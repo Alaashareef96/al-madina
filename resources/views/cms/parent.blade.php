@@ -669,6 +669,8 @@ License: You must have a valid license purchased only from themeforest(the above
 													fill="#000000" fill-rule="nonzero" />
 											</g>
 										</svg>
+
+										
 										<!--end::Svg Icon--></span>
 									<span class="menu-text">About</span>
 									<i class="menu-arrow"></i>
@@ -725,7 +727,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</svg>
 										<!--end::Svg Icon-->
 									</span>
-									<span class="menu-text">FAQs</span>
+									<span class="menu-text">Team</span>
 									<i class="menu-arrow"></i>
 								</a>
 								<div class="menu-submenu">
@@ -733,12 +735,12 @@ License: You must have a valid license purchased only from themeforest(the above
 									<ul class="menu-subnav">
 										<li class="menu-item menu-item-parent" aria-haspopup="true">
 											<span class="menu-link">
-												<span class="menu-text">FAQs</span>
+												<span class="menu-text">Team</span>
 											</span>
 										</li>
 									
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('team.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
@@ -747,7 +749,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</li>
 										
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('team.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>

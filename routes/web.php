@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -44,6 +45,9 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
     Route::resource('admins', AdminController::class);
 
     Route::resource('about', AboutController::class);
+
+    Route::resource('team', TeamController::class);
+
 
     // Route::resource('categories', CategoryController::class);
 

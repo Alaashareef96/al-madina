@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create Category')
+@section('page-name','Create About')
 @section('main-page','Content Management')
-@section('sub-page','Categories')
-@section('page-name-small','Create Category')
+@section('sub-page','About')
+@section('page-name-small','Create About')
 
 @section('styles')
 
@@ -22,7 +22,7 @@
             <form id="create-form">
                 @csrf
                 <div class="card-body">
-                 
+                    
                     <h3 class="text-dark font-weight-bold mb-10">Image</h3>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Image:<span class="text-danger">*</span></label>
@@ -30,7 +30,7 @@
                             <label for="title">Choose Image</label>
                             <input type="file" id="image" name="image" accept="image/*" onchange="previewFile(this);" /><br/>
                         </p>
-                        <img id="previewImg" src="/examples/images/transparent.png" width="100px" height="100px" alt="Placeholder">
+                        <img id="previewImg" src={{asset('cms/assets/media/users/blank.png')}} width="100px" height="100px" alt="Placeholder">
                         <p>
                           </div>      
                     </div>
@@ -41,6 +41,7 @@
                         <div class="form-group">
                             <label for="title">Choose Video</label>
                             <input type="file" id="video" name="video" accept="video/*" /><br/>
+                            <video id="vid" width="200" height="150" controls></video>
                     
                           </div>      
                     </div>
@@ -50,8 +51,10 @@
                         <label for="name" class="col-3 col-form-label">Name (Ar):</label>
                         <div class="col-6">
                             <input name="name[ar]" type="text" class="form-control" id="name" placeholder="Please enter your name" />
+
                             <span class="form-text text-muted">Please enter arabic name</span>
                         </div>
+                        
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Name (En):</label>
@@ -153,11 +156,42 @@
     }
 </script>
 
+<script>
+    const input = document.getElementById('video');
+    const video = document.getElementById('vid');
+    const videoSource = document.createElement('source');
+    
+    input.addEventListener('change', function() {
+      const files = this.files || [];
+    
+      if (!files.length) return;
+    
+      const reader = new FileReader();
+    
+      reader.onload = function (e) {
+        videoSource.setAttribute('src', e.target.result);
+        video.appendChild(videoSource);
+        video.load();
+        video.play();
+      };
+    
+      reader.onprogress = function (e) {
+        console.log('progress: ', Math.round((e.loaded * 100) / e.total));
+      };
+    
+      reader.readAsDataURL(files[0]);
+    });
+    </script>
 
     <script>
      function store(){
         let formData = new FormData($('#create-form')[0]);
-        axios.post('/cms/admin/about', formData).then(function (response) {
+        axios.post('/cms/admin/about', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        }).then(function (response) {
             // handle success
             console.log(response);
             // document.getElementById('create-form').reset();

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +38,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+
+    public function render($request, Throwable $e)
+    {
+        if($e instanceof ValidationException) {
+
+            // if($request->wantsJson() || $request->ajax()){
+
+                $firstKey = array_key_first($e->errors());
+
+                return response()->json(['message' => $e->errors()[$firstKey]], 422);
+            // }
+
+        }
     }
 }
