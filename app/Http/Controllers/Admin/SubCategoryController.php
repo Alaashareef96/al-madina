@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\SubCategoryRequest;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class SubCategoryController extends Controller
@@ -16,7 +19,8 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = SubCategory::all();
+        return response()->view('cms.subCategory.index', ['subcategories' => $data]);
     }
 
     /**
@@ -26,62 +30,72 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all();
+        return response()->view('cms.subCategory.create', ['categories' => $category]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(SubCategoryRequest $request)
     {
-        //
+        $data=[$request];
+        $validator = Validator($data);
+
+        if(! $validator->fails()){
+            $subCategory = SubCategory::create($request->only(['name','category_id']));
+
+            return response()->json([
+                'message' => $subCategory ? 'Create successflu' : 'Create falid'
+            ],$subCategory ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        }else{
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ],Response::HTTP_BAD_REQUEST);
+
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SubCategory  $subCategory
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(SubCategory $subCategory)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SubCategory  $subCategory
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(SubCategory $subCategory)
     {
-        //
+        $category = Category::all();
+        $data = $subCategory->category()->first();
+        return response()->view('cms.subCategory.edit', ['subcategory' => $subCategory, 'categories' => $category, 'alaas' => $data]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubCategory  $subCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SubCategory $subCategory)
+
+    public function update(SubCategoryRequest $request, SubCategory $subCategory)
     {
-        //
+        $data=[$request];
+        $validator = Validator($data);
+
+        if(! $validator->fails()){
+            $subCategory->update($request->only(['name','category_id']));
+
+            return response()->json([
+                'message' => $subCategory ? 'Create successflu' : 'Create falid'
+            ],$subCategory ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        }else{
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ],Response::HTTP_BAD_REQUEST);
+
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SubCategory  $subCategory
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(SubCategory $subCategory)
     {
-        //
+
+        $isDeleted = $subCategory->delete();
+        return response()->json([
+            'icon'=>$isDeleted ? 'success':'error',
+            'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'
+        ], $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
     }
 }

@@ -36,12 +36,7 @@ class TeamController extends Controller
         return response()->view('cms.team.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(TeamRequest $request)
     {
         $data=[$request];
@@ -96,16 +91,10 @@ class TeamController extends Controller
         return response()->view('cms.team.edit', ['team' => $team]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Team  $team
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(TeamRequest $request, Team $team)
     {
-        {
+
             $data=[$request];
             $validator = Validator($data);
 
@@ -121,7 +110,7 @@ class TeamController extends Controller
                     $team->image()->update(['url_image' => $url_image]);
                 }
                 return response()->json([
-                    'message' => $team ? 'Create successflu' : 'Create falid'
+                    'message' => $team ? 'Update successflu' : 'Update falid'
                 ],$team ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
             }else{
                 return response()->json([
@@ -130,15 +119,9 @@ class TeamController extends Controller
 
             }
 
-        }
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Team  $team
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Team $team)
     {
 

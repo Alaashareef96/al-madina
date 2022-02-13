@@ -2,50 +2,51 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $data = Category::all();
+        return response()->view('cms.category.index', ['categories' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return response()->view('cms.category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(CategoryRequest $request)
     {
-        //
+
+            $data=[$request];
+            $validator = Validator($data);
+
+            if(! $validator->fails()){
+                $category = Category::create($request->only(['name']));
+
+                return response()->json([
+                    'message' => $category ? 'Create successflu' : 'Create falid'
+                ],$category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+            }else{
+                return response()->json([
+                    'message' => $validator->getMessageBag()->first()
+                ],Response::HTTP_BAD_REQUEST);
+
+            }
+
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Category $category)
     {
         //
@@ -59,29 +60,37 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return response()->view('cms.category.edit', ['category' => $category]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
+
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $data=[$request];
+        $validator = Validator($data);
+
+        if(! $validator->fails()){
+            $category->update($request->only(['name']));
+
+            return response()->json([
+                'message' => $category ? 'Update successflu' : 'Update falid'
+            ],$category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        }else{
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ],Response::HTTP_BAD_REQUEST);
+
+        }
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Category $category)
     {
-        //
+        $isDeleted = $category->delete();
+        return response()->json([
+            'icon'=>$isDeleted ? 'success':'error',
+            'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'
+        ], $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
     }
 }

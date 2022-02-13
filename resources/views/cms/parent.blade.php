@@ -798,7 +798,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</li>
 
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('categories.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
@@ -807,7 +807,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</li>
 
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('categories.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
@@ -852,7 +852,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</li>
 
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('sub-categories.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
@@ -861,7 +861,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										</li>
 
 										<li class="menu-item" aria-haspopup="true">
-											<a href="" class="menu-link">
+											<a href="{{route('sub-categories.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>

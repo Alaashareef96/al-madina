@@ -100,13 +100,7 @@ class AboutController extends Controller
         return response()->view('cms.about.edit', ['about' => $about]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\About  $about
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(AboutRequest $request, About $about)
     {
         $data=[$request];
@@ -115,11 +109,11 @@ class AboutController extends Controller
 
           if(! $validator->fails()){
             $about->update($request->only(['name', 'massage', 'details','Objectives','team']));
-            
+
             if ($request->hasFile('image')) {
                 Storage::disk('public')->delete($about->imgVid->url_image);
-                $image = $request->file('image'); 
-                $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $image->getClientOriginalExtension();      
+                $image = $request->file('image');
+                $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $image->getClientOriginalExtension();
                 $request->file('image')->storeAs('/about', $imageName, ['disk' => 'public']);
                 $url_image = 'about/' . $imageName;
                $about->imgVid()->update(['url_image' => $url_image]);
@@ -134,7 +128,7 @@ class AboutController extends Controller
 
                $about->imgVid()->update(['url_video' => $url_video]);
             }
-        
+
 
             return response()->json([
                 'message' => $about ? 'Create successflu' : 'Create falid'
@@ -148,12 +142,7 @@ class AboutController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\About  $about
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(About $about)
     {
         $url_video = $about->imgVid->url_video;
