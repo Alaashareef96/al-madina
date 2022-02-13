@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','All Team')
+@section('page-name','All Teams')
 @section('main-page','Content Management')
 @section('sub-page','Team')
-@section('page-name-small','All Team')
+@section('page-name-small','All Teams')
 
 @section('styles')
 
@@ -15,15 +15,15 @@
     <!--begin::Header-->
     <div class="card-header border-0 py-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label font-weight-bolder text-dark">Team</span>
-            <span class="text-muted mt-3 font-weight-bold font-size-sm">Manage Team</span>
+            <span class="card-label font-weight-bolder text-dark">Teams</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm">Manage Teams</span>
         </h3>
-       
+
         <div class="card-toolbar">
-            <a href="{{route('team.create')}}" class="btn btn-info font-weight-bolder font-size-sm">New
+            <a href="{{route('teams.create')}}" class="btn btn-info font-weight-bolder font-size-sm">New
                 Team</a>
         </div>
-     
+
 
     </div>
     <!--end::Header-->
@@ -34,10 +34,10 @@
             <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_2">
                 <thead>
                     <tr class="text-uppercase">
-                    <th style="min-width: 50px">#</th> 
+                    <th style="min-width: 50px">#</th>
                     <th style="min-width: 100px">image</th>
                     <th style="min-width: 150px">Name</th>
-                    <th style="min-width: 150px">details</th>   
+                    <th style="min-width: 150px">Category</th>
                     <th style="min-width: 150px">Created At</th>
                     <th style="min-width: 120px">Updated At</th>
                     {{-- <th style="min-width: 120px">Settings</th> --}}
@@ -46,21 +46,21 @@
                 </thead>
                 <tbody>
                     <?php $i = 0; ?>
-                    @foreach ($abouts as $about)
+                    @foreach ($teams as $team)
                     <tr>
                         <?php $i++; ?>
                         <td>{{ $i }}</td>
-                        {{-- <td>
+                        <td>
                             <img class="img-circle img-bordered-sm" width="65" height="65"
-                            src="{{url(Storage::url($about->imgVid->url_image))}}"  alt="User Image">
-                           </td> --}}
-                        <td>{{$about->name}}</td>
-                        <td>{{$about->details}}</td>
-                        <td>{{$about->created_at->diffForHumans()}}</td>
-                        <td>{{$about->updated_at->diffForHumans()}}</td>
+                            src="{{url(Storage::url($team->image->url_image ?? ''))}}"  alt="User Image">
+                           </td>
+                        <td>{{$team->name ?? ''}}</td>
+                        <td>{{$team->category ?? ''}}</td>
+                        <td>{{$team->created_at->diffForHumans()}}</td>
+                        <td>{{$team->updated_at->diffForHumans()}}</td>
 
                         <td class="pr-0 text-right">
-                            <a href="{{route('team.edit',$team->id)}}"
+                            <a href="{{route('teams.edit',$team->id)}}"
                                 class="btn btn-icon btn-light btn-hover-primary btn-sm 3">
                                 <span class="svg-icon svg-icon-md svg-icon-primary">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg-->
@@ -80,7 +80,7 @@
                                     <!--end::Svg Icon-->
                                 </span>
                             </a>
-                            <a href="#" onclick="confirmDestroy('{{$team->id}}',this)" 
+                            <a href="#" onclick="confirmDestroy('{{$team->id}}',this)"
                                 class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                 <span class="svg-icon svg-icon-md svg-icon-primary">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
@@ -131,7 +131,7 @@
 
     function destroy(id, reference) {
         //JS - Axios
-        axios.delete('/cms/admin/team/'+id)
+        axios.delete('/cms/admin/teams/'+id)
             .then(function (response) {
                 // handle success
                 console.log(response);

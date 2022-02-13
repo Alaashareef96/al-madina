@@ -22,7 +22,7 @@
             <form id="create-form">
                 @csrf
                 <div class="card-body">
-                 
+
                     <h3 class="text-dark font-weight-bold mb-10">Image</h3>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Image:<span class="text-danger">*</span></label>
@@ -32,7 +32,7 @@
                         </p>
                         <img id="previewImg" src={{asset('cms/assets/media/users/blank.png')}} width="100px" height="100px" alt="Placeholder">
                         <p>
-                          </div>      
+                          </div>
                     </div>
                     <h3 class="text-dark font-weight-bold mb-10">Basic Info</h3>
 
@@ -43,14 +43,18 @@
                             <span class="form-text text-muted">Please enter arabic name</span>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <input name="type" type="hidden" class="form-control" id="type" value="create" placeholder="Please enter your name" />
+
+                    </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Name (En):</label>
                         <div class="col-6">
                             <input name="name[en]" type="text" class="form-control" id="name_en" placeholder="Enter english name" />
                             <span class="form-text text-muted">Please enter english name</span>
                         </div>
-                    </div> 
-                    
+                    </div>
+
                     <div class="separator separator-dashed my-10"></div>
                     <div class="form-group row mt-4">
                         <label for="name" class="col-3 col-form-label">Category (Ar):</label>
@@ -65,7 +69,7 @@
                             <input name="category[en]" type="text" class="form-control" id="category_en" placeholder="Enter english category" />
                             <span class="form-text text-muted">Please enter english category</span>
                         </div>
-                    </div> 
+                    </div>
                     <div class="separator separator-dashed my-10"></div>
                 </div>
                 <div class="card-footer">
@@ -93,7 +97,7 @@
 <script>
     function previewFile(input){
         var file = $("input[type=file]").get(0).files[0];
- 
+
         if(file){
             var reader = new FileReader();
             reader.onload = function(){
@@ -107,7 +111,7 @@
     <script>
      function store(){
         let formData = new FormData($('#create-form')[0]);
-        axios.post('/cms/admin/team', formData, {
+        axios.post('/cms/admin/teams', formData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -117,13 +121,13 @@
             console.log(response);
             // document.getElementById('create-form').reset();
             toastr.success(response.data.message);
-            window.location.href = '/cms/admin/team';
+            window.location.href = '/cms/admin/teams';
         }).catch(function (error) {
             // handle error
             console.log(error);
             toastr.error(error.response.data.message);
         });
-    }    
+    }
 
     </script>
-@endsection 
+@endsection

@@ -161,12 +161,12 @@ License: You must have a valid license purchased only from themeforest(the above
 								</a>
 							</li>
 
-{{-- 						
+{{--
 							<li class="menu-section">
 								<h4 class="menu-text">Invitations Management</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -198,7 +198,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Institutions</span>
 											</span>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -207,7 +207,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -216,11 +216,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -252,7 +252,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Invitation Groups</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -261,8 +261,8 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
-									
+
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -271,11 +271,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -307,7 +307,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Invitations</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -316,7 +316,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -325,18 +325,18 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li> --}}
-						
 
-							
+
+
 							<li class="menu-section">
 								<h4 class="menu-text">Human Resources</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -368,7 +368,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Admins</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('admins.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -377,7 +377,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('admins.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -386,11 +386,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li>
-							
+
 							{{-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -422,7 +422,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Stores</span>
 											</span>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -431,7 +431,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -440,11 +440,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-					
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -474,7 +474,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Users</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -483,19 +483,19 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
 						 --}}
 
-						
+
 							<li class="menu-section">
 								<h4 class="menu-text">Roles & Permissions</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 							</li>
 
-							
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -527,7 +527,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Roles</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('roles.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -536,7 +536,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-								
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('roles.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -545,11 +545,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-							
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -581,7 +581,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Permissions</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('permissions.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -590,8 +590,8 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
-									
+
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('permissions.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -600,12 +600,12 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-						
-						
+
+
 							<li class="menu-section">
 								<h4 class="menu-text">Client Services</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -647,14 +647,14 @@ License: You must have a valid license purchased only from themeforest(the above
 									<span class="menu-text">Notifications</span>
 								</a>
 							</li>
-						
 
-						
+
+
 							<li class="menu-section">
 								<h4 class="menu-text">Content Management</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -670,7 +670,7 @@ License: You must have a valid license purchased only from themeforest(the above
 											</g>
 										</svg>
 
-										
+
 										<!--end::Svg Icon--></span>
 									<span class="menu-text">About</span>
 									<i class="menu-arrow"></i>
@@ -683,7 +683,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">About</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('about.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -692,8 +692,8 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
-									
+
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="{{route('about.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -702,11 +702,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-							
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -738,36 +738,36 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Team</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
-											<a href="{{route('team.create')}}" class="menu-link">
+											<a href="{{route('teams.create')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
-											<a href="{{route('team.index')}}" class="menu-link">
+											<a href="{{route('teams.index')}}" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
 													<span></span>
 												</i>
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li>
-							
 
-						
+
+
 							<li class="menu-section">
 								<h4 class="menu-text">Store Management</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -796,7 +796,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Categories</span>
 											</span>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -805,7 +805,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -814,12 +814,12 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
-									
+
+
 									</ul>
 								</div>
 							</li>
-							
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -850,7 +850,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">SubCategories</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -859,7 +859,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -868,11 +868,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-										
+
 									</ul>
 								</div>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -900,7 +900,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Products</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -909,7 +909,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-										
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -918,11 +918,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-						
+
 							<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 								<a href="javascript:;" class="menu-link menu-toggle">
 									<span class="svg-icon menu-icon">
@@ -952,7 +952,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Products Offers</span>
 											</span>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -961,7 +961,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Create</span>
 											</a>
 										</li>
-									
+
 										<li class="menu-item" aria-haspopup="true">
 											<a href="" class="menu-link">
 												<i class="menu-bullet menu-bullet-dot">
@@ -970,11 +970,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="menu-text">Index</span>
 											</a>
 										</li>
-									
+
 									</ul>
 								</div>
 							</li>
-						
+
 							<li class="menu-item" aria-haspopup="true">
 								<a href="" class="menu-link">
 									<span class="svg-icon menu-icon">
@@ -997,7 +997,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								</a>
 							</li>
 
-							
+
 							<li class="menu-section">
 								<h4 class="menu-text">System Management</h4>
 								<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -2091,7 +2091,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--end::Nav-->
 	</div>
 	<!--end::Dropdown-->
-	</div> 
+	</div>
 	<!--end::Languages-->
 	<!--begin::User-->
 	<div class="topbar-item">

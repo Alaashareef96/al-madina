@@ -55,11 +55,11 @@
                         <td>{{ $i }}</td>
                         <td>
                             <img class="img-circle img-bordered-sm" width="65" height="65"
-                            src="{{url(Storage::url($about->imgVid->url_image))}}"  alt="User Image">
+                            src="{{url(Storage::url($about->imgVid->url_image ?? ''))}}"  alt="User Image">
                            </td>
-                        <td>{{$about->name}}</td>
-                        <td>{{$about->details}}</td>
-                        <td>{{$about->massage}}</td>
+                        <td>{{$about->name ?? ''}}</td>
+                        <td>{{$about->details ?? ''}}</td>
+                        <td>{{$about->massage ?? ''}}</td>
                         <td>{{$about->Objectives}}</td>
                         <td>{{$about->team}}</td>
                         <td>{{$about->created_at->diffForHumans()}}</td>

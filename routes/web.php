@@ -46,7 +46,7 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('about', AboutController::class);
 
-    Route::resource('team', TeamController::class);
+    Route::resource('teams', TeamController::class);
 
 
     // Route::resource('categories', CategoryController::class);

@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\About;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\aboutRequest;
+use App\Http\Requests\AboutRequest;
 use App\Models\Media;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -42,40 +42,30 @@ class AboutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AboutRequest $request)
     {
-        $validator = Validator($request->all(),[
-            'name.ar' => 'required|string',
-            'name.en' => 'required|string',
-            'image' => 'required',
-          ]);
+        $data=[$request];
+        $validator = Validator($data);
 
           if(! $validator->fails()){
             $about = About::create($request->only(['name', 'massage', 'details','Objectives','team']));
 
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('image','video')) {
                 $image = $request->file('image');
+                $video = $request->file('video');
                 $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $image->getClientOriginalExtension();
+                $videoName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $video->getClientOriginalExtension();
                 $request->file('image')->storeAs('/about', $imageName, ['disk' => 'public']);
+                $request->file('video')->storeAs('/about', $videoName, ['disk' => 'public']);
 
                 $img = new Media();
                 $img->object_type = 'about';
                 $img->object_id = $about->id;
                 $img->url_image = 'about/' . $imageName;
-            
-            
-            if ($request->hasFile('video')) {
-                $video = $request->file('video');
-                $videoName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $video->getClientOriginalExtension();
-                $request->file('video')->storeAs('/about', $videoName, ['disk' => 'public']);
-
                 $img->url_video = 'about/' . $videoName;
-            
 
-              $about->imgVid()->save($img);
-            }
+            $about->imgVid()->save($img);
         }
-
             return response()->json([
                 'message' => $about ? 'Create successflu' : 'Create falid'
             ],$about ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
@@ -117,39 +107,34 @@ class AboutController extends Controller
      * @param  \App\Models\About  $about
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, About $about)
+    public function update(AboutRequest $request, About $about)
     {
-        $validator = Validator($request->all(),[
-            'name.ar' => 'required|string',
-            'name.en' => 'required|string',
-            'image' => 'nullable',
-          ]);
+        $data=[$request];
+
+        $validator = Validator($data);
 
           if(! $validator->fails()){
             $about->update($request->only(['name', 'massage', 'details','Objectives','team']));
+            
             if ($request->hasFile('image')) {
-                $url = $about->imgVid->url_image;
-                $imagee = $about->imgVid->delete();
-                Storage::disk('public')->delete($imagee,$url);
-                $image = $request->file('image');
-                $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $image->getClientOriginalExtension();
+                Storage::disk('public')->delete($about->imgVid->url_image);
+                $image = $request->file('image'); 
+                $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $image->getClientOriginalExtension();      
                 $request->file('image')->storeAs('/about', $imageName, ['disk' => 'public']);
-
                 $url_image = 'about/' . $imageName;
-    
+               $about->imgVid()->update(['url_image' => $url_image]);
+            }
+
             if ($request->hasFile('video')) {
-                $url = $about->imgVid->url_video;
-                $videoo = $about->imgVid->delete();
-                Storage::disk('public')->delete($videoo,$url);
+                Storage::disk('public')->delete($about->imgVid->url_video);
                 $video = $request->file('video');
                 $videoName = Carbon::now()->format('Y_m_d_h_i') . '_' . $about->name . '.' . $video->getClientOriginalExtension();
                 $request->file('video')->storeAs('/about', $videoName, ['disk' => 'public']);
-
                 $url_video = 'about/' . $videoName;
 
-               $about->imgVid()->create(['url_video' => $url_video , 'url_image' => $url_image]);
+               $about->imgVid()->update(['url_video' => $url_video]);
             }
-        }
+        
 
             return response()->json([
                 'message' => $about ? 'Create successflu' : 'Create falid'

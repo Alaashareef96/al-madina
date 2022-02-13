@@ -23,7 +23,6 @@ class AboutRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'name.ar' => 'required|string',
             'name.en' => 'required|string',
@@ -35,8 +34,8 @@ class AboutRequest extends FormRequest
             'Objectives.en' => 'required|string',
             'team.ar' => 'required|string',
             'team.en' => 'required|string',
-            'image' => 'required|image',
-            'video' => 'required|video',  
+            'image' => 'required_if:type,==,create', 
+            'video' => 'required_if:type,==,create'
         ];
     }
 }

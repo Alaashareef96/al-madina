@@ -54,6 +54,12 @@
 
                             <span class="form-text text-muted">Please enter arabic name</span>
                         </div>
+
+                        <div class="col-6">
+                            <input name="type" type="hidden" class="form-control" id="type" value="create" placeholder="Please enter your name" />
+
+                           
+                        </div>
                         
                     </div>
                     <div class="form-group row mt-4">
