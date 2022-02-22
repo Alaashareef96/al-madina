@@ -67,7 +67,7 @@ class AdminController extends Controller
             $admin->email = $request->input('email');
             $admin->password = Hash::make(12345);
             $isSaved = $admin->save();
-            if ($isSaved) 
+            if ($isSaved)
                 $admin->assignRole($role);
                 // event(new Registered($admin));
             return response()->json([
@@ -91,12 +91,7 @@ class AdminController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Admin $admin)
     {
         $roles = Role::where('guard_name', '=', 'admin')->get();

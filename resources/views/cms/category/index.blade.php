@@ -36,6 +36,7 @@
                     <tr class="text-uppercase">
                     <th style="min-width: 50px">#</th>
                     <th style="min-width: 150px">Name</th>
+                    <th style="min-width: 150px">Parent_Name</th>
                     <th style="min-width: 150px">Created At</th>
                     <th style="min-width: 120px">Updated At</th>
                     {{-- <th style="min-width: 120px">Settings</th> --}}
@@ -49,7 +50,8 @@
                         <?php $i++; ?>
                         <td>{{ $i }}</td>
                         <td>{{$category->name ?? ''}}</td>
-                        <td>{{$category->created_at->diffForHumans()}}</td>
+                        <td>{{$category->parent->name ?? '--'}}</td>
+                       <td>{{$category->created_at->diffForHumans()}}</td>
                         <td>{{$category->updated_at->diffForHumans()}}</td>
 
                         <td class="pr-0 text-right">

@@ -13,74 +13,49 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $data = Category::all();
-        return response()->view('cms.category.index', ['categories' => $data]);
+        $categories = Category::with('parent')->get();
+        return response()->view('cms.category.index',compact('categories'));
     }
 
 
     public function create()
     {
-        return response()->view('cms.category.create');
+        $categories =   Category::all();
+        return response()->view('cms.category.create',compact('categories'));
     }
 
 
     public function store(CategoryRequest $request)
     {
 
-            $data=[$request];
-            $validator = Validator($data);
 
-            if(! $validator->fails()){
-                $category = Category::create($request->only(['name']));
+       $category = Category::create($request->only(['name','parent_id']));
 
-                return response()->json([
+       return response()->json([
                     'message' => $category ? 'Create successflu' : 'Create falid'
-                ],$category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-            }else{
-                return response()->json([
-                    'message' => $validator->getMessageBag()->first()
-                ],Response::HTTP_BAD_REQUEST);
-
-            }
+       ],$category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
 
     }
 
 
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Category $category)
     {
-        return response()->view('cms.category.edit', ['category' => $category]);
+        $data = $category->parent()->first();
+        return response()->view('cms.category.edit',['categories' =>$category,'alaas'=>$data]);
     }
 
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $data=[$request];
-        $validator = Validator($data);
 
-        if(! $validator->fails()){
-            $category->update($request->only(['name']));
+
+            $category->update($request->only(['name','parent_id']));
 
             return response()->json([
                 'message' => $category ? 'Update successflu' : 'Update falid'
             ],$category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-        }else{
-            return response()->json([
-                'message' => $validator->getMessageBag()->first()
-            ],Response::HTTP_BAD_REQUEST);
 
-        }
 
     }
 

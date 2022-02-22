@@ -80,7 +80,7 @@
     <script>
      function store(){
         let formData = new FormData($('#create-form')[0]);
-        axios.post('/cms/admin/subcategories', formData, {
+        axios.post('/cms/admin/sub-categories', formData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -90,7 +90,7 @@
             console.log(response);
             // document.getElementById('create-form').reset();
             toastr.success(response.data.message);
-            window.location.href = '/cms/admin/subcategories';
+            window.location.href = '/cms/admin/sub-categories';
         }).catch(function (error) {
             // handle error
             console.log(error);

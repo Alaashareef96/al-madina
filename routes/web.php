@@ -3,7 +3,10 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Site\AboutSiteController;
+use App\Http\Controllers\Site\HomeSiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -50,9 +53,20 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('teams', TeamController::class);
 
-     Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class);
 
-     Route::resource('sub-categories', SubCategoryController::class);
+    Route::resource('sub-categories', SubCategoryController::class);
+
+    Route::resource('products', ProductController::class);
+
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
+
+//****************************SITE*****************************
+Route::group(['prefix' => 'al-madina'],(function() {
+
+    Route::get('/home', [HomeSiteController::class, 'index'])->name('home');
+    Route::get('/about', [AboutSiteController::class, 'index'])->name('about');
+
+}));

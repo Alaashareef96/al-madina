@@ -1,0 +1,53 @@
+body {
+    text-align: start;
+    direction: ltr;
+}
+.input-search button{
+    left: unset;
+    right: 6px;
+}
+.about-us{
+    text-align: start;
+}
+.play{
+    top: 50%;
+    left: unset;
+    padding-inline-end: 0;
+
+}
+.play::after{
+    left: unset;
+    right: 50%;
+}
+.info-manger{
+    padding-inline-start: 10px;
+    border-inline-start: 5px solid var(--green);
+    text-align: start;
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "\f105";
+}
+.page-link .fa-chevron-left:before{
+    content: "\f054";
+}
+.page-link .fa-chevron-right:before{
+    content: "\f053";
+}
+.footer-search svg{
+    transform:  rotate(180deg);
+}
+.footer-search svg:hover{
+    transform: scale(1.2) rotate(
+        180deg);
+}
+.card-search.product-card .size{
+    right: 7px;
+    left: unset;
+}
+/* 
+.bubbles::before{
+    background-position:top left;
+}
+.bubbles::after{
+    background-position:bottom right;
+} */
