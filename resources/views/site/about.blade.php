@@ -28,8 +28,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
+
                         <h1 class="title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                            {{$about->name}}
+                           {{$about->name}}
                         </h1>
                         <div class="paragraph mb-lg-0 mb-3 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             استطاعت شركة المدينة للمشروبات الخفيفة من تحقيق النجاح حيث
@@ -210,6 +211,7 @@
                         الإدارة وغيرها من وسائل التطوير.</p>
                 </div>
             </div>
+
             <div class="members">
                 <div class="container">
                     <h2 class="main-title-secondary wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">

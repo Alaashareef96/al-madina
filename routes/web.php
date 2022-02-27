@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DeleteImageController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Site\AboutSiteController;
@@ -55,9 +59,17 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('categories', CategoryController::class);
 
-    Route::resource('sub-categories', SubCategoryController::class);
+//    Route::resource('sub-categories', SubCategoryController::class);
 
     Route::resource('products', ProductController::class);
+
+    Route::resource('offers', OfferController::class);
+
+    Route::get('/delete/{id}', [DeleteImageController::class, 'delete'])->name('delete');
+
+    Route::resource('news', NewsController::class);
+
+    Route::resource('albums', AlbumController::class);
 
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');

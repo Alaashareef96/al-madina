@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMediaTable extends Migration
+class CreateOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->morphs('object');
-            $table->string('url_image')->nullable();
-            $table->string('url_video')->nullable();
-            $table->string('url_images')->nullable();
-            $table->string('type')->nullable();
-
+            $table->string('name');
+            $table->string('details');
+            $table->string('terms');
+            $table->string('subscription');
+            $table->date('expiry_date');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media');
+        Schema::dropIfExists('offers');
     }
 }

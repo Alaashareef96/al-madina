@@ -36,18 +36,9 @@ class AboutController extends Controller
         return response()->view('cms.about.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(AboutRequest $request)
     {
-        $data=[$request];
-        $validator = Validator($data);
-
-          if(! $validator->fails()){
             $about = About::create($request->only(['name', 'massage', 'details','Objectives','team']));
 
             if ($request->hasFile('image','video')) {
@@ -69,12 +60,7 @@ class AboutController extends Controller
             return response()->json([
                 'message' => $about ? 'Create successflu' : 'Create falid'
             ],$about ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-        }else{
-            return response()->json([
-                'message' => $validator->getMessageBag()->first()
-            ],Response::HTTP_BAD_REQUEST);
 
-        }
 
      }
 
@@ -103,11 +89,6 @@ class AboutController extends Controller
 
     public function update(AboutRequest $request, About $about)
     {
-        $data=[$request];
-
-        $validator = Validator($data);
-
-          if(! $validator->fails()){
             $about->update($request->only(['name', 'massage', 'details','Objectives','team']));
 
             if ($request->hasFile('image')) {
@@ -133,12 +114,7 @@ class AboutController extends Controller
             return response()->json([
                 'message' => $about ? 'Create successflu' : 'Create falid'
             ],$about ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-        }else{
-            return response()->json([
-                'message' => $validator->getMessageBag()->first()
-            ],Response::HTTP_BAD_REQUEST);
 
-        }
 
     }
 
