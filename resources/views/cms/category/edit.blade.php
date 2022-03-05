@@ -42,34 +42,18 @@
                         </div>
 
                         <div class="separator separator-dashed my-10"></div>
-                        <div class="form-group row">
-                            <label class="col-3 col-form-label">Inline radios</label>
-                            <div class="col-9 col-form-label">
-                                <div class="radio-inline">
-                                    <label class="radio">
-                                        <input type="radio" name="type" value="1"/>
-                                        <span></span>
-                                        Main Category
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="type" value="2"/>
-                                        <span></span>
-                                        Sub Category
-                                    </label>
-                                </div>
-                                <span class="form-text text-muted">Some help text goes here</span>
-                            </div>
-                        </div>
+
                         <div class="form-group row hidden" id="cats_list" >
                             <label class="col-3 col-form-label">Category Nmae:<span class="text-danger">*</span></label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <div class="dropdown bootstrap-select form-control dropup">
                                     <select class="form-control selectpicker" data-size="7"  name="parent_id" id="parent_id"
                                             title="Choose one of the following..." tabindex="null" data-live-search="true">
-                                        @foreach ($categories as $category)
-                                            <option value="{{$category->id}}" @if($category->parent_id == $category->id) selected
-                                                @endif>{{$category->name}}</option>
-                                        @endforeach
+
+                                        <option value="Brand"@if($categories->type == 'Brand') selected @endif>Brand</option>
+                                        <option value="Size"@if($categories->type == 'Size') selected @endif>Size</option>
+                                        <option value="Taste"@if($categories->type == 'Taste') selected @endif>Taste</option>
+
                                     </select>
                                 </div>
                                 <span class="form-text text-muted">Please select Category Nmae</span>

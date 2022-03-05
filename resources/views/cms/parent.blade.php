@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Bootstrap 4 HTML, React, Angular 11 & VueJS Admin Dashboard Theme
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: https://1.envato.market/EA4JP
-Renew Support: https://1.envato.market/EA4JP
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
+
 <html lang="en">
 <!--begin::Head-->
 
@@ -25,6 +14,8 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!--begin::Fonts-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 	<!--end::Fonts-->
+
+@if (App::getLocale() == 'en')
 	<!--begin::Page Vendors Styles(used by this page)-->
 	<link href="{{asset('cms/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet"
 		type="text/css" />
@@ -39,12 +30,25 @@ License: You must have a valid license purchased only from themeforest(the above
 	<link href="{{asset('cms/assets/css/themes/layout/header/menu/light.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('cms/assets/css/themes/layout/brand/dark.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('cms/assets/css/themes/layout/aside/dark.css')}}" rel="stylesheet" type="text/css" />
+    @else
+
+        <link href="{{asset('cms/assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}" rel="stylesheet"
+              type="text/css" />
+        <link href="{{asset('cms/assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('cms/assets/plugins/custom/prismjs/prismjs.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+
+        <link href="{{asset('cms/assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('cms/assets/css/themes/layout/header/base/light.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('cms/assets/css/themes/layout/header/menu/light.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('cms/assets/css/themes/layout/brand/dark.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('cms/assets/css/themes/layout/aside/dark.rtl.css')}}" rel="stylesheet" type="text/css" />
+    @endif
 	<!--end::Layout Themes-->
 	<link rel="shortcut icon" href="{{asset('cms/assets/media/logos/favicon.ico')}}" />
 	<link rel="stylesheet" href="{{asset('cms/assets/plugins/toastr/toastr.min.css')}}" />
 	<link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
 
-	@yield('styles')
+    @yield('styles')
 </head>
 <!--end::Head-->
 <!--begin::Body-->

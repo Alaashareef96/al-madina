@@ -18,12 +18,12 @@
             <span class="card-label font-weight-bolder text-dark">About</span>
             <span class="text-muted mt-3 font-weight-bold font-size-sm">Manage About</span>
         </h3>
-       
+
         <div class="card-toolbar">
             <a href="{{route('about.create')}}" class="btn btn-info font-weight-bolder font-size-sm">New
                 About</a>
         </div>
-     
+
 
     </div>
     <!--end::Header-->
@@ -34,12 +34,13 @@
             <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_2">
                 <thead>
                     <tr class="text-uppercase">
-                    <th style="min-width: 50px">#</th> 
+                    <th style="min-width: 50px">#</th>
                     <th style="min-width: 100px">image</th>
                     <th style="min-width: 150px">Name</th>
                     <th style="min-width: 150px">details</th>
                     <th style="min-width: 150px">massage</th>
                     <th style="min-width: 150px">Objectives</th>
+                    <th style="min-width: 150px">Contribution</th>
                     <th style="min-width: 150px">team</th>
                     <th style="min-width: 150px">Created At</th>
                     <th style="min-width: 120px">Updated At</th>
@@ -62,6 +63,7 @@
                         <td>{{$about->massage ?? ''}}</td>
                         <td>{{$about->Objectives}}</td>
                         <td>{{$about->team}}</td>
+                        <td>{{$about->contribution}}</td>
                         <td>{{$about->created_at->diffForHumans()}}</td>
                         <td>{{$about->updated_at->diffForHumans()}}</td>
 
@@ -86,7 +88,7 @@
                                     <!--end::Svg Icon-->
                                 </span>
                             </a>
-                            <a href="#" onclick="confirmDestroy('{{$about->id}}',this)" 
+                            <a href="#" onclick="confirmDestroy('{{$about->id}}',this)"
                                 class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                 <span class="svg-icon svg-icon-md svg-icon-primary">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->

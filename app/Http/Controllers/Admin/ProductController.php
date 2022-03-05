@@ -27,23 +27,20 @@ class ProductController extends Controller
         return response()->view('cms.product.index', ['products' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        $category = Category::all();
-        return response()->view('cms.product.create',['categories' => $category]);
+        $brand = Category::where('type','Brand')->get();
+        $size = Category::where('type','Size')->get();
+        $taste = Category::where('type','Taste')->get();
+        return response()->view('cms.product.create',compact('brand','size','taste'));
     }
 
     public function store(ProductRequest $request)
     {
 
-            $product = Product::create($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price']));
-            $product->categories()->attach($request->category);
-
+            $product = Product::create($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id']));
+//            $product->categories()->attach($request->category);
 
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
@@ -72,17 +69,19 @@ class ProductController extends Controller
 
     public function edit(product $product)
     {
-        $category = Category::all();
+        $brand = Category::where('type','Brand')->get();
+        $size = Category::where('type','Size')->get();
+        $taste = Category::where('type','Taste')->get();
 
-        return response()->view('cms.product.edit',['categories' => $category,'product' => $product]);
+        return response()->view('cms.product.edit',compact('product','brand','size','taste'));
     }
 
 
     public function update(Request $request, product $product)
     {
 
-        $product->update($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price']));
-        $product->categories()->sync($request->category);
+        $product->update($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id']));
+//        $product->categories()->sync($request->category);
 
 
         if ($request->hasFile('image')) {

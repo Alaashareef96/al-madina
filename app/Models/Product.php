@@ -11,28 +11,35 @@ class Product extends Model
 {
     use HasFactory;
     use HasTranslations;
-    protected $fillable = ['name','details','calories','fats','protein','carbohydrate','vitamin','price'];
+    protected $fillable = ['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id'];
     public $translatable = ['name','details'];
-//
-//    public function SubCategory()
-//    {
-//        return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
-//    }
+
 
     public function image()
     {
         return $this->morphOne(Media::class, 'object', 'object_type', 'object_id', 'id');
     }
 
-    public function categories()
+//    public function categories()
+//    {
+//        return $this->belongsToMany(Category::class, 'product_categories');
+//    }
+
+    public function brand()
     {
-        return $this->belongsToMany(Category::class, 'product_categories');
+        return $this->belongsTo(Category::class, 'brand_id');
     }
 
 
+    public function size()
+    {
+        return $this->belongsTo(Category::class, 'size_id');
+    }
 
-
-
+    public function taste()
+    {
+        return $this->belongsTo(Category::class, 'taste_id');
+    }
 
 
 //

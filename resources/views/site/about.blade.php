@@ -18,7 +18,7 @@
                     </ol>
                 </nav>
                 <figure class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">
-                    <img src="" alt="" srcset="" loading="lazy">
+                    <img src="{{url(Storage::url($about->imgVid->url_image ?? ''))}}" alt="" srcset="" loading="lazy">
                 </figure>
             </div>
         </div>
@@ -30,18 +30,10 @@
                     <div class="col-lg-6">
 
                         <h1 class="title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                           {{$about->name}}
+                           {{$about->name ?? ''}}
                         </h1>
                         <div class="paragraph mb-lg-0 mb-3 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                            استطاعت شركة المدينة للمشروبات الخفيفة من تحقيق النجاح حيث
-                            أصبحت من كبرى الشركات في مجالها في السوق الفلسطينية
-                            وأضحت منتجاتها تحظي برضي الشريحة العريضة من المستهلكين مما
-                            أعطي الشركة الفرصة بتوسيع مساهمتها في السوق المحلي خلال
-                            فتره وجيزة تسعي الشركة إلى توسيع منتجاتها وفتح أفاق جديدة
-                            للتصدير للخارج، وتعتمد الشركة في إنتاجها على تحقيق الجودة العالية
-                            وفق أحدث تكنولوجيا التصنيع في العالم. وبأيدي وعقول فلسطينية
-                            قادرة وكفؤة، ولدي الشركة خطط مستقبلية لدخول الأسواق المحلية
-                            .بمنتجات متعددة أخري
+                            {{$about->details ?? ''}}
                         </div>
 
 
@@ -89,9 +81,7 @@
                     <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">الرسالة:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <p> النهوض بالاقتصاد الفلسطيني وذلك بإنتاج أفضل المنتجات وبالجودة العالمية بالإضافة إلى تنويع
-                        المنتجات لتلبي حاجة السوق المحلي ذلك بالتعاون مع
-                        مؤسسات القطاع الخاص والمؤسسات الاجتماعية.</p>
+                    <p> {{$about->massage ?? ''}}</p>
                 </div>
             </div>
             <div class="about__content mt-4">
@@ -122,18 +112,7 @@
                     <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">الأهداف:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-                    <p> تهدف الشركة إلى تطوير الاقتصاد الوطني من خلال توفير منتجات غذائية عالية الجودة لتحل محل المنتجات
-                        الواردة للسوق المحلي ويتأتى ذلك من خلال
-                        الاعتماد على تشغيل عدد من الخبراء والمختصين والعاملين داخل الشركة و خارجها من ذوي الخبرة
-                        والكفاءة العالية في مجال التصنيع الغذائي وبالذات
-                        المشروبات كما و إنها سعت ومنذ البداية إلي الارتقاء بالمنتج الوطني ليصل إلي الجودة العالمية، وذلك
-                        بتوفير المواد الخام ذات الجودة العالية والمميزة
-                        وتسعى الشركة وباستمرار لخلق البدائل المحلية ما أمكن وتحسين الإنتاج والارتقاء بجودته مما يقلل
-                        الاعتماد على الخارج.
-                        كما وهناك الهدف الاجتماعي حيث تؤثر الشركة وتتأثر بمجريات الأحداث علي الساحة الفلسطينية حيث تقوم
-                        الشركة بمساعدة الأطفال الفلسطينيين،
-                        وقد نفذت الشركة العديد من المشاريع الداعمة للمجتمع الفلسطيني من خلال دراسة الاحتياجات الملحة
-                        وتقديم العون والمساعدة في الوقت المناسب.</p>
+                    <p> {{$about->Objectives ?? ''}}</p>
                 </div>
             </div>
             <div class="about__content mt-4">
@@ -183,15 +162,7 @@
                     <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.45s">المساهمة الاجتماعية:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                    <p> تقوم الشركة بتشجيع الطاقات الخلاقة المبدعة القادرة علي إنشاء اقتصاد وطني مستقل قادر علي تنمية
-                        وتطوير السوق المحلي ويقلل ما أمكن من
-                        الاعتماد علي الاستيراد من الأسواق الخارجية ، ونحن نؤمن بأننا قادرون علي استغلال مواردنا المتاحة
-                        رغم الصعاب لتقوية أركان المجتمع الفلسطيني
-                        اقتصاديا واجتماعيا ، وقد قمنا بدعم مشاريع دعم الطالب الفلسطيني بالإضافة إلي مساهمتنا في تعزيز
-                        قدرة الطبقات الفقيرة علي العيش بكرامة
-                        وذلك بتقديم يد العون للمحتاجين ، ولكن مع هذا فتركيزنا علي الطفل الفلسطيني الذي هو عماد المستقبل
-                        حيث تركزت مساعدتنا الاجتماعية والإنسانية
-                        للأطفال في مجال التعليم والصحة ونسعى أن نقدم المزيد في المستقبل إنشاء الله.</p>
+                    <p> {{$about->contribution ?? ''}}</p>
                 </div>
             </div>
         </div>
@@ -202,13 +173,8 @@
                     <h2 class="main-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
                         فريق العمل
                     </h2>
-                    <p class="text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">يتشكل مجلس الإدارة
-                        لشركة المدينة للمشروبات الخفيفة من عدد من رجال الأعمال الفلسطيني يعملون علي اختيار أفضل الطاقات
-                        والكفاءات للعمل بالشركة ويعمل الآن ما
-                        يقارب من 120 موظفا و عاملا ، يعملون من أجل تطوير منتجات الشركة وإيصالها إلي المستهلكين في أفضل
-                        صورة، وتقدم شركة المدينة للعاملين كل ما يحتاجونه في
-                        سبيل تطويرهم وتعزيز مكانتهم المهنية باستمرار كي يواكبوا كل جديد وكل حديث في مجال الصناعة و
-                        الإدارة وغيرها من وسائل التطوير.</p>
+                    <p class="text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                        {{$about->team ?? ''}}</p>
                 </div>
             </div>
 
@@ -219,101 +185,24 @@
                     </h2>
                     <div class="owl-carousel owl-theme owl-team  wow fadeInUp" data-wow-duration="1s"
                          data-wow-delay="0.1s">
+                        @foreach($teams as $team)
                         <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
                             <div class="card-img-top column">
                                 <div class="user-info column img-size">
                                     <figure>
-                                        <img src="images/member1.png" alt="Card image cap">
+                                        <img  src="{{url(Storage::url($team->image->url_image ?? ''))}}" alt="Card image cap">
                                     </figure>
                                     <div class="text-center">
-                                        <p>عبدالرحمن السلطان</p>
-                                        <span>مدير الادارة</span>
+                                        <p> {{$team->name}}</p>
+                                        <span>{{$team->category}}</span>
                                     </div>
                                 </div>
 
                             </div>
 
                         </div>
-                        <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                            <div class="card-img-top column">
+                            @endforeach
 
-                                <div class="user-info column img-size">
-                                    <figure>
-                                        <img src="images/member2.png" alt="Card image cap">
-                                    </figure>
-                                    <div class="text-center">
-                                        <p>محمد عبدالله</p>
-                                        <span>مهندس برمجيات</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                            <div class="card-img-top column">
-
-                                <div class="user-info column img-size">
-                                    <figure>
-                                        <img src="images/member3.png" alt="Card image cap">
-                                    </figure>
-                                    <div class="text-center">
-                                        <p>عبدالرحيم المطيري</p>
-                                        <span>مدرس ثانوي</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                            <div class="card-img-top column">
-
-                                <div class="user-info column img-size">
-                                    <figure>
-                                        <img src="images/member4.png" alt="Card image cap">
-                                    </figure>
-                                    <div class="text-center">
-                                        <p>عبدالكريم الخطيب</p>
-                                        <span>مصمم جرافيك</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                            <div class="card-img-top column">
-
-                                <div class="user-info column img-size">
-                                    <figure>
-                                        <img src="images/avatar1.png" alt="Card image cap">
-                                    </figure>
-                                    <div class="text-center">
-                                        <p>مهند أحمد</p>
-                                        <span>مدرس ثانوي</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="card people_rate_card wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                            <div class="card-img-top column">
-
-                                <div class="user-info column img-size">
-                                    <figure>
-                                        <img src="images/avatar1.png" alt="Card image cap">
-                                    </figure>
-                                    <div class="text-center">
-                                        <p>مهند أحمد</p>
-                                        <span>مدرس ثانوي</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
                     </div>
                 </div>
 
@@ -329,7 +218,7 @@
 
 @section('script')
     <script>
-        var words = ['المدينة','المدينه']
+        var words = ['Al-Madina','المدينه']
         for (let index = 0; index < words.length; index++) {
             $('.title')[0].innerHTML = $('.title')[0].innerHTML.replace(words[index],'<span style="color:var(--green)">'+words[index]+'</span>');
         }

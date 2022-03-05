@@ -60,14 +60,36 @@
                     <div class="separator separator-dashed my-10"></div>
                     <h3 class="text-dark font-weight-bold mb-10">Category</h3>
                     <div class="form-group row">
-                        <label class="col-3 col-form-label">Category:</label>
+                        <label class="col-3 col-form-label">Brand Name:</label>
                         <div class="col-lg-6 col-md-9 col-sm-12">
-                            <select class="form-control selectpicker" data-size="7"  name="category[]" multiple>
-                                @foreach ($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                            <select class="form-control selectpicker" data-size="7"  name="brand_id"
+                                    title="Choose one of the following..." tabindex="null" data-live-search="true">
+                                @foreach ($brand as $brandName)
+                                    <option value="{{$brandName->id}}">{{$brandName->name}}</option>
                                 @endforeach
                             </select>
-                            <div class="mt-3 text-muted">In this example, the dropdown.enabled setting is set (minimum charactes typed to show the dropdown) to 3. Maximum number of tags is set to 6</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Size Name:</label>
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <select class="form-control selectpicker" data-size="7"  name="size_id"
+                                    title="Choose one of the following..." tabindex="null" data-live-search="true">
+                                @foreach ($size as $sizeName)
+                                    <option value="{{$sizeName->id}}">{{$sizeName->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Taste Name:</label>
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <select class="form-control selectpicker" data-size="7"  name="taste_id"
+                                    title="Choose one of the following..." tabindex="null" data-live-search="true">
+                                @foreach ($taste as $tasteName)
+                                    <option value="{{$tasteName->id}}">{{$tasteName->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 

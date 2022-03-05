@@ -33,23 +33,23 @@
 
 <body>
 
-<div id="loadOverlay" style="background-color:rgb(31 94 157 / 90%);position: fixed;top: 0px;left:0px;width: 100%;height: 100%;z-index: 200000;    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;">
-    <div id="loading" width="200" height="200"></div>
-</div>
+{{--<div id="loadOverlay" style="background-color:rgb(31 94 157 / 90%);position: fixed;top: 0px;left:0px;width: 100%;height: 100%;z-index: 200000;    display: flex;--}}
+{{--    align-items: center;--}}
+{{--    justify-content: center;--}}
+{{--    flex-direction: column;">--}}
+{{--    <div id="loading" width="200" height="200"></div>--}}
+{{--</div>--}}
 <script>
-    document.getElementsByTagName('html')[0].style.overflow='hidden';
-    document.getElementsByTagName('body')[0].style.overflow='hidden';
-    var animation = bodymovin.loadAnimation({
-        container: document.getElementById('loading'), // Required
-        path: "images/data.json", // Required
-        renderer: 'svg', // Required
-        loop: true, // Optional
-        autoplay: true, // Optional
-        name: "Hello World", // Name for future reference. Optional.
-    });
+    // document.getElementsByTagName('html')[0].style.overflow='hidden';
+    // document.getElementsByTagName('body')[0].style.overflow='hidden';
+    // var animation = bodymovin.loadAnimation({
+    //     container: document.getElementById('loading'), // Required
+    //     path: "images/data.json", // Required
+    //     renderer: 'svg', // Required
+    //     loop: true, // Optional
+    //     autoplay: true, // Optional
+    //     name: "Hello World", // Name for future reference. Optional.
+    // });
 </script>
 <!-- header -->
 <header class="main-header">
@@ -57,8 +57,8 @@
         <div class="container">
             <div class="top">
                 <div class="language">
-                    <a href="#" class="active">العربية</a>
-                    <a href="#">English</a>
+                    <a href="{{route('dashboard.change-language-user','ar')}}" class="active">العربية</a>
+                    <a href="{{route('dashboard.change-language-user','en')}}">English</a>
                 </div>
                 <div class="socail-media">
 
@@ -151,13 +151,13 @@
 
             <ul class="main-menu">
                 <li>
-                    <a href="index.html" class="active">الرئيسية</a>
+                    <a href={{route('home')}} class="active">الرئيسية</a>
                 </li>
                 <li>
-                    <a href="about.html">من نحن</a>
+                    <a href={{route('about')}}>من نحن</a>
                 </li>
                 <li>
-                    <a href="products.html">المنتجات</a>
+                    <a href={{route('product')}}>المنتجات</a>
                 </li>
                 <li>
                     <a href="offers.html">الحملات والعروض</a>
@@ -403,15 +403,16 @@
 <script src="{{asset('site/js/wow.min.js')}}"></script>
 <script src="{{asset('site/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('site/js/main.js')}}"></script>
+<script src="{{asset('js/axios.js')}}"></script>
 <script>
-    // var words = ['المدينة','المدينه']
-    // for (let index = 0; index < words.length; index++) {
-    //     $('.title')[0].innerHTML = $('.title')[0].innerHTML.replace(words[index],'<span style="color:var(--green)">'+words[index]+'</span>');
-    // }
-    $(window).on('load',function(){
-        $('#loadOverlay').fadeOut();
-        $('html,body').css('overflow','');
-    });
+    // // var words = ['المدينة','المدينه']
+    // // for (let index = 0; index < words.length; index++) {
+    // //     $('.title')[0].innerHTML = $('.title')[0].innerHTML.replace(words[index],'<span style="color:var(--green)">'+words[index]+'</span>');
+    // // }
+    // $(window).on('load',function(){
+    //     $('#loadOverlay').fadeOut();
+    //     $('html,body').css('overflow','');
+    // });
 </script>
 @yield('script')
 </html>

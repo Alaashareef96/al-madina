@@ -16,13 +16,19 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('details');
+            $table->text('details');
             $table->string('calories');
             $table->string('fats');
             $table->string('protein');
             $table->string('carbohydrate');
             $table->string('vitamin');
             $table->string('price');
+            $table->foreignId('brand_id');
+            $table->foreignId('size_id');
+            $table->foreignId('taste_id');
+            $table->foreign('brand_id')->on('categories')->references('id')->onDelete('cascade');
+            $table->foreign('size_id')->on('categories')->references('id')->onDelete('cascade');
+            $table->foreign('taste_id')->on('categories')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

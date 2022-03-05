@@ -39,7 +39,7 @@ class AboutController extends Controller
 
     public function store(AboutRequest $request)
     {
-            $about = About::create($request->only(['name', 'massage', 'details','Objectives','team']));
+            $about = About::create($request->only(['name', 'massage', 'details','Objectives','contribution','team']));
 
             if ($request->hasFile('image','video')) {
                 $image = $request->file('image');
@@ -89,7 +89,7 @@ class AboutController extends Controller
 
     public function update(AboutRequest $request, About $about)
     {
-            $about->update($request->only(['name', 'massage', 'details','Objectives','team']));
+            $about->update($request->only(['name', 'massage', 'details','Objectives','contribution','team']));
 
             if ($request->hasFile('image')) {
                 Storage::disk('public')->delete($about->imgVid->url_image);

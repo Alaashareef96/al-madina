@@ -50,7 +50,7 @@
                         <?php $i++; ?>
                         <td>{{ $i }}</td>
                         <td>{{$category->name ?? ''}}</td>
-                        <td>{{$category->parent->name ?? '--'}}</td>
+                        <td>{{$category->type ?? '--'}}</td>
                        <td>{{$category->created_at->diffForHumans()}}</td>
                         <td>{{$category->updated_at->diffForHumans()}}</td>
 

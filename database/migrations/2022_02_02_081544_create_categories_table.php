@@ -15,9 +15,9 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->nullable();
+            $table->enum('type',['Brand','Size','Taste']);
             $table->string('name',);
-            $table->foreign('parent_id')->on('categories')->references('id')->onDelete('cascade');
+//            $table->foreign('parent_id')->on('categories')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

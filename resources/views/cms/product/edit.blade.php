@@ -55,15 +55,36 @@
                         <div class="separator separator-dashed my-10"></div>
                         <h3 class="text-dark font-weight-bold mb-10">Category</h3>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Category:</label>
+                            <label class="col-3 col-form-label">Brand Name:</label>
                             <div class="col-lg-6 col-md-9 col-sm-12">
-                                <select class="form-control selectpicker" data-size="7"  name="category[]" multiple>
-                                    @forelse($categories as $category)
-                                        <option value="{{ $category->id }}" {{ in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'selected' : null }}>{{ $category->name }}</option>
-                                    @empty
-                                    @endforelse
+                                <select class="form-control selectpicker" data-size="7"  name="brand_id">
+                                    @foreach ($brand as $brandName)
+                                        <option value="{{$brandName->id}}" @if($brandName->id == $product->id) selected
+                                            @endif>{{$brandName->name}}</option>
+                                    @endforeach
                                 </select>
-                                <div class="mt-3 text-muted">In this example, the dropdown.enabled setting is set (minimum charactes typed to show the dropdown) to 3. Maximum number of tags is set to 6</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Size Name:</label>
+                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                <select class="form-control selectpicker" data-size="7"  name="size_id">
+                                    @foreach ($size as $sizeName)
+                                        <option value="{{$brandName->id}}" @if($sizeName->id == $product->id) selected
+                                            @endif>{{$sizeName->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Taste Name:</label>
+                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                <select class="form-control selectpicker" data-size="7"  name="taste_id">
+                                    @foreach ($taste as $tasteName)
+                                        <option value="{{$tasteName->id}}" @if($tasteName->id == $product->id) selected
+                                            @endif>{{$tasteName->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

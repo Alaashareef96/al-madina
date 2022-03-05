@@ -10,6 +10,6 @@ class HomeSiteController extends Controller
     public function index()
     {
 
-        return response()->view('site.about');
+        return response()->view('site.index');
     }
 }

@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Edit Role')
-@section('main-page','Roles & Permissions')
-@section('sub-page','Roles')
-@section('page-name-small','Edit Role')
+@section('page-name',__('role.Edit_Role'))
+@section('main-page',__('role.Roles_Permissions'))
+@section('sub-page',__('role.Roles'))
+@section('page-name-small',__('role.Edit_Role'))
 
 @section('styles')
 
@@ -16,7 +16,7 @@
         <!--begin::Card-->
         <div class="card card-custom gutter-b example example-compact">
             <div class="card-header">
-                <h3 class="card-title">Edit Admin</h3>
+                <h3 class="card-title">{{__('role.Edit_Role')}}</h3>
                 {{-- <div class="card-toolbar">
                         <div class="example-tools justify-content-center">
                             <span class="example-toggle" data-toggle="tooltip" title="View code"></span>
@@ -28,25 +28,25 @@
             <form>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="col-3 col-form-label">Auth Type:</label>
+                        <label class="col-3 col-form-label">{{__('role.Auth_Type')}}:</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <div class="dropdown bootstrap-select form-control dropup">
                                 <select class="form-control selectpicker" data-size="7" id="guard_name"
-                                    title="Choose one of the following..." tabindex="null" data-live-search="true">
-                                    <option value="admin" @if($role->guard_name == 'admin') selected @endif>Admin
+                                    title="{{__('role.Choose_one_of_the_following')}}" tabindex="null" data-live-search="true">
+                                    <option value="admin" @if($role->guard_name == 'admin') selected @endif>{{__('role.Admin')}}
                                     </option>
-                                    
+
                                 </select>
                             </div>
-                            <span class="form-text text-muted">Please select auth type</span>
+                            <span class="form-text text-muted">{{__('role.Please_select_auth_type')}}</span>
                         </div>
                     </div>
                     <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Name</label>
+                        <label class="col-3 col-form-label">{{__('role.Name')}}</label>
                         <div class="col-9">
                             <input type="text" class="form-control" id="name" value="{{$role->name}}"
-                                placeholder="Enter role name" />
-                            <span class="form-text text-muted">Please enter role name</span>
+                                placeholder="{{__('role.Enter_role_name')}}" />
+                            <span class="form-text text-muted">{{__('role.Please_enter_role_name')}}</span>
                         </div>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
 
                         </div>
                         <div class="col-9">
-                            <button type="button" onclick="update('{{$role->id}}')" class="btn btn-primary mr-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <button type="button" onclick="update('{{$role->id}}')" class="btn btn-primary mr-2">{{__('role.Save_Edit')}}</button>
+                            <button type="reset" class="btn btn-secondary">{{__('role.Cancel')}}</button>
                         </div>
                     </div>
                 </div>
@@ -90,4 +90,4 @@
      }
 
     </script>
-@endsection 
+@endsection

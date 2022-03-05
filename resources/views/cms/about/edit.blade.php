@@ -104,8 +104,19 @@
                         </div>
                         <div class="separator separator-dashed my-10"></div>
 
-                        <div class="separator separator-dashed my-10"></div>
 
+                        <h3 class="text-dark font-weight-bold mb-10">Contribution</h3>
+                        <div class="form-group">
+                            <label>Contribution (Ar):</label>
+                            <textarea class="form-control" name="contribution[ar]" id="Objectives" rows="3" placeholder="Enter ...">{{$about->getTranslation('contribution', 'ar')}}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contribution (En):</label>
+                            <textarea class="form-control" name="contribution[en]" id="Objectives_en" rows="3" placeholder="Enter ...">{{$about->getTranslation('contribution', 'en')}}</textarea>
+                        </div>
+
+                        <div class="separator separator-dashed my-10"></div>
                         <h3 class="text-dark font-weight-bold mb-10">Team</h3>
                         <div class="form-group">
                             <label>Team (Ar):</label>

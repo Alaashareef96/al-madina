@@ -34,8 +34,12 @@ class ProductRequest extends FormRequest
             'carbohydrate' => 'required|integer',
             'vitamin' => 'required|integer',
             'price' => 'required|integer',
-            'category.*' => 'numeric|exists:categories,id',
-          'image' => 'required_if:type,==,create'
+            'image' => 'required_if:type,==,create',
+            'brand_id' => 'required|integer',
+            'size_id' => 'required|integer',
+            'taste_id' => 'required|integer'
+
+
 
 
         ];

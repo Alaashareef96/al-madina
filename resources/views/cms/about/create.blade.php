@@ -22,7 +22,7 @@
             <form id="create-form">
                 @csrf
                 <div class="card-body">
-                    
+
                     <h3 class="text-dark font-weight-bold mb-10">Image</h3>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Image:<span class="text-danger">*</span></label>
@@ -32,7 +32,7 @@
                         </p>
                         <img id="previewImg" src={{asset('cms/assets/media/users/blank.png')}} width="100px" height="100px" alt="Placeholder">
                         <p>
-                          </div>      
+                          </div>
                     </div>
 
                     <h3 class="text-dark font-weight-bold mb-10">Video</h3>
@@ -42,8 +42,8 @@
                             <label for="title">Choose Video</label>
                             <input type="file" id="video" name="video" accept="video/*" /><br/>
                             <video id="vid" width="200" height="150" controls></video>
-                    
-                          </div>      
+
+                          </div>
                     </div>
                     <h3 class="text-dark font-weight-bold mb-10">Basic Info</h3>
 
@@ -58,9 +58,9 @@
                         <div class="col-6">
                             <input name="type" type="hidden" class="form-control" id="type" value="create" placeholder="Please enter your name" />
 
-                           
+
                         </div>
-                        
+
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Name (En):</label>
@@ -68,27 +68,27 @@
                             <input name="name[en]" type="text" class="form-control" id="name_en" placeholder="Enter english name" />
                             <span class="form-text text-muted">Please enter english name</span>
                         </div>
-                    </div> 
+                    </div>
                     <div class="separator separator-dashed my-10"></div>
                     <h3 class="text-dark font-weight-bold mb-10">Details</h3>
                     <div class="form-group">
                         <label>Details (Ar):</label>
                         <textarea class="form-control" name="details[ar]" id="details" rows="3" placeholder="Enter ..."></textarea>
                     </div>
-                    
+
 
                     <div class="form-group">
                         <label>Details (En):</label>
                         <textarea class="form-control" name="details[en]" id="details_en" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
-                    
+
                     <h3 class="text-dark font-weight-bold mb-10">Massage</h3>
                     <div class="form-group">
                         <label>Massage (Ar):</label>
                         <textarea class="form-control" name="massage[ar]" id="massage" rows="3" placeholder="Enter ..."></textarea>
                     </div>
-                    
+
 
                     <div class="form-group">
                         <label>Massage (En):</label>
@@ -96,14 +96,13 @@
                     </div>
                     <div class="separator separator-dashed my-10"></div>
 
-                    <div class="separator separator-dashed my-10"></div>
-                    
+
                     <h3 class="text-dark font-weight-bold mb-10">Objectives</h3>
                     <div class="form-group">
                         <label>Objectives (Ar):</label>
                         <textarea class="form-control" name="Objectives[ar]" id="Objectives" rows="3" placeholder="Enter ..."></textarea>
                     </div>
-                    
+
 
                     <div class="form-group">
                         <label>Objectives (En):</label>
@@ -111,14 +110,25 @@
                     </div>
                     <div class="separator separator-dashed my-10"></div>
 
+                    <h3 class="text-dark font-weight-bold mb-10">Contribution</h3>
+                    <div class="form-group">
+                        <label>Contribution (Ar):</label>
+                        <textarea class="form-control" name="contribution[ar]" id="Objectives" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contribution (En):</label>
+                        <textarea class="form-control" name="contribution[en]" id="Objectives_en" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
                     <div class="separator separator-dashed my-10"></div>
-                    
+
+
                     <h3 class="text-dark font-weight-bold mb-10">Team</h3>
                     <div class="form-group">
                         <label>Team (Ar):</label>
                         <textarea class="form-control" name="team[ar]" id="team" rows="3" placeholder="Enter ..."></textarea>
                     </div>
-                    
+
 
                     <div class="form-group">
                         <label>Team (En):</label>
@@ -151,7 +161,7 @@
 <script>
     function previewFile(input){
         var file = $("input[type=file]").get(0).files[0];
- 
+
         if(file){
             var reader = new FileReader();
             reader.onload = function(){
@@ -166,25 +176,25 @@
     const input = document.getElementById('video');
     const video = document.getElementById('vid');
     const videoSource = document.createElement('source');
-    
+
     input.addEventListener('change', function() {
       const files = this.files || [];
-    
+
       if (!files.length) return;
-    
+
       const reader = new FileReader();
-    
+
       reader.onload = function (e) {
         videoSource.setAttribute('src', e.target.result);
         video.appendChild(videoSource);
         video.load();
         video.play();
       };
-    
+
       reader.onprogress = function (e) {
         console.log('progress: ', Math.round((e.loaded * 100) / e.total));
       };
-    
+
       reader.readAsDataURL(files[0]);
     });
     </script>
@@ -208,7 +218,7 @@
             console.log(error);
             toastr.error(error.response.data.message);
         });
-    }    
+    }
 
     </script>
-@endsection 
+@endsection

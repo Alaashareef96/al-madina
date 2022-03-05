@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Site\AboutSiteController;
 use App\Http\Controllers\Site\HomeSiteController;
+use App\Http\Controllers\Site\ProductSiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -76,9 +77,16 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 });
 
 //****************************SITE*****************************
-Route::group(['prefix' => 'al-madina'],(function() {
 
+
+
+Route::prefix('al-madina')->group(function(){
+
+    Route::get('/change-lang-user/{language}', [DashboardController::class, 'changeLanguage'])->name('dashboard.change-language-user');
     Route::get('/home', [HomeSiteController::class, 'index'])->name('home');
     Route::get('/about', [AboutSiteController::class, 'index'])->name('about');
+    Route::get('/product', [ProductSiteController::class, 'index'])->name('product');
+    Route::get('/show-product', [ProductSiteController::class, 'showProduct'])->name('show-product');
+    Route::get('/filter-product', [ProductSiteController::class, 'filterProduct'])->name('filter-product');
 
-}));
+});

@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','All Roles')
-@section('main-page','Roles & Permissions')
-@section('sub-page','Roles')
-@section('page-name-small','All Roles')
+@section('page-name',__('role.All_Roles'))
+@section('main-page',__('role.Roles_Permissions'))
+@section('sub-page',__('role.Roles'))
+@section('page-name-small',__('role.All_Roles'))
 
 @section('styles')
 
@@ -15,11 +15,11 @@
     <!--begin::Header-->
     <div class="card-header border-0 py-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label font-weight-bolder text-dark">Roles</span>
-            <span class="text-muted mt-3 font-weight-bold font-size-sm">Manage Roles</span>
+            <span class="card-label font-weight-bolder text-dark">{{__('role.Roles')}}</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm">{{__('role.Manage_Roles')}}</span>
         </h3>
         <div class="card-toolbar">
-            <a href="{{route('roles.create')}}" class="btn btn-info font-weight-bolder font-size-sm">New Role</a>
+            <a href="{{route('roles.create')}}" class="btn btn-info font-weight-bolder font-size-sm">{{__('role.New_Role')}}</a>
         </div>
     </div>
     <!--end::Header-->
@@ -30,10 +30,10 @@
             <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_2">
                 <thead>
                     <tr class="text-uppercase">
-                        <th style="min-width: 150px">name</th>
-                        <th style="min-width: 120px">Auth Type</th>
-                        <th style="min-width: 80px">Permissions</th>
-                        <th class="pr-0 text-right" style="min-width: 160px">action</th>
+                        <th style="min-width: 150px">{{__('role.Name')}}</th>
+                        <th style="min-width: 120px">{{__('role.Auth_Type')}}</th>
+                        <th style="min-width: 80px">{{__('role.Permissions')}}</th>
+                        <th class="pr-0 text-right" style="min-width: 160px">{{__('role.Action')}}</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -10,17 +10,26 @@ class Category extends Model
 {
     use HasFactory;
     use HasTranslations;
-    protected $fillable = ['name','parent_id'];
+    protected $fillable = ['name','type'];
     public $translatable = ['name'];
 
-    public function parent(){
-        return $this->belongsTo(self::class, 'parent_id');
-    }
-
-    public function products()
-    {
-        return $this -> belongsToMany(Product::class,'product_categories');
-    }
+//    public function parent(){
+//        return $this->belongsTo(self::class, 'parent_id');
+//    }
+//
+//    //get all childrens=
+//    public function childrens(){
+//        return $this -> hasMany(self::class,'parent_id');
+//    }
+//
+//    public function products()
+//    {
+//        return $this -> belongsToMany(Product::class,'product_categories');
+//    }
+//
+//    public function scopeMain($query){
+//        return $query -> whereNull('parent_id');
+//    }
 
 
 

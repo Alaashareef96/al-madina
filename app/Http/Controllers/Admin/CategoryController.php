@@ -13,15 +13,15 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::with('parent')->get();
+        $categories = Category::all();
         return response()->view('cms.category.index',compact('categories'));
     }
 
 
     public function create()
     {
-        $categories =   Category::all();
-        return response()->view('cms.category.create',compact('categories'));
+//        $categories =  Category::all();
+        return response()->view('cms.category.create');
     }
 
 
@@ -29,7 +29,7 @@ class CategoryController extends Controller
     {
 
 
-       $category = Category::create($request->only(['name','parent_id']));
+       $category = Category::create($request->only(['name','type']));
 
        return response()->json([
                     'message' => $category ? 'Create successflu' : 'Create falid'
@@ -41,8 +41,8 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        $data = $category->parent()->first();
-        return response()->view('cms.category.edit',['categories' =>$category,'alaas'=>$data]);
+//        $data = $category->parent()->first();
+        return response()->view('cms.category.edit',['categories' =>$category]);
     }
 
 
@@ -50,7 +50,7 @@ class CategoryController extends Controller
     {
 
 
-            $category->update($request->only(['name','parent_id']));
+            $category->update($request->only(['name','type']));
 
             return response()->json([
                 'message' => $category ? 'Update successflu' : 'Update falid'
