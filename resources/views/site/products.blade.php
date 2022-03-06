@@ -50,7 +50,7 @@
                             <div class="bottom">
                                 @foreach($brand as $brandName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter" >
+                                    <input type="checkbox" name="filter" class="data-to-filter"  id="brandID" value="{{$brandName->id}}">
                                     <span class="checkmark"></span>
                                     <span class='label'>{{$brandName->name}}</span>
                                 </label>
@@ -89,7 +89,7 @@
                             <div class="bottom">
                                 @foreach($size as $sizeName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter">
+                                    <input type="checkbox" name="filter" class="data-to-filter" id="sizeID" value="{{$sizeName->id}}">
                                     <span class="checkmark"></span>
                                     <span class='label'> {{$sizeName->name}}</span>
                                 </label>
@@ -127,7 +127,7 @@
                             <div class="bottom">
                                 @foreach($taste as $tasteName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter">
+                                    <input type="checkbox" name="filter" class="data-to-filter" id="tasteID" value="{{$tasteName->id}}" >
                                     <span class="checkmark"></span>
                                     <span class='label'>{{ $tasteName->name }}</span>
                                 </label>
@@ -138,43 +138,33 @@
                     </div>
                 </div>
                 <div class="col-lg-9 mt-lg-0 mt-3">
-                    <div class="row">
-                        @foreach($products as $product)
-                        <div class="col-lg-4 col-md-6">
-                            <a href="#" class="product-link" data-id="{{ $product->id }}">
+                    <div class="row" id="updateDiv">
 
-                                <div class="card product-card  wow fadeInUp" data-target=".product_details" data-wow-duration="1s" data-wow-delay="0.2s">
-                                    <figure class="card-img-top">
-                                        <img src="{{url(Storage::url($product->image->url_image ?? ''))}}" alt="Card image cap">
-                                        <span >{{$product->size->name}}</span>
-                                    </figure>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{$product->brand->name}}</h5>
-                                        <p class="card-text"> {{$product->name}}
-                                            بطعم {{$product->taste->name}}</p>
+
+                        @foreach($products as $product)
+                            <div class="col-lg-4 col-md-6">
+                                <a href="#" class="product-link" data-id="{{ $product->id }}">
+
+                                    <div class="card product-card  wow fadeInUp" data-target=".product_details" data-wow-duration="1s" data-wow-delay="0.2s">
+                                        <figure class="card-img-top">
+                                            <img src="{{url(Storage::url($product->image->url_image ?? ''))}}" alt="Card image cap">
+                                            <span >{{$product->size->name}}</span>
+                                        </figure>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{$product->brand->name}}</h5>
+                                            <p class="card-text"> {{$product->name}}
+                                                بطعم {{$product->taste->name}}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
                         @endforeach
 
+                    </div>
+                    <div class="row">
                         <div class="mx-auto mt-5">
                             <nav class="custom-pagination">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                {{ $products->links() }}
                             </nav>
                         </div>
                     </div>
@@ -185,7 +175,6 @@
     </div>
 
     <div class="modal-container">
-
 
     </div>
 @endsection
@@ -210,27 +199,70 @@
         })
     </script>
 
+    <script>
+        $(document).on('click','.data-to-filter',function(){
+
+            var brand = [];
+            var size = [];
+            var taste = [];
+            $('.data-to-filter').each(function(){
+
+                if($(this).is(":checked")){
+                    if ($(this).attr('id') == 'brandID'){
+                        brand.push($(this).val());
+                    }
+                    else if($(this).attr('id') == 'sizeID'){
+                        size.push($(this).val());
+                    }
+                    else if($(this).attr('id') == 'tasteID'){
+                        taste.push($(this).val());
+                    }
+                }
+
+            });
+
+            $.ajax({
+                type: 'get',
+                // dataType: 'html',
+                url: "{{ route('filter-product') }}",
+                data: {
+                    'brand': brand,
+                    'size': size,
+                    'taste': taste,
+                },
+                success: function (data) {
+                    // console.log(response);
+                    $('#updateDiv').html(data.view);
+                }
+            });
+
+        });
+    </script>
+
+
 {{--    <script>--}}
-{{--        $(document).on('click','.product-link',function (){--}}
-{{--            var id = $(this).data('id');--}}
+{{--        $('.taste_filter').click(function(){--}}
 
-{{--            axios.get('/al-madina/show-product',{--}}
-{{--                id:id--}}
+{{--            var taste = [];--}}
 
-{{--            }).then(function (response) {--}}
-{{--                // handle success--}}
-{{--                console.log(response);--}}
-{{--                $('.modal-container').html(response.view);--}}
-{{--                $('#product_details').modal('show');--}}
-{{--            }).catch(function (error) {--}}
-{{--                // handle error--}}
-{{--                console.log(error);--}}
+{{--            $('.taste_filter').each(function(){--}}
+{{--                if($(this).is(":checked")){--}}
 
+{{--                    taste.push($(this).val());--}}
+{{--                }--}}
+{{--            });--}}
+{{--            $.ajax({--}}
+{{--                type: 'get',--}}
+{{--                url: "{{ route('filter-product') }}",--}}
+{{--                data: {'taste': taste},--}}
+{{--                success: function (data) {--}}
+{{--                    // console.log(response);--}}
+{{--                    $('#updateDiv').html(data.view);--}}
+{{--                }--}}
 {{--            });--}}
 
-{{--        })--}}
+{{--        });--}}
 {{--    </script>--}}
-
 
 @endsection
 
