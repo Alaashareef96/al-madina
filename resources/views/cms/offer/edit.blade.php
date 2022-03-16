@@ -6,7 +6,7 @@
 @section('page-name-small','Create About')
 
 @section('styles')
-
+    <link href="{{asset('cms/assets/css/_select2.scss')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -101,15 +101,31 @@
                         <div class="separator separator-dashed my-10"></div>
 
                         <h3 class="text-dark font-weight-bold mb-10">Terms</h3>
-                        <div class="form-group">
-                            <label>Terms (Ar):</label>
-                            <textarea class="form-control" name="terms[ar]" id="terms" rows="3" placeholder="Enter ...">{{$offer->getTranslation('terms', 'ar')}}</textarea>
+                        <div class="form-group row mt-4">
+                            <label class="col-3 col-form-label">Terms (ar):</label>
+                            <div class="col-6">
+                                <div class="tagify-item">
+                                    <select class="js-example-basic-single" name="terms[ar][]" multiple>
+                                        @foreach ($offer->getTranslation('terms', 'ar') as $term)
+                                            <option value="{{$term}}" selected>{{$term}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
 
-                        <div class="form-group">
-                            <label>Terms (En):</label>
-                            <textarea class="form-control" name="terms[en]" id="terms" rows="3" placeholder="Enter ...">{{$offer->getTranslation('terms', 'en')}}</textarea>
+                        <div class="form-group row mt-4">
+                            <label class="col-3 col-form-label">Terms (en):</label>
+                            <div class="col-6">
+                                <div class="tagify-item">
+                                    <select class="js-example-basic-single_2" name="terms[en][]" multiple>
+                                        @foreach ($offer->getTranslation('terms', 'en') as $term)
+                                            <option value="{{$term}}" selected>{{$term}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="separator separator-dashed my-10"></div>
 
@@ -159,7 +175,7 @@
 @endsection
 @section('scripts')
 <script src="{{asset('cms/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{asset('cms/assets/js/select2.js')}}"></script>
 <script>
     function previewFile(input){
         var file = $("input[type=file]").get(0).files[0];
@@ -259,5 +275,21 @@
     //         toastr.error(error.response.data.message);
     //     });
     // }
+</script>
+
+<script>
+    $(".js-example-basic-single").select2({
+        tags: true,
+        tokenSeparators: [',', '  '],
+        width: '100%'
+    });
+</script>
+
+<script>
+    $(".js-example-basic-single_2").select2({
+        tags: true,
+        tokenSeparators: [',', '  '],
+        width: '100%'
+    });
 </script>
 @endsection

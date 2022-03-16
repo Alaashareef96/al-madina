@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class AlbumRequest extends FormRequest
+class SubscribRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +24,13 @@ class AlbumRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'name.ar' => 'required|string',
-            'name.en' => 'required|string',
-            'details.ar' => 'required|string',
-            'details.en' => 'required|string',
-//            'files' => 'required_if:type,==,create'
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'mobile' => 'required|integer',
+            'code' => 'required',
         ];
     }
+
 }

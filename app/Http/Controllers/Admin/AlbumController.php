@@ -33,6 +33,19 @@ class AlbumController extends Controller
         $album = Album::create($request->only(['name', 'details']));
 
 
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $videoName = Carbon::now()->format('Y_m_d_h_i') . '_' . $album->name . '.' . $video->getClientOriginalExtension();
+            $request->file('video')->storeAs('/album', $videoName, ['disk' => 'public']);
+
+            $video = new Media();
+            $video->object_type = 'album';
+            $video->type= 'video';
+            $video->object_id = $album->id;
+            $video->url_video = 'album/' . $videoName;
+
+            $album->video()->save($video);
+        }
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $name = $file->getClientOriginalName();
@@ -48,7 +61,7 @@ class AlbumController extends Controller
         }
 
         return response()->json([
-            'message' => $album ? 'Create successflu' : 'Create falid'
+            'message' => $album ? 'Create successful' : 'Create failed'
         ],$album ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 
@@ -65,6 +78,16 @@ class AlbumController extends Controller
     {
         $album->update($request->only(['name', 'details']));
 
+        if ($request->hasFile('video')) {
+            Storage::disk('public')->delete($album->video->url_video);
+            $video = $request->file('video');
+            $videoName = Carbon::now()->format('Y_m_d_h_i') . '_' . $album->name . '.' . $video->getClientOriginalExtension();
+            $request->file('video')->storeAs('/album', $videoName, ['disk' => 'public']);
+            $url_video = 'album/' . $videoName;
+
+            $album->video()->update(['url_video' => $url_video]);
+        }
+
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $name = $file->getClientOriginalName();
@@ -76,6 +99,7 @@ class AlbumController extends Controller
                 $images->url_images = 'album/' . $name;
                 $album->images()->save($images);
             }
+
         }
         return response()->json([
             'message' => $album ? 'Create successflu' : 'Create falid'

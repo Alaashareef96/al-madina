@@ -39,7 +39,7 @@
 
                     </div>
                     <div class="col-lg-6">
-                        <a href="https://www.youtube.com/embed/9_5wHw6l11o" data-fancybox>
+                        <a href="{{url(Storage::url($about->imgVid->url_video ?? ''))}}" data-fancybox>
                             <div class="video">
                                 <figure class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.4s">
                                     <img src="{{asset('site/images/about-2.png')}}" class="img-fluid">

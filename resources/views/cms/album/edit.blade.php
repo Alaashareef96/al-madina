@@ -42,7 +42,16 @@
                                 @endforeach
                             </div>
                         </div>
+                        <h3 class="text-dark font-weight-bold mb-10">Video</h3>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Video:<span class="text-danger">*</span></label>
+                            <div class="form-group">
+                                <label for="title">Choose Video</label>
+                                <input type="file" id="video" name="video" accept="video/*" /><br/>
+                                <video id="vid" src="{{url(Storage::url($album->video->url_video))}}" width="200" height="150" controls></video>
 
+                            </div>
+                        </div>
                         <h3 class="text-dark font-weight-bold mb-10">Basic Info</h3>
 
                         <div class="form-group row mt-4">

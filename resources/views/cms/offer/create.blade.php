@@ -6,6 +6,7 @@
 @section('page-name-small','Create About')
 
 @section('styles')
+    <link href="{{asset('cms/assets/css/_select2.scss')}}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -98,19 +99,31 @@
                     <div class="separator separator-dashed my-10"></div>
 
                     <h3 class="text-dark font-weight-bold mb-10">Terms</h3>
-                    <div class="form-group">
-                        <label>Terms (Ar):</label>
-                        <textarea class="form-control" name="terms[ar]" id="terms" rows="3" placeholder="Enter ..."></textarea>
+                    <div class="form-group row mt-4">
+                        <label class="col-3 col-form-label">Terms (ar):</label>
+                        <div class="col-6">
+                            <div class="tagify-item">
+{{--                                <input class="basicBootstrapTagify" name="terms[ar]" value="">--}}
+                                <select class="js-example-basic-single" name="terms[ar][]" multiple>
+
+                                </select>
+                            </div>
+                    </div>
                     </div>
 
 
-                    <div class="form-group">
-                        <label>Terms (En):</label>
-                        <textarea class="form-control" name="terms[en]" id="terms" rows="3" placeholder="Enter ..."></textarea>
+                    <div class="form-group row mt-4">
+                        <label class="col-3 col-form-label">Terms (en):</label>
+                        <div class="col-6">
+                            <div class="tagify-item">
+                                <select class="js-example-basic-single_2" name="terms[en][]" multiple>
+
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
 
-                    <div class="separator separator-dashed my-10"></div>
 
                     <h3 class="text-dark font-weight-bold mb-10">Subscription</h3>
                     <div class="form-group">
@@ -156,7 +169,10 @@
 @endsection
 @section('scripts')
 <script src="{{asset('cms/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{asset('cms/assets/js/select2.js')}}"></script>
+
+
+
 
 {{--Start_Image--}}
 
@@ -192,33 +208,6 @@
 
 {{--End_Images--}}
 
-{{--<script>--}}
-{{--    const input = document.getElementById('video');--}}
-{{--    const video = document.getElementById('vid');--}}
-{{--    const videoSource = document.createElement('source');--}}
-
-{{--    input.addEventListener('change', function() {--}}
-{{--      const files = this.files || [];--}}
-
-{{--      if (!files.length) return;--}}
-
-{{--      const reader = new FileReader();--}}
-
-{{--      reader.onload = function (e) {--}}
-{{--        videoSource.setAttribute('src', e.target.result);--}}
-{{--        video.appendChild(videoSource);--}}
-{{--        video.load();--}}
-{{--        video.play();--}}
-{{--      };--}}
-
-{{--      reader.onprogress = function (e) {--}}
-{{--        console.log('progress: ', Math.round((e.loaded * 100) / e.total));--}}
-{{--      };--}}
-
-{{--      reader.readAsDataURL(files[0]);--}}
-{{--    });--}}
-{{--    </script>--}}
-
 <script>
      function store() {
          let formData = new FormData($('#create-form')[0]);
@@ -232,8 +221,12 @@
                  toastr.success(response.data.message);
                  window.location.href = '/cms/admin/offers';
              }).catch(function (error) {
-                 console.log(error);
-                 toastr.error(error.response.data.message);
+                 console.log( error.response.data.message);
+                 let messages = '';
+                 for (const [key, value] of Object.entries(error.response.data.message)) {
+                     messages+='-'+value+'</br>';
+                 }
+                 toastr.error(messages);
              });
          }
 </script>
@@ -278,6 +271,21 @@
         _("status").innerHTML = "Upload Aborted";
     }
 
+</script>
+<script>
+    $(".js-example-basic-single").select2({
+        tags: true,
+        tokenSeparators: [',', '  '],
+        width: '100%'
+    });
+</script>
+
+<script>
+    $(".js-example-basic-single_2").select2({
+        tags: true,
+        tokenSeparators: [',', '  '],
+        width: '100%'
+    });
 </script>
 
 @endsection

@@ -23,4 +23,10 @@ class News extends Model
     {
         return $this->morphMany(Media::class, 'object', 'object_type', 'object_id', 'id');
     }
+
+    public function comment()
+    {
+
+        return $this->hasMany(Comment::class, 'news_id', 'id');
+    }
 }

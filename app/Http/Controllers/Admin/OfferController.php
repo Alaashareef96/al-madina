@@ -33,7 +33,7 @@ class OfferController extends Controller
     public function store(OfferRequest $request)
     {
 
-
+//         dd($request);
         $offer = Offer::create($request->only(['name', 'details', 'terms','subscription','expiry_date']));
 
         if ($request->hasFile('image','video')) {
@@ -85,13 +85,15 @@ class OfferController extends Controller
 
     public function edit(Offer $offer)
     {
+//        return $offer;
         return response()->view('cms.offer.edit',compact('offer'));
     }
 
 
     public function update(Request $request, Offer $offer)
     {
-        $offer->update($request->only(['name', 'details', 'terms','subscription','expiry_date']));
+
+      $offer->update($request->only(['name', 'details', 'terms','subscription','expiry_date']));
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($offer->img->url_image);

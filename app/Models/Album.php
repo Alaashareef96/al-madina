@@ -17,4 +17,8 @@ class Album extends Model
     {
         return $this->morphMany(Media::class, 'object', 'object_type', 'object_id', 'id');
     }
+    public function video()
+    {
+        return $this->morphOne(Media::class, 'object', 'object_type', 'object_id', 'id')->where('type' ,'video');
+    }
 }

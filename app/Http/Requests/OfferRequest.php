@@ -28,8 +28,6 @@ class OfferRequest extends FormRequest
             'name.en' => 'required|string',
             'details.ar' => 'required|string',
             'details.en' => 'required|string',
-            'terms.ar' => 'required|string',
-            'terms.en' => 'required|string',
             'subscription.ar' => 'required|string',
             'subscription.en' => 'required|string',
             'expiry_date' => 'required|date',

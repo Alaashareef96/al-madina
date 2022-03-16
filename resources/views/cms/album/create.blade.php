@@ -22,13 +22,21 @@
             <form id="create-form">
                 @csrf
                 <div class="card-body">
-
-                    <h3 class="text-dark font-weight-bold mb-10">Files</h3>
+                    <h3 class="text-dark font-weight-bold mb-10">Images</h3>
                     <div class="form-group row">
-                        <label class="col-3 col-form-label">Files:<span class="text-danger">*</span></label>
+                        <label class="col-3 col-form-label">Images :<span class="text-danger">*</span></label>
                         <div class="form-group">
-                            <label for="title">Choose Files</label>
-                            <input type="file" name="files[]" id="file1"   onchange="uploadFile()" multiple><br>
+                            <label for="title">Choose Images</label>
+                            <input type="file" id="files" name="files[]" accept="image/*" multiple/><br/>
+                            <div id="frames"></div>
+                        </div>
+                    </div>
+                    <h3 class="text-dark font-weight-bold mb-10">Video</h3>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Video:<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <label for="title">Choose Video</label>
+                            <input type="file" name="video" id="file1"  accept="video/*"  onchange="uploadFile()"><br>
                             <br>
                             <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
 
@@ -216,5 +224,14 @@
     }
 
 </script>
-
+<script>
+    $(document).ready(function(){
+        $('#files').change(function(){
+            $("#frames").html('');
+            for (var i = 0; i < $(this)[0].files.length; i++) {
+                $("#frames").append('<img src="'+window.URL.createObjectURL(this.files[i])+'" width="100px" height="100px"/>');
+            }
+        });
+    });
+</script>
 @endsection

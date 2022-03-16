@@ -125,8 +125,13 @@
             window.location.href = '/cms/admin/categories';
         }).catch(function (error) {
             // handle error
-            console.log(error);
-            toastr.error(error.response.data.message);
+            console.log(error.response.data.message);
+            // toastr.error(error.response.data.message);
+            let messages = '';
+            for (const [key, value] of Object.entries(error.response.data.message)) {
+                messages+='-'+value+'</br>';
+            }
+            toastr.error(messages);
         });
     }
 

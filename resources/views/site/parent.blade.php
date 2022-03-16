@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="{{asset('site/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('site/css/custom.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.8.1/lottie_svg.min.js" integrity="sha512-jk2H6cbspEVLyLHIJkHcwiHqh7sQuyrBJvHKokFyKebzaRZiA7RmcbAo7KvM3GqFaLJJGDFC/gBMYzbeeS7KUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+{{--    <link rel="stylesheet" href="{{asset('cms/assets/plugins/toastr/toastr.min.css')}}">--}}
+{{--    <link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">--}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- <link rel="stylesheet" href="css/style-en.css"> -->
     <style>
         #loading svg path{
@@ -160,16 +162,16 @@
                     <a href={{route('product')}}>المنتجات</a>
                 </li>
                 <li>
-                    <a href="offers.html">الحملات والعروض</a>
+                    <a href="{{route('offer')}}">الحملات والعروض</a>
                 </li>
                 <li>
-                    <a href="news.html">الأخبار</a>
+                    <a href="{{route('news')}}">الأخبار</a>
                 </li>
                 <li>
-                    <a href="albums.html">الألبومات</a>
+                    <a href="{{route('albums')}}">الألبومات</a>
                 </li>
                 <li>
-                    <a href="contact_us.html">اتصل بنا</a>
+                    <a href="{{route('contact')}}">اتصل بنا</a>
                 </li>
             </ul>
             <div class="input-search d-lg-block d-none">
@@ -403,16 +405,19 @@
 <script src="{{asset('site/js/wow.min.js')}}"></script>
 <script src="{{asset('site/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('site/js/main.js')}}"></script>
+<script src="{{asset('cms/assets/js/pages/features/miscellaneous/toastr.js')}}"></script>
 <script src="{{asset('js/axios.js')}}"></script>
-<script>
-    // // var words = ['المدينة','المدينه']
-    // // for (let index = 0; index < words.length; index++) {
-    // //     $('.title')[0].innerHTML = $('.title')[0].innerHTML.replace(words[index],'<span style="color:var(--green)">'+words[index]+'</span>');
-    // // }
-    // $(window).on('load',function(){
-    //     $('#loadOverlay').fadeOut();
-    //     $('html,body').css('overflow','');
-    // });
-</script>
+<script src="{{asset('cms/assets/js/pages/features/miscellaneous/sweetalert2.js')}}"></script>
+
+{{--<script>--}}
+{{--    // // var words = ['المدينة','المدينه']--}}
+{{--    // // for (let index = 0; index < words.length; index++) {--}}
+{{--    // //     $('.title')[0].innerHTML = $('.title')[0].innerHTML.replace(words[index],'<span style="color:var(--green)">'+words[index]+'</span>');--}}
+{{--    // // }--}}
+{{--    // $(window).on('load',function(){--}}
+{{--    //     $('#loadOverlay').fadeOut();--}}
+{{--    //     $('html,body').css('overflow','');--}}
+{{--    // });--}}
+{{--</script>--}}
 @yield('script')
 </html>

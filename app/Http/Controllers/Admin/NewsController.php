@@ -129,7 +129,7 @@ class NewsController extends Controller
         $media = $news->img->delete();
 
         $isDeleted = $news->delete();
-        if ($isDeleted) Storage::disk('public')->delete($url_image,$url_video,$media);
+        if ($isDeleted) Storage::disk('public')->delete($url_image,$url_video);
         return response()->json([
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'

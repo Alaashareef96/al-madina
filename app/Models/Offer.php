@@ -12,6 +12,7 @@ class Offer extends Model
     use HasTranslations;
     protected $fillable = ['name','details','terms','subscription','expiry_date'];
     public $translatable = ['name','details','terms','subscription'];
+//    protected $appends = ['terms'];
 
     public function img()
     {
@@ -22,4 +23,13 @@ class Offer extends Model
     {
         return $this->morphMany(Media::class, 'object', 'object_type', 'object_id', 'id');
     }
+
+    public function setTermsAttribute($value) {
+        $this->attributes['terms'] =  implode('@#', $value);
+    }
+
+    public function getTermsAttribute($value) {
+       return explode('@#', $value);
+    }
+
 }

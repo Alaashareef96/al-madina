@@ -13,6 +13,6 @@ class AboutSiteController extends Controller
     {
         $about = About::first();
         $teams = Team::all();
-        return response()->view('site.about',compact('about','teams'));
+        return response()->view('site.about.about',compact('about','teams'));
     }
 }

@@ -10,13 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolePermissionController extends Controller
 {
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Spatie\Permission\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Role $role)
     {
         //
