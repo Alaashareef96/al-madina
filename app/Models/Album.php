@@ -21,4 +21,8 @@ class Album extends Model
     {
         return $this->morphOne(Media::class, 'object', 'object_type', 'object_id', 'id')->where('type' ,'video');
     }
+    public function img()
+    {
+        return $this->morphOne(Media::class, 'object', 'object_type', 'object_id', 'id')->where('type' ,'cover');
+    }
 }

@@ -15,7 +15,7 @@ class ContactSiteController extends Controller
     {
 
 //        $news = News::all();
-        return response()->view('site.contact');
+        return response()->view('site.contact.contact');
     }
 
     public function save(ContactRequest $request)
@@ -33,7 +33,7 @@ class ContactSiteController extends Controller
 
     public function showContact(){
 
-        $contacts = Contact::all();
+        $contacts = Contact::orderBy('id', 'desc')->get();
         return response()->view('cms.contact.contact',compact('contacts'));
     }
 

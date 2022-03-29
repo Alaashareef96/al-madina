@@ -60,6 +60,22 @@ class AlbumController extends Controller
 
         }
 
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName =$image->getClientOriginalName();
+            $request->file('image')->storeAs('/album', $imageName, ['disk' => 'public']);
+
+            $img = new Media();
+            $img->type = 'cover';
+            $img->object_type = 'album';
+            $img->object_id = $album->id;
+            $img->url_image = 'album/' . $imageName;
+
+
+            $album->img()->save($img);
+        }
+
+
         return response()->json([
             'message' => $album ? 'Create successful' : 'Create failed'
         ],$album ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
@@ -101,8 +117,17 @@ class AlbumController extends Controller
             }
 
         }
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($album->img->url_image);
+            $image = $request->file('image');
+            $imageName =$image->getClientOriginalName();
+            $request->file('image')->storeAs('/album', $imageName, ['disk' => 'public']);
+            $url_image = 'album/' . $imageName;
+            $album->img()->update(['url_image' => $url_image]);
+        }
         return response()->json([
-            'message' => $album ? 'Create successflu' : 'Create falid'
+            'message' => $album ? 'Updated successful' : 'Updated failed'
         ],$album ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 

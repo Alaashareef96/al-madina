@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
+        $data = Product::orderBy('id', 'desc')->get();
         return response()->view('cms.product.index', ['products' => $data]);
     }
 
@@ -77,7 +77,7 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, product $product)
+    public function update(ProductRequest $request, product $product)
     {
 
         $product->update($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id']));
@@ -106,7 +106,7 @@ class ProductController extends Controller
         $media = $product->image->delete();
 
         $isDeleted = $product->delete();
-        if ($isDeleted) Storage::disk('public')->delete($url_image,$media);
+        if ($isDeleted) Storage::disk('public')->delete($url_image);
         return response()->json([
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'

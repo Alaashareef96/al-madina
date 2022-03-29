@@ -1,6 +1,6 @@
 @extends('site.parent')
 
-@section('titel','About')
+@section('titel',trans('site/about.About'))
 
 @section('styl')
 
@@ -13,8 +13,8 @@
             <div class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">من نحن</li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}"> {{trans('site/about.Home')}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> {{trans('site/about.About')}}</li>
                     </ol>
                 </nav>
                 <figure class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">
@@ -42,7 +42,7 @@
                         <a href="{{url(Storage::url($about->imgVid->url_video ?? ''))}}" data-fancybox>
                             <div class="video">
                                 <figure class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.4s">
-                                    <img src="{{asset('site/images/about-2.png')}}" class="img-fluid">
+                                    <img src="{{url(Storage::url($about->imgVid->url_image ?? ''))}}" class="img-fluid">
                                     <div class="play">
                                         <i class="fa fa-play" aria-hidden="true"></i>
                                     </div>
@@ -78,7 +78,7 @@
                             </g>
                         </svg>
                     </span>
-                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">الرسالة:</p>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s"> {{trans('site/about.message')}}:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                     <p> {{$about->massage ?? ''}}</p>
@@ -109,7 +109,7 @@
                             </g>
                         </svg>
                     </span>
-                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">الأهداف:</p>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s"> {{trans('site/about.Objectives')}}:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
                     <p> {{$about->Objectives ?? ''}}</p>
@@ -159,7 +159,7 @@
                         </svg>
 
                     </span>
-                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.45s">المساهمة الاجتماعية:</p>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.45s"> {{trans('site/about.social_contribution')}}:</p>
                 </div>
                 <div class="body wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">
                     <p> {{$about->contribution ?? ''}}</p>
@@ -171,7 +171,7 @@
             <div class="note">
                 <div class="container">
                     <h2 class="main-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                        فريق العمل
+                        {{trans('site/about.Team')}}
                     </h2>
                     <p class="text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
                         {{$about->team ?? ''}}</p>
@@ -181,7 +181,7 @@
             <div class="members">
                 <div class="container">
                     <h2 class="main-title-secondary wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                        أعضاء الفريق
+                        {{trans('site/about.Team_members')}}
                     </h2>
                     <div class="owl-carousel owl-theme owl-team  wow fadeInUp" data-wow-duration="1s"
                          data-wow-delay="0.1s">

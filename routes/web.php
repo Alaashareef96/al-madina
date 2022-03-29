@@ -3,19 +3,29 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AlbumController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DeleteImageController;
+use App\Http\Controllers\Admin\JobController;
+use App\Http\Controllers\Admin\JobsRequestController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\SuccessPartnerController;
+use App\Http\Controllers\Admin\TheySaidController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Site\AboutSiteController;
 use App\Http\Controllers\Site\AlbumsSiteController;
 use App\Http\Controllers\Site\ContactSiteController;
 use App\Http\Controllers\Site\HomeSiteController;
+use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
+use App\Http\Controllers\Site\SearchSiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -40,13 +50,26 @@ Route::prefix('cms')->middleware('guest:admin')->group(function(){
     Route::post('login', [AuthController::class,'login'])->name('auth.login');
 
 });
+Route::prefix('email')->middleware('auth:admin')->group(function () {
+    Route::get('verify', [VerifyEmailController::class, 'notice'])->name('verification.notice');
+    Route::post('verification-notification', [VerifyEmailController::class, 'send'])->middleware(['throttle:6,1'])->name('verification.send');
+    Route::get('verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+});
 
-Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
+Route::middleware('guest')->group(function () {
+    // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'])->name('password.update');
+});
+
+
+Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(function(){
     Route::get('/change-lang/{language}', [DashboardController::class, 'changeLanguage'])->name('dashboard.change-language');
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
-    // Route::get('edit-password', [AuthController::class,'editPassword'])->name('auth.edit-password');
-    // Route::put('update-password', [AuthController::class,'updatePassword'])->name('auth.update-password');
+    Route::get('edit-password', [AuthController::class,'editPassword'])->name('auth.edit-password');
+    Route::put('update-password', [AuthController::class,'updatePassword'])->name('auth.update-password');
 
     Route::get('edit-profile', [AuthController::class,'editProfile'])->name('auth.edit-profile');
     Route::put('update-profile', [AuthController::class,'updateProfile']);
@@ -82,6 +105,20 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('albums', AlbumController::class);
 
+    Route::resource('jobs', JobController::class);
+
+    Route::get('/show-jobsRequest', [JobsRequestController::class, 'index'])->name('show-jobsRequest');
+    Route::get('/delete-jobsRequest/{id}', [JobsRequestController::class, 'delete'])->name('delete-jobsRequest');
+    Route::get('/show-details-request-jobs/{id}', [JobsRequestController::class, 'showDetails'])->name('show-details-request-jobs');
+
+    Route::resource('slider', SliderController::class);
+
+    Route::resource('brand', BrandController::class);
+
+    Route::resource('they-said', TheySaidController::class);
+
+    Route::resource('success-partners', SuccessPartnerController::class);
+
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
@@ -113,7 +150,13 @@ Route::prefix('al-madina')->group(function(){
     Route::get('/contact', [ContactSiteController::class, 'index'])->name('contact');
     Route::post('/save-contact', [ContactSiteController::class, 'save'])->name('save-contact');
 
+    Route::get('/show-jobs', [JobsSiteController::class, 'index'])->name('show-jobs');
+    Route::get('/jobs-details/{id}', [JobsSiteController::class, 'jobsDetails'])->name('jobs-details');
+    Route::get('/request-jobs/{id}', [JobsSiteController::class, 'jobsRequest'])->name('request-jobs');
+    Route::post('/save-request-jobs', [JobsSiteController::class, 'saveJobsRequest'])->name('save-request-jobs');
 
+
+    Route::get('/search', [SearchSiteController::class, 'index'])->name('search');
 
 
 });

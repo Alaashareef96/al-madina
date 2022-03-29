@@ -531,7 +531,7 @@ body {
 }
 
 /* .bg-img{
-   
+
 } */
 .about-us {
     padding-top: 69px;
@@ -769,6 +769,7 @@ body {
     margin-top: 110px;
     position: relative;
     overflow-x: clip;
+    min-height:300px;
 }
 
 .manger-word::after {
@@ -2290,6 +2291,7 @@ body {
     align-items: center;
     margin: 0;
     outline: none;
+    z-index: 9;
 }
 
 .custom-modal .modal-body h2 {
@@ -3276,7 +3278,7 @@ body {
     background-image: url(../images/bubbles_top.png);
     background-repeat: no-repeat;
     background-position: top right;
-    z-index: 0;
+    z-index: -1;
 }
 
 .bubbles::after {

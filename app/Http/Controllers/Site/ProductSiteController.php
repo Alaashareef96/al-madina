@@ -13,11 +13,11 @@ class ProductSiteController extends Controller
     public function index()
     {
 
-        $products = Product::with('brand','size','taste')->paginate(20);
+        $products = Product::with('brand','size','taste')->orderBy('id', 'desc')->paginate(10);
         $brand = Category::where('type','Brand')->get();
         $size = Category::where('type','Size')->get();
         $taste = Category::where('type','Taste')->get();
-        return response()->view('site.products',compact('products','brand','size','taste'));
+        return response()->view('site.products.products',compact('products','brand','size','taste'));
     }
 
     public function showProduct(Request $request)
@@ -25,7 +25,7 @@ class ProductSiteController extends Controller
         $id = $request->id;
         $show= Product::findOrFail($id);
         if ($show){
-            $view = view('site.product_details',compact('show'))->render();
+            $view = view('site.products.product_details',compact('show'))->render();
             return response()->json(['view'=>$view]);
         }
         return false;
@@ -36,7 +36,8 @@ class ProductSiteController extends Controller
 
         $brand = $request->brand; //brand
         $size = $request->size; //size
-        $taste = $request->taste; //size
+        $taste = $request->taste; //taste
+        $order = $request->sort;
         $products = Product::query();
 
         if(is_array($brand) && count($brand) > 0){
@@ -49,9 +50,14 @@ class ProductSiteController extends Controller
             $products = $products->whereIn('taste_id', $taste );
         }
 
+//        ->orderBy('id', $order ?? 'desc')->get();
+        $products = $products->orderBy('id', $order ?? 'desc')->get();
+        $view = view('site.products.product_filter',compact('products'))->render();
 
-        $products = $products->paginate(20);
-        $view = view('site.product_filter',compact('products'))->render();
-        return response()->json(['view'=>$view]);
+        return response()->json([
+            'view'=>$view,
+            'order' => $order,
+            'products_count'=>count($products),
+        ]);
     }
 }

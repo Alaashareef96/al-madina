@@ -11,8 +11,8 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
-                    <li class="breadcrumb-item"><a href="news.html">الأخبار والنشاطات</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('news')}}">الأخبار والنشاطات</a></li>
                     <li class="breadcrumb-item active" aria-current="page">تفاصيل الخبر</li>
                 </ol>
             </nav>
@@ -187,7 +187,7 @@
                             @if( isset($comment->img) && $comment->img->url_image != null)
                                 <img src="{{url(Storage::url($comment->img->url_image))}}" alt="Card image cap">
                                 @else
-                            <img src="{{asset('site/images/avatar1.png')}}" alt="Card image cap">
+                            <img src="{{asset('cms/assets/media/users/blank.png')}}" alt="Card image cap">
                             @endif
                         </figure>
                         <div class="mt-2">
@@ -335,9 +335,9 @@
                                     </div>
 
                                 </div>
-                                <a href="news-details.html">
+                                <a href="{{route('news-details',$new->id)}}">
                                     <h2>{{$new->name}}</h2>
-                                    <p>{{$new->details}}...</p>
+                                    <p>{{ \Illuminate\Support\Str::limit($new->details, 200, $end='...') }}</p>
                                 </a>
                                 </a>
 
@@ -430,6 +430,52 @@
         </div>
     </div>
 
+    <div class="modal custom-modal success fade bd-example-modal-lg-thanks" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="276.929" height="185.027" viewBox="0 0 276.929 185.027">
+                        <g id="Group_52754" data-name="Group 52754" transform="translate(-568.173 -216)">
+                            <g id="Group_52753" data-name="Group 52753" transform="translate(654.301 281.027)">
+                                <g id="Illustration" transform="translate(0 0)">
+                                    <g id="Success">
+                                        <g id="maps-and-flags">
+                                            <path id="Path_20604" data-name="Path 20604" d="M60,120a60,60,0,1,1,60-60A60.069,60.069,0,0,1,60,120Z" fill="#2ed573"/>
+                                            <path id="Path_20605" data-name="Path 20605" d="M87.886,110.6A59.894,59.894,0,0,1,40.62,13.884a59.93,59.93,0,1,0,66.568,93.463A59.5,59.5,0,0,1,87.886,110.6Z" transform="translate(0 -10.594)" fill="#2ed573"/>
+                                        </g>
+                                        <path id="Path_20811" data-name="Path 20811" d="M199.244,173.958l-32.857,32.857a5.05,5.05,0,0,1-7.147,0l-16.428-16.428a5.054,5.054,0,0,1,7.147-7.147l12.855,12.855L192.1,166.811a5.054,5.054,0,0,1,7.147,7.147Zm0,0" transform="translate(-110.949 -126.888)" fill="#fff"/>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="Illustration-2" data-name="Illustration" transform="translate(568.173 216)">
+                                <g id="elements_copy" data-name="elements copy" transform="translate(0 0)">
+                                    <path id="Fill_10" data-name="Fill 10" d="M13.252.169C4.57,4.551-2.9,13.967,1.112,24.131,4.556,32.866,15.8,36.707,24.432,34.565c9.093-2.258,13.716-10.93,11.063-19.889C32.663,5.126,22.74-.954,13.034.148c-1.817.207-1.838,3.084,0,2.876a18.415,18.415,0,0,1,18.115,8.915c4.573,7.841,1.649,17.537-7.481,19.852C16.924,33.5,7.987,30.8,4.453,24.5-.614,15.48,7.009,6.534,14.7,2.651c1.651-.835.2-3.315-1.451-2.482" transform="translate(0 102.056)" fill="#b1d7ff"/>
+                                    <path id="Fill_131" data-name="Fill 131" d="M15.248,7.624A7.624,7.624,0,1,1,7.624,0a7.624,7.624,0,0,1,7.624,7.624" transform="translate(261.681 112.523)" fill="#eb8807"/>
+                                    <path id="Fill_133" data-name="Fill 133" d="M7.353,3.677A3.677,3.677,0,1,1,3.677,0,3.676,3.676,0,0,1,7.353,3.677" transform="translate(219.812 57.57)" fill="#f3f3f3"/>
+                                    <path id="Fill_146" data-name="Fill 146" d="M9.7,4.849A4.849,4.849,0,1,1,4.849,0,4.849,4.849,0,0,1,9.7,4.849" transform="translate(44.296 71.924)" fill="#f3f3f3"/>
+                                    <path id="Fill_163" data-name="Fill 163" d="M11.638,0l4.116,7.525,7.523,4.115-7.523,4.115-4.116,7.525L7.523,15.755,0,11.64,7.523,7.525,11.638,0" transform="translate(172.71)" fill="#ffde02"/>
+                                    <path id="Fill_164" data-name="Fill 164" d="M7.937,0l2.807,5.13,5.13,2.807-5.13,2.805L7.937,15.874,5.132,10.742,0,7.937,5.132,5.13,7.937,0" transform="translate(20.528 33.317)" fill="#ffde02"/>
+                                </g>
+                                <path id="Fill_116" data-name="Fill 116" d="M10.769,5.7H11.4a5.7,5.7,0,1,0-5.7,5.7,5.7,5.7,0,0,0,5.7-5.7H10.135A4.434,4.434,0,1,1,5.7,1.269,4.44,4.44,0,0,1,10.135,5.7h.635" transform="translate(224.759 152.859)" fill="#adebff"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <h3>شكرا لك</h3>
+                    <p>تم إضافة تعليقك بنجاح</p>
+                    <a href="{{route('home')}}" class="btn btn-primary custom-botton">
+                        العودة للرئيسية
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 
@@ -444,14 +490,15 @@
                 }
             }).then(function (response) {
                 console.log(response);
-                Swal.fire(
-                    'Good job!',
-                    'You clicked the button!',
-                    'success'
-                )
-                window.location.reload();
+                // Swal.fire(
+                //     'Good job!',
+                //     'You clicked the button!',
+                //     'success'
+                // )
+                // window.location.reload();
                 document.getElementById('create-form').reset();
                 $('.bd-example-modal-lg').modal('hide');
+                $('.bd-example-modal-lg-thanks').modal('show');
 
             }).catch(function (error) {
                 console.log(error.response.data.message);

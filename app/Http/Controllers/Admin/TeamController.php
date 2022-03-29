@@ -26,11 +26,7 @@ class TeamController extends Controller
         return response()->view('cms.team.index', ['teams' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return response()->view('cms.team.create');
@@ -39,10 +35,7 @@ class TeamController extends Controller
 
     public function store(TeamRequest $request)
     {
-        $data=[$request];
-        $validator = Validator($data);
 
-        if(! $validator->fails()){
             $team = Team::create($request->only(['name', 'category']));
 
             if ($request->hasFile('image')) {
@@ -59,33 +52,17 @@ class TeamController extends Controller
                 $team->image()->save($img);
             }
             return response()->json([
-                'message' => $team ? 'Create successflu' : 'Create falid'
+                'message' => $team ? 'Create successful' : 'Create failed'
             ],$team ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-        }else{
-            return response()->json([
-                'message' => $validator->getMessageBag()->first()
-            ],Response::HTTP_BAD_REQUEST);
-
-        }
 
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Team  $team
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Team $team)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Team  $team
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Team $team)
     {
         return response()->view('cms.team.edit', ['team' => $team]);
@@ -95,10 +72,7 @@ class TeamController extends Controller
     public function update(TeamRequest $request, Team $team)
     {
 
-            $data=[$request];
-            $validator = Validator($data);
 
-            if(! $validator->fails()){
                 $team->update($request->only(['name', 'category']));
 
                 if ($request->hasFile('image')) {
@@ -112,13 +86,6 @@ class TeamController extends Controller
                 return response()->json([
                     'message' => $team ? 'Update successflu' : 'Update falid'
                 ],$team ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-            }else{
-                return response()->json([
-                    'message' => $validator->getMessageBag()->first()
-                ],Response::HTTP_BAD_REQUEST);
-
-            }
-
 
     }
 
@@ -129,7 +96,7 @@ class TeamController extends Controller
         $media = $team->image->delete();
 
         $isDeleted = $team->delete();
-        if ($isDeleted) Storage::disk('public')->delete($url_image,$media);
+        if ($isDeleted) Storage::disk('public')->delete($url_image);
         return response()->json([
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'

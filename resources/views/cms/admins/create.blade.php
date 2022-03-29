@@ -17,7 +17,7 @@
         <div class="card card-custom gutter-b example example-compact">
             <div class="card-header">
                 <h3 class="card-title">{{__('admin.Create_New_Admin')}}</h3>
-                
+
             </div>
             <!--begin::Form-->
             <form id="create-form">
@@ -47,7 +47,7 @@
                             <span class="form-text text-muted">{{__('admin.Please_enter_your_full_name')}}</span>
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                         <label class="col-3 col-form-label">{{__('admin.Email_address')}}:<span class="text-danger">*</span></label>
                         <div class="col-9">
@@ -55,7 +55,7 @@
                             <span class="form-text text-muted">{{__('admin.Please_enter_your_email_address')}}</span>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -91,12 +91,15 @@
        toastr.success(response.data.message);
        window.location.href = '/cms/admin/admins';
   }).catch(function (error) {
-    // handle error
-       console.log(error);
-       toastr.error(error.response.data.message);
-  });
+          console.log(error);
+          let messages = '';
+          for (const [key, value] of Object.entries(error.response.data.message)) {
+              messages+='-'+value+'</br>';
+          }
+          toastr.error(messages);
+      });
 
      }
 
     </script>
-@endsection 
+@endsection

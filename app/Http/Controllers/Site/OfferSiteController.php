@@ -14,15 +14,15 @@ class OfferSiteController extends Controller
     public function index()
     {
 
-       $offers = Offer::all();
-        return response()->view('site.offers',compact('offers'));
+       $offers = Offer::orderBy('id', 'desc')->get();
+        return response()->view('site.offers.offers',compact('offers'));
     }
 
     public function offerDetails($id)
     {
         $offers= Offer::findOrFail($id);
 
-         return response()->view('site.offers_details',compact('offers'));
+         return response()->view('site.offers.offers_details',compact('offers'));
 
 
     }

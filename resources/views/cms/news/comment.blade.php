@@ -39,10 +39,10 @@
                     <th style="min-width: 150px">Name</th>
                     <th style="min-width: 150px">Comment</th>
                     <th style="min-width: 150px">Status</th>
-                    <th style="min-width: 150px">Created At</th>
-                    <th style="min-width: 120px">Updated At</th>
+                    <th style="min-width: 150px">Name News</th>
+                    <th style="min-width: 100px">Created At</th>
                     {{-- <th style="min-width: 120px">Settings</th> --}}
-                  <th class="pr-0 text-right" style="min-width: 160px">action</th>
+                  <th class="pr-0 text-right" style="min-width: 80px">action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,7 +53,12 @@
                         <td>{{ $i }}</td>
                         <td>
                             <img class="img-circle img-bordered-sm" width="65" height="65"
-                                 src="{{url(Storage::url($comment->img->url_image ?? ''))}}"  alt="User Image">
+                                 @if( isset($comment->img) && $comment->img->url_image != null)
+                                 src="{{url(Storage::url($comment->img->url_image))}}"  alt="User Image">
+                            @else
+                                 src="{{asset('cms/assets/media/users/blank.png')}}"  alt="User Image">
+                                @endif
+
                            </td>
                         <td>{{$comment->name ?? ''}}</td>
                         <td>{{$comment->comment ?? ''}}</td>
@@ -66,8 +71,9 @@
                                 </label>
                             </span>
                         </td>
+                        <td>{{$comment->news->name}}</td>
                         <td>{{$comment->created_at->diffForHumans()}}</td>
-                        <td>{{$comment->updated_at->diffForHumans()}}</td>
+
 
                         <td class="pr-0 text-right">
 

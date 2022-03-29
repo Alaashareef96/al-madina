@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create Albums')
+@section('page-name','Edit Albums')
 @section('main-page','Content Management')
 @section('sub-page','Album')
-@section('page-name-small','Create Albums')
+@section('page-name-small','Edit Albums')
 
 @section('styles')
 
@@ -22,7 +22,17 @@
                 <form id="create-form">
                     @csrf
                     <div class="card-body">
-
+                        <h3 class="text-dark font-weight-bold mb-10">Cover Video</h3>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Image :<span class="text-danger">*</span></label>
+                            <div class="form-group">
+                                <label for="title">Choose Image Cover</label>
+                                <input type="file" id="image" name="image" accept="image/*" onchange="previewFile(this);" /><br/>
+                                </p>
+                                <img id="previewImg" src={{url(Storage::url($album->img->url_image ?? ''))}} width="100px" height="100px" alt="Placeholder">
+                                <p>
+                            </div>
+                        </div>
 
                         <h3 class="text-dark font-weight-bold mb-10">Images</h3>
                         <div class="form-group">
@@ -137,7 +147,11 @@
             window.location.href = '/cms/admin/albums';
         }).catch(function (error) {
             console.log(error);
-            toastr.error(error.response.data.message);
+            let messages = '';
+            for (const [key, value] of Object.entries(error.response.data.message)) {
+                messages+='-'+value+'</br>';
+            }
+            toastr.error(messages);
         });
     }
 
@@ -158,5 +172,19 @@
         });
     })
 
+</script>
+
+<script>
+    function previewFile(input){
+        var file = $("input[type=file]").get(0).files[0];
+
+        if(file){
+            var reader = new FileReader();
+            reader.onload = function(){
+                $("#previewImg").attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
 </script>
 @endsection

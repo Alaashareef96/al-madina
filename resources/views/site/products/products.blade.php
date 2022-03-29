@@ -12,7 +12,7 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
                     <li class="breadcrumb-item active" aria-current="page">المنتجات</li>
                 </ol>
             </nav>
@@ -50,7 +50,7 @@
                             <div class="bottom">
                                 @foreach($brand as $brandName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter" class="data-to-filter"  id="brandID" value="{{$brandName->id}}">
+                                    <input type="checkbox" name="filter" class="filter_input" data-parent="brand" data-name="{{ $brandName->name }}" id="brandID" data-id="{{ $brandName->id }}">
                                     <span class="checkmark"></span>
                                     <span class='label'>{{$brandName->name}}</span>
                                 </label>
@@ -89,7 +89,7 @@
                             <div class="bottom">
                                 @foreach($size as $sizeName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter" class="data-to-filter" id="sizeID" value="{{$sizeName->id}}">
+                                    <input type="checkbox" name="filter" class="filter_input" data-parent="size" data-name="{{ $sizeName->name }}" id="sizeID" data-id="{{ $sizeName->id }}">
                                     <span class="checkmark"></span>
                                     <span class='label'> {{$sizeName->name}}</span>
                                 </label>
@@ -127,7 +127,7 @@
                             <div class="bottom">
                                 @foreach($taste as $tasteName)
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="filter" class="data-to-filter" id="tasteID" value="{{$tasteName->id}}" >
+                                    <input type="checkbox" name="filter" class="filter_input"  data-parent="taste" data-name="{{ $tasteName->name }}" id="tasteID" data-id="{{ $tasteName->id }}" >
                                     <span class="checkmark"></span>
                                     <span class='label'>{{ $tasteName->name }}</span>
                                 </label>
@@ -138,31 +138,56 @@
                     </div>
                 </div>
                 <div class="col-lg-9 mt-lg-0 mt-3">
+                    <div class="col-12" id="filter-bar" style="display: none">
+                        <div class="nav-search">
+                            <div>
+                                <span class="number-of-search-result" id="search_number"></span>
+                                <span> بحث توافق بحثك عن </span>
+                                <span id="search-names"> </span>
+                            </div>
+                            <div>
+                                <span class="word-search">اعرض حسب:</span>
+                                <select name="search_by" id="sort-select">
+                                    <option value="desc">الأحدث</option>
+                                    <option value="asc">الأقدم</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="words-filter" id="filter-tabs">
+
+
+
+                        </div>
+
+                    </div>
+
                     <div class="row" id="updateDiv">
 
+                            @include('site.products.product_filter')
+{{--                        @foreach($products as $product)--}}
+{{--                            <div class="col-lg-4 col-md-6">--}}
+{{--                                <a href="#" class="product-link" data-id="{{ $product->id }}">--}}
 
-                        @foreach($products as $product)
-                            <div class="col-lg-4 col-md-6">
-                                <a href="#" class="product-link" data-id="{{ $product->id }}">
-
-                                    <div class="card product-card  wow fadeInUp" data-target=".product_details" data-wow-duration="1s" data-wow-delay="0.2s">
-                                        <figure class="card-img-top">
-                                            <img src="{{url(Storage::url($product->image->url_image ?? ''))}}" alt="Card image cap">
-                                            <span >{{$product->size->name}}</span>
-                                        </figure>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$product->brand->name}}</h5>
-                                            <p class="card-text"> {{$product->name}}
-                                                بطعم {{$product->taste->name}}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
+{{--                                    <div class="card product-card  wow fadeInUp" data-target=".product_details" data-wow-duration="1s" data-wow-delay="0.2s">--}}
+{{--                                        <figure class="card-img-top">--}}
+{{--                                            <img src="{{url(Storage::url($product->image->url_image ?? ''))}}" alt="Card image cap">--}}
+{{--                                            <span >{{$product->size->name}}</span>--}}
+{{--                                        </figure>--}}
+{{--                                        <div class="card-body">--}}
+{{--                                            <h5 class="card-title">{{$product->brand->name}}</h5>--}}
+{{--                                            <p class="card-text"> {{$product->name}}--}}
+{{--                                                بطعم {{$product->taste->name}}</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
 
                     </div>
                     <div class="row">
-                        <div class="mx-auto mt-5">
+                        <div class="mx-auto mt-5" id="pagination-div">
                             <nav class="custom-pagination">
                                 {{ $products->links() }}
                             </nav>
@@ -171,7 +196,11 @@
                 </div>
             </div>
         </div>
+        <form id="sort-form">
+            <div id="filter-inputs">
 
+            </div>
+        </form>
     </div>
 
     <div class="modal-container">
@@ -199,70 +228,145 @@
         })
     </script>
 
-    <script>
-        $(document).on('click','.data-to-filter',function(){
-
-            var brand = [];
-            var size = [];
-            var taste = [];
-            $('.data-to-filter').each(function(){
-
-                if($(this).is(":checked")){
-                    if ($(this).attr('id') == 'brandID'){
-                        brand.push($(this).val());
-                    }
-                    else if($(this).attr('id') == 'sizeID'){
-                        size.push($(this).val());
-                    }
-                    else if($(this).attr('id') == 'tasteID'){
-                        taste.push($(this).val());
-                    }
-                }
-
-            });
-
-            $.ajax({
-                type: 'get',
-                // dataType: 'html',
-                url: "{{ route('filter-product') }}",
-                data: {
-                    'brand': brand,
-                    'size': size,
-                    'taste': taste,
-                },
-                success: function (data) {
-                    // console.log(response);
-                    $('#updateDiv').html(data.view);
-                }
-            });
-
-        });
-    </script>
-
-
 {{--    <script>--}}
-{{--        $('.taste_filter').click(function(){--}}
-
+{{--        $(document).on('click','.data-to-filter',function(){--}}
+{{--            var id= $(this).val();--}}
+{{--            var brand = [];--}}
+{{--            var size = [];--}}
 {{--            var taste = [];--}}
+{{--            $('#catFilters').find('#cat-box'+ id).remove();--}}
+{{--            $('.data-to-filter').each(function(){--}}
 
-{{--            $('.taste_filter').each(function(){--}}
 {{--                if($(this).is(":checked")){--}}
+{{--                    if ($(this).attr('id') == 'brandID'){--}}
+{{--                        brand.push($(this).val());--}}
+{{--                    }--}}
+{{--                    else if($(this).attr('id') == 'sizeID'){--}}
+{{--                        size.push($(this).val());--}}
+{{--                    }--}}
+{{--                    else if($(this).attr('id') == 'tasteID'){--}}
+{{--                        taste.push($(this).val());--}}
 
-{{--                    taste.push($(this).val());--}}
+{{--                    }--}}
+{{--                    let html = `<div class="d-flex justify-content-center align-items-center border p-2 mr-2" id="cat-box`+id+`" >--}}
+{{--                                <span class="pr-3">`+$(this).data('name')+`</span>--}}
+{{--                                <i class="fa fa-times-circle" aria-hidden="true"></i>--}}
+{{--                            </div>`;--}}
+{{--                    $('#catFilters').append(html);--}}
+
+{{--                    // $('#search_name').append($(this).data('name'));--}}
 {{--                }--}}
+
 {{--            });--}}
+
 {{--            $.ajax({--}}
 {{--                type: 'get',--}}
+{{--                // dataType: 'html',--}}
 {{--                url: "{{ route('filter-product') }}",--}}
-{{--                data: {'taste': taste},--}}
+{{--                data: {--}}
+{{--                    'brand': brand,--}}
+{{--                    'size': size,--}}
+{{--                    'taste': taste,--}}
+{{--                },--}}
 {{--                success: function (data) {--}}
 {{--                    // console.log(response);--}}
 {{--                    $('#updateDiv').html(data.view);--}}
+{{--                    $('#search_number').html(data.products_count);--}}
+{{--                    $('#search_div').show();--}}
+
 {{--                }--}}
 {{--            });--}}
 
 {{--        });--}}
 {{--    </script>--}}
+
+    <script>
+        $(document).on('change','.filter_input',function (){
+            var id = $(this).data("id");
+            var parent = $(this).data("parent");
+
+
+            if ($(this).val() == 0){
+                $(this).val(1);
+                var name = $(this).data('name');
+                var input_id = $(this).data('id');
+                $('#search-names').append('<span class="search-name" data-id="'+id+'"> , '+ name+'</span>');
+
+
+                var tab = '<div class="d-flex justify-content-center align-items-center border p-2 mr-2">'+
+                    '<span class="pr-3"> '+name+'</span>'+
+                    '<a class="remove-tab" data-id="'+input_id+'"><i class="fa fa-times-circle" aria-hidden="true"></i></a>'+
+                    '</div>';
+                $('#filter-tabs').append(tab);
+                $('#filter-inputs').append('<input type="hidden" data-id="'+id+'" data-parent="'+parent+'" name="ids[]" value="'+id+'" class="input-id">')
+            }
+
+            else {
+                $(this).val(0);
+                $('.bottom').find("[data-id='" + id + "']").prop("checked",false);
+                $('#search-names').find("[data-id='" + id + "']").remove();
+                $('#filter-inputs').find("[data-id='" + id + "']").remove();
+                $('#filter-tabs').find("[data-id='" + id + "']").parent().remove();
+
+            }
+
+            // var inputt = $(this).val();
+            sorting();
+        });
+
+        $(document).on('click','.remove-tab',function (){
+            var id = $(this).data('id');
+            $('.bottom').find("[data-id='" + id + "']").prop("checked",false);
+            $('#search-names').find("[data-id='" + id + "']").remove();
+            $('#filter-inputs').find("[data-id='" + id + "']").remove();
+            $(this).parent().remove();
+            sorting();
+        });
+
+        function sorting(){
+            var brand = [];
+            var size = [];
+            var taste = [];
+            var sort = $('#sort-select').val();
+
+            $('.input-id').each(function(i, obj) {
+                if($(this).data('parent') == 'brand'){
+                    brand.push($(this).val());
+                }
+                else if($(this).data('parent') == 'size'){
+                    size.push($(this).val());
+                }
+                else if($(this).data('parent') == 'taste') {
+                    taste.push($(this).val());
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('filter-product') }}",
+                type: "get",
+                data: {
+                    brand: brand,
+                    size: size,
+                    taste: taste,
+                    sort: sort
+
+                },
+                success: function (data) {
+                    $('#filter-bar').show();
+                    $('#pagination-div').hide();
+                    $('#search_number').html(data.products_count);
+                    $('#updateDiv').html(data.view);
+                    $('#sort-select').val(data.order);
+                },
+
+            });
+        }
+
+        $(document).on('change','#sort-select',function (){
+            sorting();
+        })
+
+    </script>
 
 @endsection
 

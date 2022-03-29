@@ -68,7 +68,7 @@ class OfferController extends Controller
         }
 
         return response()->json([
-            'message' => $offer ? 'Create successflu' : 'Create falid'
+            'message' => $offer ? 'Create successful' : 'Create failed'
         ],$offer ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 
@@ -90,7 +90,7 @@ class OfferController extends Controller
     }
 
 
-    public function update(Request $request, Offer $offer)
+    public function update(OfferRequest $request, Offer $offer)
     {
 
       $offer->update($request->only(['name', 'details', 'terms','subscription','expiry_date']));
@@ -129,7 +129,7 @@ class OfferController extends Controller
         }
 
         return response()->json([
-            'message' => $offer ? 'Updated successflu' : 'Updated falid'
+            'message' => $offer ? 'Updated successful' : 'Updated failed'
         ],$offer ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 
@@ -144,7 +144,7 @@ class OfferController extends Controller
 //        $mediaimg = $offer->images->delete();
 
         $isDeleted = $offer->delete();
-        if ($isDeleted) Storage::disk('public')->delete($url_image,$url_video,$media);
+        if ($isDeleted) Storage::disk('public')->delete($url_image,$url_video);
         return response()->json([
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'

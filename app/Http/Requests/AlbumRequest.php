@@ -28,7 +28,7 @@ class AlbumRequest extends FormRequest
             'name.en' => 'required|string',
             'details.ar' => 'required|string',
             'details.en' => 'required|string',
-//            'files' => 'required_if:type,==,create'
+//           'files' => 'required_if:type,==,create'
         ];
     }
 }

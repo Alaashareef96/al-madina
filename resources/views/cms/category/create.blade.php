@@ -124,9 +124,7 @@
             toastr.success(response.data.message);
             window.location.href = '/cms/admin/categories';
         }).catch(function (error) {
-            // handle error
-            console.log(error.response.data.message);
-            // toastr.error(error.response.data.message);
+            console.log(error);
             let messages = '';
             for (const [key, value] of Object.entries(error.response.data.message)) {
                 messages+='-'+value+'</br>';

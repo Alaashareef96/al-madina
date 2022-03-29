@@ -39,7 +39,7 @@ class AboutController extends Controller
 
     public function store(AboutRequest $request)
     {
-            $about = About::create($request->only(['name', 'massage', 'details','Objectives','contribution','team']));
+            $about = About::create($request->only(['name_manager','details_manager','name', 'massage', 'details','Objectives','contribution','team']));
 
             if ($request->hasFile('image','video')) {
                 $image = $request->file('image');
@@ -57,30 +57,34 @@ class AboutController extends Controller
 
             $about->imgVid()->save($img);
         }
+
+        if ($request->hasFile('image_manager')) {
+            $image = $request->file('image_manager');
+            $imageName =$image->getClientOriginalName();
+            $request->file('image_manager')->storeAs('/about', $imageName, ['disk' => 'public']);
+
+            $img = new Media();
+            $img->type = 'cover';
+            $img->object_type = 'about';
+            $img->object_id = $about->id;
+            $img->url_image = 'about/' . $imageName;
+
+
+            $about->img()->save($img);
+        }
             return response()->json([
-                'message' => $about ? 'Create successflu' : 'Create falid'
+                'message' => $about ? 'Create successful' : 'Create failed'
             ],$about ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
 
      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\About  $about
-     * @return \Illuminate\Http\Response
-     */
     public function show(About $about)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\About  $about
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(About $about)
     {
         return response()->view('cms.about.edit', ['about' => $about]);
@@ -89,7 +93,7 @@ class AboutController extends Controller
 
     public function update(AboutRequest $request, About $about)
     {
-            $about->update($request->only(['name', 'massage', 'details','Objectives','contribution','team']));
+            $about->update($request->only(['name_manager','details_manager','name', 'massage', 'details','Objectives','contribution','team']));
 
             if ($request->hasFile('image')) {
                 Storage::disk('public')->delete($about->imgVid->url_image);
@@ -109,10 +113,18 @@ class AboutController extends Controller
 
                $about->imgVid()->update(['url_video' => $url_video]);
             }
+        if ($request->hasFile('image_manager')) {
+            Storage::disk('public')->delete($about->img->url_image);
+            $image = $request->file('image_manager');
+            $imageName =$image->getClientOriginalName();
+            $request->file('image_manager')->storeAs('/about', $imageName, ['disk' => 'public']);
+            $url_image = 'about/' . $imageName;
+            $about->img()->update(['url_image' => $url_image]);
+        }
 
 
             return response()->json([
-                'message' => $about ? 'Create successflu' : 'Create falid'
+                'message' => $about ? 'Create successful' : 'Create failed'
             ],$about ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
 
@@ -123,10 +135,12 @@ class AboutController extends Controller
     {
         $url_video = $about->imgVid->url_video;
         $url_image = $about->imgVid->url_image;
+        $url = $about->img->url_image;
         $media = $about->imgVid->delete();
+        $media_url = $about->img->delete();
 
         $isDeleted = $about->delete();
-        if ($isDeleted) Storage::disk('public')->delete($url_image,$media,$url_video);
+        if ($isDeleted) Storage::disk('public')->delete($url_image,$url_video,$url);
         return response()->json([
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'

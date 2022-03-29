@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create Team')
+@section('page-name','Edit Team')
 @section('main-page','Content Management')
 @section('sub-page','Team')
-@section('page-name-small','Create Team')
+@section('page-name-small','Edit Team')
 
 @section('styles')
 
@@ -203,9 +203,12 @@
                 toastr.success(response.data.message);
                 window.location.href = '/cms/admin/products';
             }).catch(function (error) {
-                // handle error
                 console.log(error);
-                toastr.error(error.response.data.message);
+                let messages = '';
+                for (const [key, value] of Object.entries(error.response.data.message)) {
+                    messages+='-'+value+'</br>';
+                }
+                toastr.error(messages);
             });
         }
 

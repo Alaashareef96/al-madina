@@ -49,6 +49,7 @@
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">{{__('admin.Full_Name')}}:<span class="text-danger">*</span></label>
                         <div class="col-9">
+                            <input type="hidden" class="form-control" id="id" value="{{$admin->id}}"/>
                             <input type="text" class="form-control" id="name" value="{{$admin->name}}"
                                 placeholder="{{__('admin.Enter_full_name')}}" />
                             <span class="form-text text-muted">{{__('admin.Please_enter_your_full_name')}}</span>
@@ -62,7 +63,7 @@
                             <span class="form-text text-muted">{{__('admin.Please_enter_your_email_address')}}</span>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -89,6 +90,7 @@
     function update(id) {
         axios.put('/cms/admin/admins/'+id,{
             role_id: document.getElementById('role_id').value,
+            id: document.getElementById('id').value,
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
         }).then(function (response) {
@@ -97,9 +99,12 @@
             toastr.success(response.data.message);
             window.location.href = '/cms/admin/admins';
         }).catch(function (error) {
-            // handle error
             console.log(error);
-            toastr.error(error.response.data.message);
+            let messages = '';
+            for (const [key, value] of Object.entries(error.response.data.message)) {
+                messages+='-'+value+'</br>';
+            }
+            toastr.error(messages);
         });
     }
 </script>

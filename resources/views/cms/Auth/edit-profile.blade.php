@@ -22,9 +22,9 @@
             <div class="card-body">
                 <div class="row">
                     <label class="col-xl-3"></label>
-                    
+
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                     <div class="col-lg-9 col-xl-6">
@@ -34,9 +34,9 @@
                 </div>
                 <div class="row">
                     <label class="col-xl-3"></label>
-                    
+
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
                     <div class="col-lg-9 col-xl-6">
@@ -51,27 +51,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input type="password" class="form-control form-control-lg form-control-solid mb-2"
-                            id="current_password" value="" placeholder="Current password" />
-                        {{-- <a href="#" class="text-sm font-weight-bold">Forgot password ?</a> --}}
-                    </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
-                <div class="col-lg-9 col-xl-6">
-                    <input type="password" class="form-control form-control-lg form-control-solid" value=""
-                        id="new_password" placeholder="New password" />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
-                <div class="col-lg-9 col-xl-6">
-                    <input type="password" class="form-control form-control-lg form-control-solid" value=""
-                        id="new_password_confirmation" placeholder="Verify password" />
-                </div>
             </div>
             <!--end::Body-->
         </form>
@@ -85,25 +64,27 @@
     <script>
      function performEdit(){
       axios.put('/cms/admin/update-profile',{
-     
+
         name:document.getElementById('name').value,
         email:document.getElementById('email').value,
-        current_password:document.getElementById('current_password').value,
-        new_password:document.getElementById('new_password').value,
-        new_password_confirmation:document.getElementById('new_password_confirmation').value,
-        
       }).then(function (response) {
     // handle success
       console.log(response);
       document.getElementById('create-form').reset();
        toastr.success(response.data.message);
   }).catch(function (error) {
-    // handle error
-       console.log(error);
-       toastr.error(error.response.data.message);
-  });
+          let messages = '';
+          if(typeof  error.response.data.message == 'string'){
+              toastr.error(error.response.data.message);
+          }else{
+              for (const [key, value] of Object.entries(error.response.data.message)) {
+                  messages+='-'+value+'</br>';
+              }
+              toastr.error(messages);
+          }
 
+      });
      }
 
     </script>
-@endsection 
+@endsection

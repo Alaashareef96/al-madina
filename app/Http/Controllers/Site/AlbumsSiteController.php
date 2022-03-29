@@ -11,8 +11,8 @@ class AlbumsSiteController extends Controller
     public function index()
     {
 
-        $albums = Album::all();
-        return response()->view('site.albums',compact('albums'));
+        $albums = Album::orderBy('id', 'desc')->get();
+        return response()->view('site.albums.albums',compact('albums'));
     }
 
 }

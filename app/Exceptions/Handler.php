@@ -43,16 +43,18 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
+
         if($e instanceof ValidationException) {
 
             // if($request->wantsJson() || $request->ajax()){
 
 //                $firstKey = array_key_first($e->errors());
-
+//                    dd( $e->errors());
                 return response()->json(['message' => $e->errors()], 422);
             // }
 
         }
+
         return parent::render($request, $e);
     }
 }

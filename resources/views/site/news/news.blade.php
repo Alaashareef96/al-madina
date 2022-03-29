@@ -8,7 +8,7 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
                     <li class="breadcrumb-item active" aria-current="page">الأخبار والنشاطات</li>
                 </ol>
             </nav>

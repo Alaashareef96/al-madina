@@ -65,7 +65,7 @@ class NewsController extends Controller
         }
 
         return response()->json([
-            'message' => $news ? 'Create successflu' : 'Create falid'
+            'message' => $news ? 'Create successful' : 'Create failed'
         ],$news ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 

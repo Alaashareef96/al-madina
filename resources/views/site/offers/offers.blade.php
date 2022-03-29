@@ -11,7 +11,7 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
                     <li class="breadcrumb-item active" aria-current="page">الحملات والعروض</li>
                 </ol>
             </nav>
@@ -138,9 +138,9 @@
                                 </div>
 
                             </div>
-                            <a href="offers-details.html">
+                            <a href="{{route('offer-details',$offer->id)}}">
                                 <h2>{{$offer->name}}</h2>
-                                <p>{{$offer->details}}...</p>
+                                <p>{{ \Illuminate\Support\Str::limit($offer->details, 200, $end='...') }}</p>
                             </a>
 
                         </div>

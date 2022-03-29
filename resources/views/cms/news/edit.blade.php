@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create News')
+@section('page-name','Edit News')
 @section('main-page','Content Management')
 @section('sub-page','News')
-@section('page-name-small','Create News')
+@section('page-name-small','Edit News')
 
 @section('styles')
 
@@ -186,7 +186,11 @@
             window.location.href = '/cms/admin/news';
         }).catch(function (error) {
             console.log(error);
-            toastr.error(error.response.data.message);
+            let messages = '';
+            for (const [key, value] of Object.entries(error.response.data.message)) {
+                messages+='-'+value+'</br>';
+            }
+            toastr.error(messages);
         });
     }
 

@@ -123,11 +123,18 @@
             toastr.success(response.data.message);
             window.location.href = '/cms/admin/teams';
         }).catch(function (error) {
-            // handle error
-            console.log(error);
-            toastr.error(error.response.data.message);
+            console.log( error.response.data.message);
+            let messages = '';
+            if(typeof  error.response.data.message == 'string'){
+                toastr.error(error.response.data.message);
+            }else{
+                for (const [key, value] of Object.entries(error.response.data.message)) {
+                    messages+='-'+value+'</br>';
+                }
+                toastr.error(messages);
+            }
         });
-    }
+     }
 
     </script>
 @endsection

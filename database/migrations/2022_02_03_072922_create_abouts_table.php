@@ -15,6 +15,8 @@ class CreateAboutsTable extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
+            $table->string('name_manager',255);
+            $table->longText('details_manager');
             $table->string('name',255);
             $table->longText('details');
             $table->longText('massage');

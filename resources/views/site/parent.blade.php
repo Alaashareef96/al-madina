@@ -59,8 +59,8 @@
         <div class="container">
             <div class="top">
                 <div class="language">
-                    <a href="{{route('dashboard.change-language-user','ar')}}" class="active">العربية</a>
-                    <a href="{{route('dashboard.change-language-user','en')}}">English</a>
+                    <a href="{{route('dashboard.change-language-user','ar')}}" class=@if (App::getLocale() == 'ar') "active" @endif >العربية</a>
+                    <a href="{{route('dashboard.change-language-user','en')}}"class=@if (App::getLocale() == 'en') "active" @endif >English</a>
                 </div>
                 <div class="socail-media">
 
@@ -147,37 +147,37 @@
     <div class="container">
 
         <div class="header">
-            <a href="index.html" class="logo">
-                <img src="images/Logo.svg" alt="" srcset="" loading="lazy">
+            <a href="{{route('home')}}" class="logo">
+                <img src="{{asset('site/images/Logo.svg')}}" alt="" srcset="" loading="lazy">
             </a>
 
             <ul class="main-menu">
                 <li>
-                    <a href={{route('home')}} class="active">الرئيسية</a>
+                    <a href="{{route('home')}}"  class={{ (request()->segment(2) == 'home') ? 'active' : ''}} >الرئيسية</a>
                 </li>
                 <li>
-                    <a href={{route('about')}}>من نحن</a>
+                    <a href="{{route('about')}}"  class={{ (request()->segment(2) == 'about') ? 'active' : ''}} >من نحن</a>
                 </li>
                 <li>
-                    <a href={{route('product')}}>المنتجات</a>
+                    <a href="{{route('product')}}" class={{ (request()->segment(2) == 'product') ? 'active' : ''}}>المنتجات</a>
                 </li>
                 <li>
-                    <a href="{{route('offer')}}">الحملات والعروض</a>
+                    <a href="{{route('offer')}}" class={{ (request()->segment(2) == 'offer') ? 'active' : ''}}>الحملات والعروض</a>
                 </li>
                 <li>
-                    <a href="{{route('news')}}">الأخبار</a>
+                    <a href="{{route('news')}}" class={{ (request()->segment(2) == 'news') ? 'active' : ''}}>الأخبار</a>
                 </li>
                 <li>
-                    <a href="{{route('albums')}}">الألبومات</a>
+                    <a href="{{route('albums')}}" class={{ (request()->segment(2) == 'albums') ? 'active' : ''}}>الألبومات</a>
                 </li>
                 <li>
-                    <a href="{{route('contact')}}">اتصل بنا</a>
+                    <a href="{{route('contact')}}" class={{ (request()->segment(2) == 'contact') ? 'active' : ''}}>اتصل بنا</a>
                 </li>
             </ul>
             <div class="input-search d-lg-block d-none">
-                <form action="search.html">
-                    <input type="text" class="form-control" placeholder="ابحث...">
-                    <button type="submit">
+                <form id="create-form" type="get" action="{{route('search')}}">
+                    <input type="search" name="search" id ='search_input' class="form-control" placeholder="ابحث...">
+                    <button type="submit" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="15.85" height="15.853"
                              viewBox="0 0 15.85 15.853">
                             <path id="Path"
@@ -198,25 +198,25 @@
         <div class="close-menu"><i class="fa fa-times"></i></div>
         <ul>
             <li>
-                <a href="index.html" >الرئيسية</a>
+                <a href="{{route('home')}}" >الرئيسية</a>
             </li>
             <li>
-                <a href="about.html">من نحن</a>
+                <a href="{{route('about')}}">من نحن</a>
             </li>
             <li>
-                <a href="products.html">المنتجات</a>
+                <a href="{{route('product')}}">المنتجات</a>
             </li>
             <li>
-                <a href="offers.html">الحملات والعروض</a>
+                <a href="{{route('offer')}}">الحملات والعروض</a>
             </li>
             <li>
-                <a href="news.html">الأخبار</a>
+                <a href="{{route('news')}}">الأخبار</a>
             </li>
             <li>
-                <a href="albums.html">الألبومات</a>
+                <a href="{{route('albums')}}">الألبومات</a>
             </li>
             <li>
-                <a href="contact_us.html">اتصل بنا</a>
+                <a href="{{route('contact')}}">اتصل بنا</a>
             </li>
         </ul>
         <div class="input-search mt-3">
@@ -334,28 +334,28 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-6 order-lg-1 order-1">
-                            <a href="index.html" class="url-footer active">الرئيسية</a>
+                            <a href="{{route('home')}}" class="url-footer active">الرئيسية</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-2 order-6">
-                            <a href="offers.html" class="url-footer">الحملات والعروض</a>
+                            <a href="{{route('offer')}}" class="url-footer">الحملات والعروض</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-3 order-4">
-                            <a href="jobs.html" class="url-footer">الوظائف</a>
+                            <a href="{{route('show-jobs')}}" class="url-footer">الوظائف</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-4 order-3">
-                            <a href="about.html" class="url-footer">من نحن</a>
+                            <a href="{{route('about')}}" class="url-footer">من نحن</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-5 order-7">
-                            <a href="news.html" class="url-footer">الأخبار والنشاطات</a>
+                            <a href="{{route('news')}}" class="url-footer">الأخبار والنشاطات</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-6 order-8">
-                            <a href="contact_us.html" class="url-footer">اتصل بنا</a>
+                            <a href="{{route('contact')}}" class="url-footer">اتصل بنا</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-7 order-5">
-                            <a href="products.html" class="url-footer">المنتجات</a>
+                            <a href="{{route('product')}}" class="url-footer">المنتجات</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-8 order-2">
-                            <a href="albums.html" class="url-footer">الألبومات</a>
+                            <a href="{{route('albums')}}" class="url-footer">الألبومات</a>
                         </div>
                     </div>
 
@@ -419,5 +419,25 @@
 {{--    //     $('html,body').css('overflow','');--}}
 {{--    // });--}}
 {{--</script>--}}
+
+{{--<script>--}}
+{{--    $(document).on('submit','#create-form',function(e){--}}
+{{--        e.preventDefault();--}}
+{{--         var search = $('#search_input').val();--}}
+{{--        $.ajax({--}}
+{{--            type: 'get',--}}
+{{--            url: "{{ route('search') }}",--}}
+{{--            data: {--}}
+{{--                'search': search,--}}
+{{--            },--}}
+{{--            success: function (data) {--}}
+{{--                console.log(response);--}}
+
+{{--            }--}}
+{{--        });--}}
+
+{{--    });--}}
+{{--</script>--}}
+
 @yield('script')
 </html>

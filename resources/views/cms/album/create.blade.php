@@ -22,6 +22,17 @@
             <form id="create-form">
                 @csrf
                 <div class="card-body">
+                    <h3 class="text-dark font-weight-bold mb-10">Cover Video</h3>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Image :<span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <label for="title">Choose Image Cover</label>
+                            <input type="file" id="image" name="image" accept="image/*" onchange="previewFile(this);" /><br/>
+                            </p>
+                            <img id="previewImg" src={{asset('cms/assets/media/users/blank.png')}} width="100px" height="100px" alt="Placeholder">
+                            <p>
+                        </div>
+                    </div>
                     <h3 class="text-dark font-weight-bold mb-10">Images</h3>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Images :<span class="text-danger">*</span></label>
@@ -106,63 +117,24 @@
 @endsection
 @section('scripts')
 <script src="{{asset('cms/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 
 {{--Start_Image--}}
-{{--<script>--}}
-{{--    function previewFile(input){--}}
-{{--        var file = $("input[type=file]").get(0).files[0];--}}
+<script>
+    function previewFile(input){
+        var file = $("input[type=file]").get(0).files[0];
 
-{{--        if(file){--}}
-{{--            var reader = new FileReader();--}}
-{{--            reader.onload = function(){--}}
-{{--                $("#previewImg").attr("src", reader.result);--}}
-{{--            }--}}
-{{--            reader.readAsDataURL(file);--}}
-{{--        }--}}
-{{--    }--}}
-{{--</script>--}}
+        if(file){
+            var reader = new FileReader();
+            reader.onload = function(){
+                $("#previewImg").attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 {{--End_Image--}}
 
-{{--Start_Images--}}
-{{--<script>--}}
-{{--    $(document).ready(function(){--}}
-{{--        $('#files').change(function(){--}}
-{{--            $("#frames").html('');--}}
-{{--            for (var i = 0; i < $(this)[0].files.length; i++) {--}}
-{{--                $("#frames").append('<img src="'+window.URL.createObjectURL(this.files[i])+'" width="100px" height="100px"/>');--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
-{{--End_Images--}}
-
-{{--<script>--}}
-{{--    const input = document.getElementById('video');--}}
-{{--    const video = document.getElementById('vid');--}}
-{{--    const videoSource = document.createElement('source');--}}
-
-{{--    input.addEventListener('change', function() {--}}
-{{--      const files = this.files || [];--}}
-
-{{--      if (!files.length) return;--}}
-
-{{--      const reader = new FileReader();--}}
-
-{{--      reader.onload = function (e) {--}}
-{{--        videoSource.setAttribute('src', e.target.result);--}}
-{{--        video.appendChild(videoSource);--}}
-{{--        video.load();--}}
-{{--        video.play();--}}
-{{--      };--}}
-
-{{--      reader.onprogress = function (e) {--}}
-{{--        console.log('progress: ', Math.round((e.loaded * 100) / e.total));--}}
-{{--      };--}}
-
-{{--      reader.readAsDataURL(files[0]);--}}
-{{--    });--}}
-{{--    </script>--}}
 
 <script>
      function store() {
@@ -178,7 +150,11 @@
                  window.location.href = '/cms/admin/albums';
              }).catch(function (error) {
                  console.log(error);
-                 toastr.error(error.response.data.message);
+                 let messages = '';
+                 for (const [key, value] of Object.entries(error.response.data.message)) {
+                     messages+='-'+value+'</br>';
+                 }
+                 toastr.error(messages);
              });
          }
 </script>
@@ -224,6 +200,8 @@
     }
 
 </script>
+
+
 <script>
     $(document).ready(function(){
         $('#files').change(function(){

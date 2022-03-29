@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create Category')
+@section('page-name','Edit Category')
 @section('main-page','Content Management')
 @section('sub-page','Categories')
-@section('page-name-small','Create Category')
+@section('page-name-small','Edit Category')
 
 @section('styles')
 
@@ -92,9 +92,12 @@
                 toastr.success(response.data.message);
                 window.location.href = '/cms/admin/categories';
             }).catch(function (error) {
-                // handle error
                 console.log(error);
-                toastr.error(error.response.data.message);
+                let messages = '';
+                for (const [key, value] of Object.entries(error.response.data.message)) {
+                    messages+='-'+value+'</br>';
+                }
+                toastr.error(messages);
             });
         }
 

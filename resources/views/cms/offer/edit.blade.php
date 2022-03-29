@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create About')
+@section('page-name','Edit Offers')
 @section('main-page','Content Management')
-@section('sub-page','About')
-@section('page-name-small','Create About')
+@section('sub-page','Offers')
+@section('page-name-small','Edit Offers')
 
 @section('styles')
     <link href="{{asset('cms/assets/css/_select2.scss')}}" rel="stylesheet" type="text/css" />
@@ -239,9 +239,12 @@
             toastr.success(response.data.message);
             window.location.href = '/cms/admin/offers';
         }).catch(function (error) {
-            // handle error
             console.log(error);
-            toastr.error(error.response.data.message);
+            let messages = '';
+            for (const [key, value] of Object.entries(error.response.data.message)) {
+                messages+='-'+value+'</br>';
+            }
+            toastr.error(messages);
         });
     }
 

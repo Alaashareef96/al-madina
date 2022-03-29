@@ -5,7 +5,7 @@
 <head>
 	{{-- <base href="../../../../"> --}}
 	<meta charset="utf-8" />
-	<title> Login | GUIDE</title>
+	<title> Login | Al-Madina</title>
 	<meta name="description" content="Login page example" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	{{-- <link rel="canonical" href="https://keenthemes.com/metronic" /> --}}
@@ -76,17 +76,17 @@
 								onclick="login()">Sign
 								In</button>
 						</form>
-						
+
 						<div class="mt-10">
-						
+
 							<a href="javascript:;" id="kt_login_signup"
 								class="text-muted text-hover-primary font-weight-bold">Sign Up</a>
 						</div>
-						
+
 					</div>
 					<!--end::Login Sign in form-->
 					<!--begin::Login Sign up form-->
-					
+
 					<div class="login-signup">
 						<div class="mb-20">
 							<h3>Works Registration</h3>
@@ -104,7 +104,7 @@
 								<input class="form-control h-auto form-control-solid py-4 px-8" type="text"
 									placeholder="Email" id="email" name="email" autocomplete="off" />
 							</div>
-							
+
 							<div class="form-group mb-5">
 								<input class="form-control h-auto form-control-solid py-4 px-8" type="password"
 									placeholder="password" id="password" name="password" autocomplete="off" />
@@ -113,8 +113,8 @@
 								<input class="form-control h-auto form-control-solid py-4 px-8" type="password"
 									placeholder="Verify Password" id="password_confirmation" name="Verify Password" autocomplete="off" />
 							</div>
-						
-							
+
+
 							<div class="form-group d-flex flex-wrap flex-center mt-10">
 								<button type="button" onclick="register()"
 									class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-2">Sign Up</button>
@@ -123,8 +123,8 @@
 							</div>
 						</form>
 					</div>
-				
-				
+
+
 					<!--end::Login Sign up form-->
 					<!--begin::Login forgot password form-->
 					<div class="login-forgot">
@@ -169,7 +169,7 @@
 								: "#ffffff" } }, "gray" : { "gray-100" : "#F3F6F9" , "gray-200" : "#EBEDF3" , "gray-300"
 								: "#E4E6EF" , "gray-400" : "#D1D3E0" , "gray-500" : "#B5B5C3" , "gray-600" : "#7E8299"
 								, "gray-700" : "#5E6278" , "gray-800" : "#3F4254" , "gray-900" : "#181C32" }
-								}, "font-family" : "Poppins" }; 
+								}, "font-family" : "Poppins" };
 	</script>
 	<!--end::Global Config-->
 	<!--begin::Global Theme Bundle(used by all pages)-->
@@ -191,7 +191,7 @@
 	        email: document.getElementById('email').value,
 	        password: document.getElementById('password').value,
 	        remember: document.getElementById('remember').checked,
-			
+
 	        // guard: guard
 	      }).then(function (response) {
 	          window.location.href = '/cms/admin/';

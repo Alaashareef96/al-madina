@@ -12,7 +12,7 @@ class AboutSiteController extends Controller
     public function index()
     {
         $about = About::first();
-        $teams = Team::all();
+        $teams = Team::orderBy('id', 'desc')->get();
         return response()->view('site.about.about',compact('about','teams'));
     }
 }

@@ -17,8 +17,8 @@ class NewsSiteController extends Controller
     public function index()
     {
 
-        $news = News::all();
-        return response()->view('site.news',compact('news'));
+        $news = News::orderBy('id', 'desc')->get();
+        return response()->view('site.news.news',compact('news'));
     }
 
     public function newsDetails($id)
@@ -29,13 +29,13 @@ class NewsSiteController extends Controller
 //        });
         $comments = Comment::where('news_id',$id)->active()->get();
         $newsall = News::all();
-        return response()->view('site.news_details',compact('news','newsall','comments'));
+        return response()->view('site..news.news_details',compact('news','newsall','comments'));
 
     }
     public function showComment()
     {
 
-        $comments = Comment::all();
+        $comments = Comment::with('news')->orderBy('id', 'desc')->get();
         return response()->view('cms.news.comment',compact('comments'));
     }
 
