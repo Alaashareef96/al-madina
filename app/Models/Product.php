@@ -20,10 +20,10 @@ class Product extends Model
         return $this->morphOne(Media::class, 'object', 'object_type', 'object_id', 'id');
     }
 
-//    public function categories()
-//    {
-//        return $this->belongsToMany(Category::class, 'product_categories');
-//    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'wishlists');
+    }
 
     public function brand()
     {

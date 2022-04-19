@@ -41,27 +41,31 @@ class NewsSiteController extends Controller
 
     public function newsComment(CommentRequest $request)
     {
-        $commentNews = Comment::create($request->only(['name', 'email', 'comment','status','news_id']));
+//        if(auth('web')->check()) {
+//            dd(auth('web')->check());
+            $commentNews = Comment::create($request->only(['name', 'email', 'comment', 'status', 'news_id']));
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $commentNews->name . '.' . $image->getClientOriginalExtension();
-            $request->file('image')->storeAs('/comment', $imageName, ['disk' => 'public']);
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = Carbon::now()->format('Y_m_d_h_i') . '_' . $commentNews->name . '.' . $image->getClientOriginalExtension();
+                $request->file('image')->storeAs('/comment', $imageName, ['disk' => 'public']);
 
-            $img = new Media();
-            $img->type= 'cover';
-            $img->object_type = 'comment';
-            $img->object_id = $commentNews->id;
-            $img->url_image = 'comment/' . $imageName;
+                $img = new Media();
+                $img->type = 'cover';
+                $img->object_type = 'comment';
+                $img->object_id = $commentNews->id;
+                $img->url_image = 'comment/' . $imageName;
 
-
-            $commentNews->img()->save($img);
-        }
-
-        return response()->json([
-            'message' => $commentNews ? 'Create successful' : 'Create failed',
-        ],$commentNews ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-
+                $commentNews->img()->save($img);
+            }
+            return response()->json([
+                'message' => $commentNews ? 'Create successful' : 'Create failed',
+            ], $commentNews ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+//        }else{
+//            return response()->json([
+//                'message' => false,
+//            ], Response::HTTP_BAD_REQUEST);
+//        }
 
     }
     public function deleteComment($id){

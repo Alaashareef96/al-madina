@@ -44,10 +44,26 @@ body {
     right: 7px;
     left: unset;
 }
-/* 
+/*
 .bubbles::before{
     background-position:top left;
 }
 .bubbles::after{
     background-position:bottom right;
 } */
+.wishlist{
+    left: 30px;
+    right:unset;
+}
+.remove-wishlist{
+    left: 30px;
+    right:unset;
+}
+.catrs{
+    left: 30px;
+    right:unset;
+}
+.product-card .card-img-top span{
+    right: 7px;
+    left:unset;
+}

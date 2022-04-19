@@ -12,6 +12,7 @@ use App\Models\Slider;
 use App\Models\SuccessPartner;
 use App\Models\They_said;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeSiteController extends Controller
 {
@@ -26,6 +27,16 @@ class HomeSiteController extends Controller
         $albums = Album::orderBy('id', 'desc')->get();
         $successpartners = SuccessPartner::orderBy('id', 'desc')->get();
         return response()->view('site.home.home',compact('about','products','offers','sliders','brands','theysaid','successpartners','albums'));
+    }
+
+    public function changeLanguageUser(Request $request, $language)
+    {
+
+        $status = in_array($language, ['en', 'ar']);
+        $lang = $status ? $language : 'ar';
+        App::setLocale($lang);
+        $request->session()->put('lang', $lang);
+        return redirect()->back();
     }
 
 

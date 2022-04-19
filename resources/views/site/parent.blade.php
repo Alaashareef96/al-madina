@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('titel')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
           integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
@@ -15,18 +16,39 @@
     <link rel="stylesheet" href="{{asset('site/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('site/css/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="{{asset('site/css/style.css')}}">
+    @if (App::getLocale() == 'en')
+    <link rel="stylesheet" href="{{asset('site/css/style-en.css')}}">
+    @endif
     <link rel="stylesheet" href="{{asset('site/css/custom.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.8.1/lottie_svg.min.js" integrity="sha512-jk2H6cbspEVLyLHIJkHcwiHqh7sQuyrBJvHKokFyKebzaRZiA7RmcbAo7KvM3GqFaLJJGDFC/gBMYzbeeS7KUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{--    <link rel="stylesheet" href="{{asset('cms/assets/plugins/toastr/toastr.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">--}}
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <link rel="stylesheet" href="css/style-en.css"> -->
+
     <style>
         #loading svg path{
             fill: #FFF;
             stroke: #FFF;
             /* fill: var(--green);
             stroke: var(--green); */
+        }
+        .alert-danger{
+            top: 16px;
+        }
+        .badge-number{
+            position: absolute;
+            top: -11px;
+            left: 7px;
+            width: 15px;
+            height: 17px;
+            /* z-index: -1; */
+            border-radius: 50%;
+            background: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .catr-show{
+            position: relative;
         }
     </style>
 
@@ -59,12 +81,33 @@
         <div class="container">
             <div class="top">
                 <div class="language">
+                        @if(auth('web')->user()->id ?? '' != null)
+                            <a href="{{route('auth.logout.user')}}" type="button" class="btn btn-primary">LogoOut</a>
+                        @else
+                            <a href="{{route('auth.login.view.user')}}" type="button" class="btn btn-primary">Login&SignUp</a>
+                        @endif
+
                     <a href="{{route('dashboard.change-language-user','ar')}}" class=@if (App::getLocale() == 'ar') "active" @endif >العربية</a>
                     <a href="{{route('dashboard.change-language-user','en')}}"class=@if (App::getLocale() == 'en') "active" @endif >English</a>
                 </div>
-                <div class="socail-media">
+                <div class="d-flex">
 
-                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                    <div class="d-flex ">
+                        <div class="wishlist-show mx-3">
+                            <a  href="{{route('favourite-show')}}" class="wishlist" >
+                                <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div class="catr-show">
+                            <a  href="{{route('site.cart.index')}}" class="catrs">
+                                <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
+                            </a>
+                            <span class="badge-number">{{Gloudemans\Shoppingcart\Facades\Cart::count()}}</span>
+                        </div>
+                    </div>
+                    <div class="socail-media ml-3">
+
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                      width="16.277" height="16.277" viewBox="0 0 16.277 16.277">
@@ -100,8 +143,8 @@
                                     </g>
                                 </svg>
                             </span>
-                    </a>
-                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16.922" height="11.973"
                                      viewBox="0 0 16.922 11.973">
@@ -110,8 +153,8 @@
                                           transform="translate(0.015 -3.503)" fill="#e53935" />
                                 </svg>
                             </span>
-                    </a>
-                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16.445" height="13.362"
                                      viewBox="0 0 16.445 13.362">
@@ -123,8 +166,8 @@
                                 </svg>
 
                             </span>
-                    </a>
-                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
                             <span>
                                 <svg id="Iconspace_User_1_25px" data-name="Iconspace_User 1_25px"
                                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -137,10 +180,13 @@
                                     </g>
                                 </svg>
                             </span>
-                    </a>
+                        </a>
 
+                    </div>
                 </div>
+
             </div>
+
         </div>
     </div>
 
@@ -153,30 +199,30 @@
 
             <ul class="main-menu">
                 <li>
-                    <a href="{{route('home')}}"  class={{ (request()->segment(2) == 'home') ? 'active' : ''}} >الرئيسية</a>
+                    <a href="{{route('home')}}"  class={{ (request()->segment(2) == 'home') ? 'active' : ''}} >{{trans('site/parent.Home')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('about')}}"  class={{ (request()->segment(2) == 'about') ? 'active' : ''}} >من نحن</a>
+                    <a href="{{route('about')}}"  class={{ (request()->segment(2) == 'about') ? 'active' : ''}} >{{trans('site/parent.About')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('product')}}" class={{ (request()->segment(2) == 'product') ? 'active' : ''}}>المنتجات</a>
+                    <a href="{{route('product')}}" class={{ (request()->segment(2) == 'product') ? 'active' : ''}}>{{trans('site/parent.products')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('offer')}}" class={{ (request()->segment(2) == 'offer') ? 'active' : ''}}>الحملات والعروض</a>
+                    <a href="{{route('offer')}}" class={{ (request()->segment(2) == 'offer') ? 'active' : ''}}>{{trans('site/parent.Campaigns_and_offers')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('news')}}" class={{ (request()->segment(2) == 'news') ? 'active' : ''}}>الأخبار</a>
+                    <a href="{{route('news')}}" class={{ (request()->segment(2) == 'news') ? 'active' : ''}}>{{trans('site/parent.News')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('albums')}}" class={{ (request()->segment(2) == 'albums') ? 'active' : ''}}>الألبومات</a>
+                    <a href="{{route('albums')}}" class={{ (request()->segment(2) == 'albums') ? 'active' : ''}}>{{trans('site/parent.Albums')}}</a>
                 </li>
                 <li>
-                    <a href="{{route('contact')}}" class={{ (request()->segment(2) == 'contact') ? 'active' : ''}}>اتصل بنا</a>
+                    <a href="{{route('contact')}}" class={{ (request()->segment(2) == 'contact') ? 'active' : ''}}>{{trans('site/parent.Contact_us')}}</a>
                 </li>
             </ul>
             <div class="input-search d-lg-block d-none">
                 <form id="create-form" type="get" action="{{route('search')}}">
-                    <input type="search" name="search" id ='search_input' class="form-control" placeholder="ابحث...">
+                    <input type="search" name="search" id ='search_input' class="form-control" placeholder="{{trans('site/parent.Search')}}">
                     <button type="submit" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="15.85" height="15.853"
                              viewBox="0 0 15.85 15.853">
@@ -232,6 +278,43 @@
     </div>
 </header>
 <!-- ./header -->
+
+@if ($message = session('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
+
+
+@if ($message = session('error'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
+
+
+@if ($message = session('warning'))
+    <div class="alert alert-warning alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
+
+
+@if ($message = session('info'))
+    <div class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
+
+@if(auth()->user()->email_verified_at == null)
+    <div class="alert alert-danger" role="alert">
+        الرجاء تفعيل البريد الالكتروني <a href="" class="alert-link-verified">اضغط هنا</a>.
+    </div>
+@endif
 @yield('contact')
 
 <!-- footer -->
@@ -328,34 +411,34 @@
                         </div>
                     </div>
                     <p class="footer__description">
-                        شركة المدينة تقدم لك أفضل المشروبات الخفيفة بأفضل الأسعار
+                        {{trans('site/parent.almdina')}}
                     </p>
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-6 order-lg-1 order-1">
-                            <a href="{{route('home')}}" class="url-footer active">الرئيسية</a>
+                            <a href="{{route('home')}}" class="url-footer active">{{trans('site/parent.Home')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-2 order-6">
-                            <a href="{{route('offer')}}" class="url-footer">الحملات والعروض</a>
+                            <a href="{{route('offer')}}" class="url-footer">{{trans('site/parent.Campaigns_and_offers')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-3 order-4">
-                            <a href="{{route('show-jobs')}}" class="url-footer">الوظائف</a>
+                            <a href="{{route('show-jobs')}}" class="url-footer">{{trans('site/parent.jobs')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-4 order-3">
-                            <a href="{{route('about')}}" class="url-footer">من نحن</a>
+                            <a href="{{route('about')}}" class="url-footer">{{trans('site/parent.About')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-5 order-7">
-                            <a href="{{route('news')}}" class="url-footer">الأخبار والنشاطات</a>
+                            <a href="{{route('news')}}" class="url-footer">{{trans('site/parent.News')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-6 order-8">
-                            <a href="{{route('contact')}}" class="url-footer">اتصل بنا</a>
+                            <a href="{{route('contact')}}" class="url-footer">{{trans('site/parent.Contact_us')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-7 order-5">
-                            <a href="{{route('product')}}" class="url-footer">المنتجات</a>
+                            <a href="{{route('product')}}" class="url-footer">{{trans('site/parent.products')}}</a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 order-lg-8 order-2">
-                            <a href="{{route('albums')}}" class="url-footer">الألبومات</a>
+                            <a href="{{route('albums')}}" class="url-footer">{{trans('site/parent.Albums')}}</a>
                         </div>
                     </div>
 
@@ -438,6 +521,34 @@
 
 {{--    });--}}
 {{--</script>--}}
+<script>
+    $(document).on('click', '.alert-link-verified', function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+
+            url: "{{route('verification.send')}}",
+            type: 'post',
+            data: {
+
+            },
+            success: function (data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم ارسال رسالة التفعيل على الايميل',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+
+        })
+    });
+
+</script>
 
 @yield('script')
 </html>

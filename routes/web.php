@@ -19,13 +19,19 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Site\AboutSiteController;
 use App\Http\Controllers\Site\AlbumsSiteController;
+use App\Http\Controllers\Site\AuthSiteController;
+use App\Http\Controllers\Site\CartSiteController;
 use App\Http\Controllers\Site\ContactSiteController;
+use App\Http\Controllers\Site\FacebookSiteController;
+use App\Http\Controllers\Site\FavouriteSiteController;
 use App\Http\Controllers\Site\HomeSiteController;
 use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
 use App\Http\Controllers\Site\SearchSiteController;
+use App\Http\Controllers\Site\SocialController;
+use App\Http\Controllers\Site\UsersSiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -50,7 +56,7 @@ Route::prefix('cms')->middleware('guest:admin')->group(function(){
     Route::post('login', [AuthController::class,'login'])->name('auth.login');
 
 });
-Route::prefix('email')->middleware('auth:admin')->group(function () {
+Route::prefix('email')->middleware('auth:admin,web')->group(function () {
     Route::get('verify', [VerifyEmailController::class, 'notice'])->name('verification.notice');
     Route::post('verification-notification', [VerifyEmailController::class, 'send'])->middleware(['throttle:6,1'])->name('verification.send');
     Route::get('verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
@@ -119,17 +125,27 @@ Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(functio
 
     Route::resource('success-partners', SuccessPartnerController::class);
 
+    Route::get('/users', [UsersSiteController::class, 'index'])->name('users');
+    Route::get('/status-user', [UsersSiteController::class, 'status'])->name('status-user');
+    Route::get('/delete-user/{id}', [UsersSiteController::class, 'deleteUser'])->name('delete-user');
+
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
 
 //****************************SITE*****************************
+Route::prefix('al-madina')->middleware('guest:web')->group(function() {
+    Route::get('loginUser', [AuthSiteController::class, 'ShowLoginUser'])->name('auth.login.view.user');
+    Route::post('register', [AuthSiteController::class, 'register'])->name('auth.register.user');
+    Route::post('loginUser', [AuthSiteController::class, 'loginUser'])->name('auth.login.user');
 
+    Route::get('/redirect/{service}', [SocialController::class, 'redirect'])->name('redirect');
+    Route::get('/callback/{service}', [SocialController::class, 'callback']);
+});
 
+    Route::prefix('al-madina')->group(function(){
 
-Route::prefix('al-madina')->group(function(){
-
-    Route::get('/change-lang-user/{language}', [DashboardController::class, 'changeLanguage'])->name('dashboard.change-language-user');
+    Route::get('/change-lang-user/{language}', [HomeSiteController::class, 'changeLanguageUser'])->name('dashboard.change-language-user');
     Route::get('/home', [HomeSiteController::class, 'index'])->name('home');
     Route::get('/about', [AboutSiteController::class, 'index'])->name('about');
 
@@ -143,7 +159,7 @@ Route::prefix('al-madina')->group(function(){
 
     Route::get('/news', [NewsSiteController::class, 'index'])->name('news');
     Route::get('/news-details/{id}', [NewsSiteController::class, 'newsDetails'])->name('news-details');
-    Route::post('/news-comment', [NewsSiteController::class, 'newsComment'])->name('news-comment');
+    Route::post('/news-comment', [NewsSiteController::class, 'newsComment'])->name('news-comment')->middleware(['auth:web','verified']);
 
     Route::get('/albums', [AlbumsSiteController::class, 'index'])->name('albums');
 
@@ -157,6 +173,16 @@ Route::prefix('al-madina')->group(function(){
 
 
     Route::get('/search', [SearchSiteController::class, 'index'])->name('search');
+
+    Route::post('/favourite', [FavouriteSiteController::class, 'storfavourite'])->name('favourite')->middleware(['auth:web','verified']);
+    Route::get('/favourite-show', [FavouriteSiteController::class, 'index'])->name('favourite-show')->middleware(['auth:web','verified']);
+    Route::delete('/favourite-delete/{id}', [FavouriteSiteController::class, 'destroy'])->name('favourite-delete')->middleware(['auth:web','verified']);
+
+    Route::get('/cart', [CartSiteController::class, 'getCart'])->name('site.cart.index')->middleware(['auth:web','verified']);
+    Route::post('/cart/add', [CartSiteController::class, 'AddToCart'])->name('site.cart.add')->middleware(['auth:web','verified']);
+    Route::delete('/cart-remove/{rowId}', [CartSiteController::class, 'RemoveCartProduct'])->name('site.cart.remove')->middleware(['auth:web','verified']);
+
+    Route::get('logout', [AuthSiteController::class,'logoutUser'])->name('auth.logout.user');
 
 
 });

@@ -1,8 +1,46 @@
 @extends('site.parent')
 
-@section('titel','products')
+@section('titel',trans('site/product.products'))
 
-@section('styl')
+@section('style')
+    <style>
+        .wishlist{
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            font-size: 23px;
+            cursor: pointer;
+            /*color: red;*/
+
+        }
+        .wishlist:hover{
+           color:red;
+            width: 100%;
+            height: 100%;
+            z-index: 13;
+        }
+        .wishlist.active{
+            color:red;
+        }
+
+        .catrs{
+            position: absolute;
+            top: 57px;
+            right: 32px;
+            font-size: 25px;
+            cursor: pointer;
+            /*color: red;*/
+
+        }
+        .catrs:hover{
+            color:red;
+            width: 100%;
+            height: 100%;
+            z-index: 13;
+        }
+
+
+    </style>
 
 @endsection
 
@@ -12,8 +50,8 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">المنتجات</li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('site/product.Home')}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{trans('site/product.products')}}</li>
                 </ol>
             </nav>
             <div class="row">
@@ -135,6 +173,85 @@
 
                             </div>
                         </div>
+
+                        <div>
+                            <div class="top">
+                                <p>المفضلة</p>
+                                <span class="filter hide">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                        <g id="Group_52884" data-name="Group 52884" transform="translate(-29 -1130.5)">
+                                            <path id="Path_30683" data-name="Path 30683"
+                                                  d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                                  transform="translate(29 1130.5)" fill="#8ec641" />
+                                            <path id="Path"
+                                                  d="M9.286,1.5H.714A.734.734,0,0,1,0,.75.734.734,0,0,1,.714,0H9.286A.734.734,0,0,1,10,.75.734.734,0,0,1,9.286,1.5Z"
+                                                  transform="translate(34 1140)" fill="#fff" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="filter show">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                        <g id="Group_52877" data-name="Group 52877" transform="translate(-29 -1130.5)">
+                                            <path id="Path_30683" data-name="Path 30683"
+                                                  d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                                  transform="translate(29 1130.5)" fill="#8ec641" />
+                                            <path id="Path"
+                                                  d="M9.286,5.714H5.714V9.286a.714.714,0,1,1-1.429,0V5.714H.714a.714.714,0,1,1,0-1.429H4.286V.714a.714.714,0,1,1,1.429,0V4.286H9.286a.714.714,0,1,1,0,1.429Z"
+                                                  transform="translate(34 1135.856)" fill="#fff" />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="bottom">
+{{--                                @foreach($taste as $tasteName)--}}
+                                    <label class="custom-checkbox">
+                                        <a href="{{route('favourite-show')}}" name="filter" class="filter_input"  >
+                                        <span class="checkmark"></span>
+                                        <span class='label'>المفضلة</span>
+                                        </a>
+                                    </label>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="top">
+                                <p>سلة المشتريات</p>
+                                <span class="filter hide">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                        <g id="Group_52884" data-name="Group 52884" transform="translate(-29 -1130.5)">
+                                            <path id="Path_30683" data-name="Path 30683"
+                                                  d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                                  transform="translate(29 1130.5)" fill="#8ec641" />
+                                            <path id="Path"
+                                                  d="M9.286,1.5H.714A.734.734,0,0,1,0,.75.734.734,0,0,1,.714,0H9.286A.734.734,0,0,1,10,.75.734.734,0,0,1,9.286,1.5Z"
+                                                  transform="translate(34 1140)" fill="#fff" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span class="filter show">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                        <g id="Group_52877" data-name="Group 52877" transform="translate(-29 -1130.5)">
+                                            <path id="Path_30683" data-name="Path 30683"
+                                                  d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                                  transform="translate(29 1130.5)" fill="#8ec641" />
+                                            <path id="Path"
+                                                  d="M9.286,5.714H5.714V9.286a.714.714,0,1,1-1.429,0V5.714H.714a.714.714,0,1,1,0-1.429H4.286V.714a.714.714,0,1,1,1.429,0V4.286H9.286a.714.714,0,1,1,0,1.429Z"
+                                                  transform="translate(34 1135.856)" fill="#fff" />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="bottom">
+                                {{--                                @foreach($taste as $tasteName)--}}
+                                <label class="custom-checkbox">
+                                    <a href="{{route('site.cart.index')}}" name="filter" class="filter_input"  >
+                                        <span class="checkmark"></span>
+                                        <span class='label'>سلة المشتريات</span>
+                                    </a>
+                                </label>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-9 mt-lg-0 mt-3">
@@ -142,14 +259,14 @@
                         <div class="nav-search">
                             <div>
                                 <span class="number-of-search-result" id="search_number"></span>
-                                <span> بحث توافق بحثك عن </span>
+                                <span> {{trans('site/product.Search_matching')}} </span>
                                 <span id="search-names"> </span>
                             </div>
                             <div>
-                                <span class="word-search">اعرض حسب:</span>
+                                <span class="word-search">{{trans('site/product.show_by')}}</span>
                                 <select name="search_by" id="sort-select">
-                                    <option value="desc">الأحدث</option>
-                                    <option value="asc">الأقدم</option>
+                                    <option value="desc">{{trans('site/product.desc')}}</option>
+                                    <option value="asc">{{trans('site/product.asc')}}</option>
                                 </select>
                             </div>
                         </div>
@@ -365,6 +482,109 @@
         $(document).on('change','#sort-select',function (){
             sorting();
         })
+        $(document).on('click','.wishlist',function (){
+            $(this).toggleClass('active');
+        });
+
+        $(document).on('click', '.wishlist', function (e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            @guest()
+            Swal.fire({
+                icon: 'error',
+                title: '{{trans('site/product.guest')}}',
+            })
+            @endguest
+            @if(auth('web')->user()->email_verified_at == null)
+            Swal.fire({
+                icon: 'info',
+                title: 'يجب تفعيل الايميل الخاص بك',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            @endif
+            var id = $(this).data("id");
+            $.ajax({
+
+                url: "{{route('favourite')}}",
+                type: 'post',
+                data: {
+                    'id': id,
+                },
+                success: function (data) {
+                    if(data.wished )
+                        Swal.fire({
+                            icon: 'success',
+                            title: '{{trans('site/product.add_wishlist')}}',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    else
+                        Swal.fire({
+                            icon: 'info',
+                            title: '{{trans('site/product.exists_wishlist')}}',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                },
+
+            })
+            {{--    .fail(function( jqXHR, textStatus, errorThrown ) {--}}
+            {{--    if (jqXHR.responseJSON.type == 'emailNotVerified'){--}}
+            {{--        location.href="{{url('/email/verify')}}"--}}
+            {{--    }--}}
+            {{--});--}}
+
+
+        });
+
+        $(document).on('click', '.catrs', function (e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            @guest()
+            Swal.fire({
+                icon: 'error',
+                title: '{{trans('site/product.guest')}}',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            @endguest
+            @if(auth('web')->user()->email_verified_at == null)
+            Swal.fire({
+                icon: 'info',
+                title: 'يجب تفعيل الايميل الخاص بك',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            @endif
+            var id = $(this).data("id");
+            $.ajax({
+
+                url: "{{route('site.cart.add')}}",
+                type: 'post',
+                data: {
+                    'id': id,
+                },
+                success: function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم الاضافة بسلة المشتريات',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+
+            })
+        });
 
     </script>
 

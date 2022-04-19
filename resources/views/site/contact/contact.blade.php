@@ -14,6 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
                     <li class="breadcrumb-item active" aria-current="page">اتصل بنا</li>
                 </ol>
+
             </nav>
             <div id="map"></div>
 
@@ -140,7 +141,11 @@
             </div>
 
         </div>
+
         <div class="contact-with-bg">
+
+
+
             <div class="container">
                 <h2 class="main-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
                     اتصل بنا
@@ -283,6 +288,8 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 
 
@@ -345,6 +352,7 @@
     ></script>
     <script>
         function store() {
+
             let formData = new FormData($('#create-form-contact')[0]);
             axios.post('/al-madina/save-contact', formData, {
                 headers: {
@@ -353,17 +361,15 @@
                 }
             }).then(function (response) {
                 console.log(response);
-                // Swal.fire(
-                //     'Good job!',
-                //     'You clicked the button!',
-                //     'success'
-                // )
-                // window.location.reload();
-                document.getElementById('create-form').reset();
+                document.getElementById('create-form-contact').reset();
                 $('.bd-example-modal-lg').modal('show');
 
             }).catch(function (error) {
                 console.log(error.response.data.message);
+                // if(error.response.data.message == false) {
+                //     // console.log(error.response.data.message);
+                //     $('.bd-example-modal-lg-false').modal('show');
+                // }
                 $('.name').text('');
                 $('.email').text('');
                 $('.phone').text('');
@@ -390,6 +396,8 @@
             });
 
         }
+
+
     </script>
 
 @endsection

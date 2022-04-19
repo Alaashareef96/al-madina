@@ -31,7 +31,7 @@
                     <!--end::Svg Icon-->
                 </span>
                 <span
-                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block"></span>
+                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">{{$user}}</span>
                 <span class="font-weight-bold text-white font-size-sm">Total Customers</span>
             </div>
             <!--end::Body-->
@@ -62,8 +62,8 @@
                     <!--end::Svg Icon--></span>
                 <!--end::Svg Icon-->
                 <span
-                    class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">₪</span>
-                <span class="font-weight-bold text-muted font-size-sm">Total Incomes</span>
+                    class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">{{$product}}</span>
+                <span class="font-weight-bold text-muted font-size-sm">Total Products</span>
             </div>
             <!--end::Body-->
         </div>
@@ -103,8 +103,8 @@
                     </svg>
                     <!--end::Svg Icon--></span>
                 <span
-                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block"></span>
-                <span class="font-weight-bold text-white font-size-sm">Total Products</span>
+                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">{{$jobRequest}}</span>
+                <span class="font-weight-bold text-white font-size-sm">Jobs Requests</span>
             </div>
             <!--end::Body-->
         </div>
@@ -132,7 +132,7 @@
                     <!--end::Svg Icon-->
                 </span>
                 <span
-                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 text-hover-primary d-block"></span>
+                    class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 text-hover-primary d-block">{{$contact}}</span>
                 <span class="font-weight-bold text-white font-size-sm">Contact Requests</span>
             </div>
             <!--end::Body-->
@@ -349,7 +349,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($latestUsers as $user) --}}
+                                     @foreach ($lastuser as $user)
                                     <tr>
                                         <td class="pl-0 py-4">
                                             <div class="symbol symbol-50 symbol-light mr-1">
@@ -365,20 +365,18 @@
                                             <div>
                                                 <span class="font-weight-bolder">Mobile:</span>
                                                 <a class="text-muted font-weight-bold text-hover-primary"
-                                                    href="#"></a>
+                                                    href="#">{{$user->mobile}}</a>
                                             </div>
                                         </td>
                                         <td class="text-right">
-                                            <span
-                                                class="text-dark-75 font-weight-bolder d-block font-size-lg"></span>
-                                            <span class="text-muted font-weight-bold"></span>
+                                            <span class="text-muted font-weight-bold">{{$user->name}}</span>
                                         </td>
                                         <td class="text-right">
 
                                             <div>
                                                 <span class="font-weight-bolder">Registered At:</span>
-                                                {{-- <a class="text-muted font-weight-bold text-hover-primary"
-                                                    href="#">{{$user->mobile}}</a> --}}
+                                                 <a class="text-muted font-weight-bold text-hover-primary"
+                                                    href="#">{{$user->created_at->format('Y-m-d')}}</a>
                                                 <span
                                                     class="text-muted font-weight-500"></span>
                                             </div>
@@ -387,10 +385,10 @@
                                             <span
                                                 class="label label-lg  label-light-success @else label-light-danger @endif label-inline">{{$user->verified_status}}</span>
                                         </td> --}}
-                                        {{-- <td class="text-right">
-                                            <span
-                                                class="label label-lg @if($user->active) label-light-info @else label-light-wanining @endif label-inline">{{$user->active_status}}</span>
-                                        </td> --}}
+{{--                                        <td class="text-right">--}}
+{{--                                           <span--}}
+{{--                                                class="label label-lg @if($user->active) label-light-info @else label-light-wanining @endif label-inline">{{$user->active_status}}</span>--}}
+{{--                                        </td>--}}
                                         {{-- <td class="text-right pr-0">
                                             <a href="#" class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                                 <span class="svg-icon svg-icon-md svg-icon-primary">
@@ -455,7 +453,7 @@
                                             </a>
                                         </td> --}}
                                     </tr>
-                                    {{-- @endforeach --}}
+                                     @endforeach
 
                                 </tbody>
                             </table>
@@ -472,93 +470,93 @@
 </div>
 <!--end::Row-->
 <!--begin::Row-->
-<div class="row">
-    <div class="col-lg-12">
-        <!--begin::Advance Table Widget 4-->
-        <div class="card card-custom card-stretch gutter-b">
-            <!--begin::Header-->
-            <div class="card-header border-0 py-5">
-                <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label font-weight-bolder text-dark">Latest Orders</span>
-                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Latest requested orders & details</span>
-                </h3>
-                {{-- <div class="card-toolbar">
-                    <a href="#" class="btn btn-info font-weight-bolder font-size-sm mr-3">New Report</a>
-                    <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">Create</a>
-                </div> --}}
-            </div>
-            <!--end::Header-->
-            <!--begin::Body-->
-            <div class="card-body pt-0 pb-3">
-                <div class="tab-content">
-                    <!--begin::Table-->
-                    <div class="table-responsive">
-                        <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                            <thead>
-                                <tr class="text-left text-uppercase">
-                                    <th style="min-width: 250px" class="pl-7">
-                                        <span class="text-dark-75">products</span>
-                                    </th>
-                                    <th style="min-width: 100px">earnings</th>
-                                    <th style="min-width: 100px">comission</th>
-                                    <th style="min-width: 100px">company</th>
-                                    <th style="min-width: 130px">rating</th>
-                                    <th style="min-width: 80px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- <tr>
-                                    <td class="pl-0 py-8">
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50 symbol-light mr-4">
-                                                <span class="symbol-label">
-                                                    <img src="{{asset('assets/media/svg/avatars/001-boy.svg')}}"
-                                class="h-75 align-self-end" alt="" />
-                                </span>
-                    </div>
-                    <div>
-                        <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                            Simmons</a>
-                        <span class="text-muted font-weight-bold d-block">HTML,
-                            JS, ReactJS</span>
-                    </div>
-                </div>
-                </td>
-                <td>
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">$8,000,000</span>
-                    <span class="text-muted font-weight-bold">In
-                        Proccess</span>
-                </td>
-                <td>
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">$520</span>
-                    <span class="text-muted font-weight-bold">Paid</span>
-                </td>
-                <td>
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Intertico</span>
-                    <span class="text-muted font-weight-bold">Web, UI/UX
-                        Design</span>
-                </td>
-                <td>
-                    <img src="{{asset('assets/media/logos/stars.png')}}" alt="image" style="width: 5.5rem" />
-                    <span class="text-muted font-weight-bold d-block font-size-sm">Best
-                        Rated</span>
-                </td>
-                <td class="pr-0 text-right">
-                    <a href="#" class="btn btn-light-success font-weight-bolder font-size-sm">View
-                        Offer</a>
-                </td>
-                </tr> --}}
-                </tbody>
-                </table>
-            </div>
-            <!--end::Table-->
-        </div>
-    </div>
-    <!--end::Body-->
-</div>
-<!--end::Advance Table Widget 4-->
-</div>
-</div>
+{{--<div class="row">--}}
+{{--    <div class="col-lg-12">--}}
+{{--        <!--begin::Advance Table Widget 4-->--}}
+{{--        <div class="card card-custom card-stretch gutter-b">--}}
+{{--            <!--begin::Header-->--}}
+{{--            <div class="card-header border-0 py-5">--}}
+{{--                <h3 class="card-title align-items-start flex-column">--}}
+{{--                    <span class="card-label font-weight-bolder text-dark">Latest Product</span>--}}
+{{--                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Latest requested orders & details</span>--}}
+{{--                </h3>--}}
+{{--                 <div class="card-toolbar">--}}
+{{--                    <a href="#" class="btn btn-info font-weight-bolder font-size-sm mr-3">New Report</a>--}}
+{{--                    <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">Create</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!--end::Header-->--}}
+{{--            <!--begin::Body-->--}}
+{{--            <div class="card-body pt-0 pb-3">--}}
+{{--                <div class="tab-content">--}}
+{{--                    <!--begin::Table-->--}}
+{{--                    <div class="table-responsive">--}}
+{{--                        <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">--}}
+{{--                            <thead>--}}
+{{--                                <tr class="text-left text-uppercase">--}}
+{{--                                    <th style="min-width: 250px" class="pl-7">--}}
+{{--                                        <span class="text-dark-75">products</span>--}}
+{{--                                    </th>--}}
+{{--                                    <th style="min-width: 100px">earnings</th>--}}
+{{--                                    <th style="min-width: 100px">comission</th>--}}
+{{--                                    <th style="min-width: 100px">company</th>--}}
+{{--                                    <th style="min-width: 130px">rating</th>--}}
+{{--                                    <th style="min-width: 80px"></th>--}}
+{{--                                </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                                 <tr>--}}
+{{--                                    <td class="pl-0 py-8">--}}
+{{--                                        <div class="d-flex align-items-center">--}}
+{{--                                            <div class="symbol symbol-50 symbol-light mr-4">--}}
+{{--                                                <span class="symbol-label">--}}
+{{--                                                    <img src="{{asset('assets/media/svg/avatars/001-boy.svg')}}"--}}
+{{--                                class="h-75 align-self-end" alt="" />--}}
+{{--                                </span>--}}
+{{--                    </div>--}}
+{{--                    <div>--}}
+{{--                        <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad--}}
+{{--                            Simmons</a>--}}
+{{--                        <span class="text-muted font-weight-bold d-block">HTML,--}}
+{{--                            JS, ReactJS</span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">$8,000,000</span>--}}
+{{--                    <span class="text-muted font-weight-bold">In--}}
+{{--                        Proccess</span>--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">$520</span>--}}
+{{--                    <span class="text-muted font-weight-bold">Paid</span>--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Intertico</span>--}}
+{{--                    <span class="text-muted font-weight-bold">Web, UI/UX--}}
+{{--                        Design</span>--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    <img src="{{asset('assets/media/logos/stars.png')}}" alt="image" style="width: 5.5rem" />--}}
+{{--                    <span class="text-muted font-weight-bold d-block font-size-sm">Best--}}
+{{--                        Rated</span>--}}
+{{--                </td>--}}
+{{--                <td class="pr-0 text-right">--}}
+{{--                    <a href="#" class="btn btn-light-success font-weight-bolder font-size-sm">View--}}
+{{--                        Offer</a>--}}
+{{--                </td>--}}
+{{--                </tr>--}}
+{{--                </tbody>--}}
+{{--                </table>--}}
+{{--            </div>--}}
+{{--            <!--end::Table-->--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <!--end::Body-->--}}
+{{--</div>--}}
+{{--<!--end::Advance Table Widget 4-->--}}
+{{--</div>--}}
+{{--</div>--}}
 <!--end::Row-->
 <!--end::Dashboard-->
 @endsection

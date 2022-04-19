@@ -9,7 +9,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <h2>تفاصيل المنتج</h2>
+            <h2>{{trans('site/product.Product_details')}}</h2>
             <form>
                 <div class="row">
                     <div class="col-lg-6">
@@ -32,37 +32,37 @@
                         </div>
 
                         <div class="mokawenat">
-                            <h5>مكونات المنتج</h5>
+                            <h5>{{trans('site/product.Product_components')}}</h5>
                             <p>{{$show->details}}</p>
                         </div>
                         <div class="value">
-                            <h5>القيمة الغذائية للمنتج</h5>
+                            <h5>{{trans('site/product.Nutritional_value')}}</h5>
                             <ul>
                                 <li>
-                                    <span class="type">طاقة (س,ح): </span>
+                                    <span class="type">{{trans('site/product.power')}}</span>
                                     <span class="number">{{$show->calories}}</span>
                                 </li>
                                 <li>
-                                    <span class="type">دهنيات (غ): </span>
+                                    <span class="type">{{trans('site/product.fats')}} </span>
                                     <span class="number">{{$show->fats}}</span>
                                 </li>
                                 <li>
-                                    <span class="type">بروتينات (غ): </span>
+                                    <span class="type">{{trans('site/product.proteins')}}</span>
                                     <span class="number">{{$show->protein}}</span>
                                 </li>
                                 <li>
-                                    <span class="type">كربوهيدرات (غ): </span>
+                                    <span class="type">{{trans('site/product.carbohydrate')}}</span>
                                     <span class="number">{{$show->carbohydrate}}</span>
                                 </li>
                                 <li>
-                                    <span class="type">فيتامين سي (ملغم): </span>
+                                    <span class="type">{{trans('site/product.vitamin')}}</span>
                                     <span class="number">{{$show->vitamin}}</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="d-flex price">
-                            <h5>السعر: </h5>
-                            <p>{{$show->price}} شيكل</p>
+                            <h5>{{trans('site/product.price')}} </h5>
+                            <p>{{$show->price}} {{trans('site/product.shekel')}}</p>
                         </div>
                     </div>
 

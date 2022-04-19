@@ -80505,6 +80505,7 @@ body {
     padding-top: 0;
   }
 }
+
 @media (min-width: 992px) {
   .footer-fixed .footer {
     position: fixed;

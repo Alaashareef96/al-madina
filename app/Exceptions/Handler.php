@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,6 +45,17 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
 
+        if ($e instanceof HttpException){
+            if($request->wantsJson() || $request->ajax()) {
+               if ($e->getMessage() == "Your email address is not verified."){
+
+                return response()->json([
+                    'type'=>'emailNotVerified',
+                    'message' => $e->getMessage()
+                ], 422);
+               }
+            }
+        }
         if($e instanceof ValidationException) {
 
             // if($request->wantsJson() || $request->ajax()){

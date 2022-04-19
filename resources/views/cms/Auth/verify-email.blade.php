@@ -50,7 +50,7 @@
 					<!--begin::Login Sign in form-->
 					<div class="login-signin">
 						<div class="mb-20">
-							<h3>Guide</h3>
+							<h3>AL-Madina</h3>
 							<div class="text-muted font-weight-bold">You must verify your email, resend verification link from below</div>
 						</div>
 						<form class="form" id="kt_login_signin_form">

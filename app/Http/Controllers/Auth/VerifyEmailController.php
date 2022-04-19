@@ -18,12 +18,20 @@ class VerifyEmailController extends Controller
     public function send(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
+//        return back()->with('success', 'worked');
         return response()->json(['message' => 'Verification link send!'], Response::HTTP_OK);
     }
 
     public function verify(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect('/cms/admin/');
+//        if(auth('admin')){
+//            return redirect('/cms/admin/');
+//        }else{
+            return redirect()->back();
+//        }
+
     }
+
+
 }

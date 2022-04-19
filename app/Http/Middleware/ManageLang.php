@@ -8,13 +8,7 @@ use Illuminate\Support\Facades\App;
 
 class ManageLang
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+
     public function handle(Request $request, Closure $next)
     {
         if (!session()->has('lang')) {

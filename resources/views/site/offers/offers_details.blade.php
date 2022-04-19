@@ -1,6 +1,6 @@
 @extends('site.parent')
 
-@section('titel','Home')
+@section('titel',trans('site/offer.Offer_details'))
 
 
 
@@ -9,9 +9,9 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('offer')}}">الحملات والعروض</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">تفاصيل الحملة</li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('site/offer.Home')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('offer')}}">{{trans('site/offer.Campaigns_and_offers')}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{trans('site/offer.Offer_details')}}</li>
                 </ol>
             </nav>
             <!-- banner -->
@@ -31,7 +31,7 @@
             <div class="subject-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">
                 <h1>{{$offers->name}}</h1>
                 <div class="links">
-                    <span>مشاركة</span>
+                    <span>{{trans('site/offer.sharing')}}</span>
                     <a href="#" title="twitter">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16.445" height="13.362"
                              viewBox="0 0 16.445 13.362">
@@ -120,7 +120,7 @@
                     </g>
                 </svg>
 
-                <span>‏15 نوفمبر, 2021</span>
+                <span>{{$offers->created_at}}</span>
             </div>
             <div class="bg-text-details">
 {{--                <p>--}}
@@ -155,7 +155,7 @@
             </div>
             <div class="bg-text-details with-bg mt-5">
                 <div class="roles">
-                    <h3>شروط الحملة:</h3>
+                    <h3>{{trans('site/offer.Campaign_Terms')}}</h3>
 
                     <?php $i = 0; ?>
                     @foreach($offers->terms as $terms_offer)
@@ -167,13 +167,13 @@
                     @endforeach
                 </div>
                 <div class="roles">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">آلية الإشتراك:</h3>
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.35s">{{trans('site/offer.Subscription')}}</h3>
                     <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
                        {{$offers->subscription}}
                     </p>
                 </div>
                 <div class="roles end">
-                    <h3 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.45s">تاريخ انتهاء الحملة:</h3>
+                    <h3 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.45s">{{trans('site/offer.end_date')}}</h3>
                     <div class="d-flex align-items-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">
                         <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
                             <g id="Group_52906" data-name="Group 52906" transform="translate(-1191.086 -530)">
@@ -215,7 +215,7 @@
                                 </g>
                             </g>
                         </svg>
-                        <p class="first">تنتهي الحملة في تاريخ</p>
+                        <p class="first">{{trans('site/offer.Campaign_ends_on_date')}}</p>
                         <p class="date">{{$offers->expiry_date}}</p>
                     </div>
                 </div>
@@ -223,14 +223,14 @@
                     <div class="row">
                         <div class="col-lg-6 mt-auto">
                             <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.55s">
-                                اشترك الأن واحصل على العديد من الجوائز القيمة
+                                {{trans('site/offer.Subscribe_now_and_get_many_valuable_prizes')}}
                             </h3>
                         </div>
                         <div class="col-lg-2 ml-auto">
                             <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg"
                                class="btn btn-primary custom-botton wow fadeInUp" data-wow-duration="1s"
                                data-wow-delay="0.6s">
-                                اشتراك الأن
+                                {{trans('site/offer.Subscribe_now')}}
                             </a>
                         </div>
                     </div>
@@ -535,48 +535,48 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h2>الاشتراك في الحملة</h2>
+                    <h2>{{trans('site/offer.Subscribe_to_the_campaign')}}</h2>
                     <form id="create-form">
                         @csrf
                         <div class="row">
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">الاسم كاملا:</label>
+                                    <label for="recipient-name" class="col-form-label">{{trans('site/offer.full_name')}}</label>
                                     <input type="text" class="form-control custom-input" name="name" id="recipient-name"
-                                           placeholder="أدخل الاسم كاملا">
+                                           placeholder="{{trans('site/offer.enter_full_name')}}">
                                     <span class="name"></span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">الايميل:</label>
+                                    <label for="recipient-name" class="col-form-label">{{trans('site/offer.email')}}</label>
                                     <input type="email" class="form-control custom-input" name="email" id="recipient-name"
-                                           placeholder="أدخل الإيميل">
+                                           placeholder="{{trans('site/offer.enter_email')}}">
                                     <span class="email"></span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">رقم المحمول:</label>
+                                    <label for="recipient-name" class="col-form-label">{{trans('site/offer.phone')}}</label>
                                     <input type="text" class="form-control custom-input" name="mobile" id="recipient-name"
-                                           placeholder="ادخل رقم المحمول">
+                                           placeholder="{{trans('site/offer.enter_phone')}}">
                                     <span class="mobile"></span>
                                 </div>
 
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">الكود:</label>
+                                    <label for="recipient-name" class="col-form-label">{{trans('site/offer.code')}}</label>
                                     <input type="text" class="form-control custom-input" name="code" id="recipient-name"
-                                           placeholder="ادخل الكود">
+                                           placeholder="{{trans('site/offer.enter_code')}}">
                                     <span class="code"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 mx-auto">
                             <button type="button"  onclick="store()" class="btn btn-primary custom-botton">
-                                اشتراك الأن
+                                {{trans('site/offer.Subscribe_now')}}
                             </button>
                         </div>
                     </form>

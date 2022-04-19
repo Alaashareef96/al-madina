@@ -7,6 +7,7 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactSiteController extends Controller
@@ -20,14 +21,17 @@ class ContactSiteController extends Controller
 
     public function save(ContactRequest $request)
     {
-
-
-        $contact = Contact::create($request->only(['name', 'email', 'comment','type',]));
-
-        return response()->json([
-            'message' => $contact ? 'Create successful' : 'Create failed',
-        ],$contact ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-
+//        dd(auth('web')->check());
+//      if(auth('web')->check()){
+          $contact = Contact::create($request->only(['name', 'email', 'comment','type',]));
+          return response()->json([
+              'message' => $contact ? 'Create successful' : 'Create failed',
+          ],$contact ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+//      }else{
+//          return response()->json([
+//              'message' => false,
+//          ], Response::HTTP_BAD_REQUEST);
+//      }
 
     }
 

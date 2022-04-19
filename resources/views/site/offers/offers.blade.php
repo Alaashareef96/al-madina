@@ -1,6 +1,6 @@
 @extends('site.parent')
 
-@section('titel','offers')
+@section('titel',trans('site/offer.Campaigns_and_offers'))
 
 @section('styl')
 
@@ -11,8 +11,8 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">الحملات والعروض</li>
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('site/offer.Home')}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{trans('site/offer.Campaigns_and_offers')}}</li>
                 </ol>
             </nav>
             <div class="row">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="share">
                                     <div class="main">
-                                        <p>مشاركة</p>
+                                        <p>{{trans('site/offer.sharing')}}</p>
                                         <i class="fa fa-share-square-o" aria-hidden="true"></i>
                                     </div>
                                     <div class="links">
