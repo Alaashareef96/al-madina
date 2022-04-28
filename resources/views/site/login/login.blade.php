@@ -218,7 +218,12 @@
 
 	        // guard: guard
 	      }).then(function (response) {
-	          window.location.href = '/al-madina/home';
+	          @if(url()->previous())
+                  window.location.href = "{{url()->previous()}}";
+              @else
+                  window.location.href = '/al-madina/home';
+               @endif
+
 	      })
 	        .catch(function (error) {
 	          toastr.error(error.response.data.message)

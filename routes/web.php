@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\JobsRequestController;
@@ -100,6 +101,8 @@ Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(functio
 
     Route::resource('products', ProductController::class);
 
+    Route::resource('coupons', CouponController::class);
+
     Route::resource('offers', OfferController::class);
 
     Route::get('/delete/{id}', [DeleteImageController::class, 'delete'])->name('delete');
@@ -178,9 +181,17 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::get('/favourite-show', [FavouriteSiteController::class, 'index'])->name('favourite-show')->middleware(['auth:web','verified']);
     Route::delete('/favourite-delete/{id}', [FavouriteSiteController::class, 'destroy'])->name('favourite-delete')->middleware(['auth:web','verified']);
 
-    Route::get('/cart', [CartSiteController::class, 'getCart'])->name('site.cart.index')->middleware(['auth:web','verified']);
-    Route::post('/cart/add', [CartSiteController::class, 'AddToCart'])->name('site.cart.add')->middleware(['auth:web','verified']);
-    Route::delete('/cart-remove/{rowId}', [CartSiteController::class, 'RemoveCartProduct'])->name('site.cart.remove')->middleware(['auth:web','verified']);
+    Route::get('/cart', [CartSiteController::class, 'getCart'])->name('site.cart.index');
+    Route::post('/cart/add', [CartSiteController::class, 'AddToCart'])->name('site.cart.add');
+    Route::delete('/cart-remove/{rowId}', [CartSiteController::class, 'RemoveCartProduct'])->name('site.cart.remove');
+    Route::get('/cart-increment/{rowId}', [CartSiteController::class, 'CartIncrement'])->name('site.cart.increment');
+    Route::get('/cart-decrement/{rowId}', [CartSiteController::class, 'CartDecrement'])->name('site.cart.decrement');
+    Route::get('/cart-change', [CartSiteController::class, 'CartChange'])->name('site.cart.change');
+
+
+    Route::post('/coupon-apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon');
+    Route::get('/coupon-calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation');
+    Route::get('/coupon-remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove');
 
     Route::get('logout', [AuthSiteController::class,'logoutUser'])->name('auth.logout.user');
 

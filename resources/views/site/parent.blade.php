@@ -36,13 +36,13 @@
         }
         .badge-number{
             position: absolute;
-            top: -11px;
-            left: 7px;
-            width: 15px;
-            height: 17px;
-            /* z-index: -1; */
+            top: -16px;
+            left: 1px;
+            width: max-content;
+            padding: 4px 6px 2px;
+            z-index: -1;
             border-radius: 50%;
-            background: red;
+            background: #aad471;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -94,14 +94,16 @@
 
                     <div class="d-flex ">
                         <div class="wishlist-show mx-3">
-                            <a  href="{{route('favourite-show')}}" class="wishlist" >
+                            <a  href="{{route('favourite-show')}}" class="wishlist-main" >
                                 <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
                             </a>
                         </div>
+                        @yield('catr')
                         <div class="catr-show">
-                            <a  href="{{route('site.cart.index')}}" class="catrs">
+                            <a  href="{{route('site.cart.index')}}" class="catrs-main">
                                 <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
                             </a>
+{{--                            {{Session::get('cartQty')}}--}}
                             <span class="badge-number">{{Gloudemans\Shoppingcart\Facades\Cart::count()}}</span>
                         </div>
                     </div>
@@ -310,11 +312,14 @@
     </div>
 @endif
 
+@auth
 @if(auth()->user()->email_verified_at == null)
     <div class="alert alert-danger" role="alert">
         الرجاء تفعيل البريد الالكتروني <a href="" class="alert-link-verified">اضغط هنا</a>.
     </div>
 @endif
+@endauth
+
 @yield('contact')
 
 <!-- footer -->

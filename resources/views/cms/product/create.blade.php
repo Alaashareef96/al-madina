@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('page-name','Create Team')
+@section('page-name','Create Product')
 @section('main-page','Content Management')
-@section('sub-page','Team')
-@section('page-name-small','Create Team')
+@section('sub-page','Products')
+@section('page-name-small','Create Product')
 
 @section('styles')
 

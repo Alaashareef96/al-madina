@@ -25,7 +25,14 @@
     </style>
 
 @endsection
-
+{{--@section('catr')--}}
+{{--                                  <div class="catr-show">--}}
+{{--                                    <a  href="{{route('site.cart.index')}}" class="catrs-main">--}}
+{{--                                        <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>--}}
+{{--                                    </a>--}}
+{{--                                    <span class="badge-number">{{$cartQty}}</span>--}}
+{{--                                </div>--}}
+{{--@endsection--}}
 @section('contact')
 
     <div class="products bubbles">
@@ -72,7 +79,7 @@
 
                         <!--begin::Table-->
                         <div class="table">
-                            <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_2">
+                            <table class="table table-head-custom table-vertical-center"  data-parent="price" id="kt_advance_table_widget_2">
                                 <thead>
                                 <tr class="text-uppercase">
                                     <th style="min-width: 50px">#</th>
@@ -89,7 +96,7 @@
                                 <tbody>
                                 <?php $i = 0; ?>
                                 @foreach ($carts as $product)
-                                    <tr>
+                                    <tr id="tr-{{$product->rowId}}">
                                         <?php $i++; ?>
                                         <td>{{ $i }}</td>
                                         <td>
@@ -101,22 +108,72 @@
                                         <td>{{$product->options->taste}}</td>
                                         <td>{{$product->options->size}}</td>
                                             <td class="col-md-2">
-                                                <button type="submit" class="btn btn-success btn-sm">+</button>
-                                                <input type="text" value="{{$product->qty}}" min="1" max="100" disabled="" style="width:25px;" >
-                                                <button type="submit" class="btn btn-danger btn-sm">-</button>
+                                                <button type="submit" onclick="cartIncrement('{{$product->rowId}}',this)" class="btn btn-success btn-sm">+</button>
+                                                <input type="text" class="input-number" data-id="{{$product->rowId}}" value="{{$product->qty}}"  min="1" max="100"  style="width:38px;" >
+                                                <button type="submit" onclick="cartDecrement('{{$product->rowId}}',this)" class="btn btn-danger btn-sm">-</button>
                                             </td>
 
-                                            <td>{{$product->subtotal}}</td>
+                                            <td id="subtotal-cart">{{$product->subtotal}}</td>
                                         <td class="pr-0 text-right">
                                             <a href="#" onclick="confirmDestroy('{{$product->rowId}}',this)">
                                             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 
                                             </a>
                                         </td>
+                                    </tr>
                                 @endforeach
+                                </tbody>
                             </table>
                         </div>
                         <!--end::Table-->
+                    <div class="row">
+                    <div class="col-md-4 col-sm-12 estimate-ship-tax">
+{{--                        @if(Session::has('coupon'))--}}
+
+{{--                        @else--}}
+                            <table class="table" id="couponField">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <span class="estimate-title">Discount Code</span>
+                                    <p>Enter your coupon code if you have one..</p>
+                                </th>
+                            </tr>
+                            <thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control unicase-form-control text-input" placeholder="You Coupon.." id="coupon_name">
+                                    </div>
+                                    <div class="clearfix pull-right">
+                                        <button type="submit" class="btn-upper btn btn-primary" onclick="applyCoupon()">APPLY COUPON</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody><!-- /tbody -->
+                        </table><!-- /table -->
+{{--                            @endif--}}
+                    </div><!-- /.estimate-ship-tax -->
+                    <div>
+
+                    <div class="col-md-12 col-sm-12 cart-shopping-total">
+                        <table class="table">
+                            <thead id="couponCalField">
+
+                            </thead><!-- /thead -->
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="cart-checkout-btn pull-right">
+                                        <button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody><!-- /tbody -->
+                        </table><!-- /table -->
+                    </div><!-- /.cart-shopping-total -->
 
 {{--                    </div>--}}
                     <div class="row">
@@ -143,7 +200,7 @@
 
 
 @section('script')
-
+{{--    <script type="text/javascript" src="{{asset('site/js/jquery.numeric-min.js')}}"></script>--}}
     <script>
         function confirmDestroy(id, reference){
             Swal.fire({
@@ -168,6 +225,9 @@
                     // handle success
                     console.log(response);
                     reference.closest('tr').remove();
+                    couponCalculation();
+                    $('#couponField').show();
+                    $('#coupon_name').val('');
                     Swal.fire({
                         icon: 'success',
                         title: 'تم الحذف بنجاح',
@@ -184,6 +244,180 @@
                     })
                 })
         }
+
+        function cartIncrement(rowId,that){
+          // $sss=   $(that).siblings('.input-number').val();
+          //   console.log($sss)
+            $.ajax({
+                type:'GET',
+                url: "/al-madina/cart-increment/"+rowId,
+                dataType:'json',
+                success:function(data){
+                    couponCalculation();
+                    $('#tr-'+rowId).find("#subtotal-cart").html(data.showTotal);
+                    $(that).siblings('.input-number').val(data.showQty);
+                    $('#search_number').html(data.cartQty);
+                    $('.badge-number').html(data.cartQty);
+                }
+            });
+        }
+
+        function cartDecrement(rowId,that){
+            $.ajax({
+                type:'GET',
+                url: "/al-madina/cart-decrement/"+rowId,
+                dataType:'json',
+                success:function(data){
+                    if(data.status){
+                        couponCalculation();
+                        $('#tr-'+rowId).find("#subtotal-cart").html(data.showTotal);
+                        $(that).siblings('.input-number').val(data.showQty);
+                        $('#search_number').html(data.cartQty);
+                        $('.badge-number').html(data.cartQty);
+                    }else{
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'يجب اضافة قيمة أعلى من صفر',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }
+            });
+        }
+        // $('.input-number').numeric({
+        //     negative:false
+        // })
+        $(document).on('change','.input-number',function (){
+            var number =$(this).val();
+            var rowId =  $(this).data('id');
+            $.ajax({
+                type: "get",
+                url: "{{ route('site.cart.change') }}",
+                data: {
+                    number: number,
+                    rowId: rowId,
+                },
+                success:function(data){
+                    if(data.status){
+                        couponCalculation();
+                        $('#tr-'+rowId).find("#subtotal-cart").html(data.showTotal);
+                        $('#search_number').html(data.cartQty);
+                        $('.badge-number').html(data.cartQty);
+                    }
+                    else{
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'يجب اضافة قيمة أعلى من صفر',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                }
+            });
+        })
+
+        function applyCoupon(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var coupon_name = $('#coupon_name').val();
+            $.ajax({
+                type:'post',
+                url: "{{ route('site.cart.coupon') }}",
+                data:{
+                    coupon_name: coupon_name,
+                },
+                success:function(data) {
+                    if(data.success){
+                        couponCalculation();
+                        $('#couponField').hide();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم إضافة الكوبون بنجاح',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }else{
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'هذا الكوبون لا يعمل',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }
+            });
+        }
+
+        function couponCalculation(){
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('site.cart.couponcalculation') }}",
+                dataType: 'json',
+                success:function(data){
+
+                    if (data.total) {
+                        $('#couponCalField').html(
+                            `<tr>
+                                <th>
+                                    <div class="cart-sub-total">
+                                        Subtotal<span class="inner-left-md">$ ${data.total}</span>
+                                    </div>
+                                    <div class="cart-grand-total">
+                                        Grand Total<span class="inner-left-md">$ ${data.total}</span>
+                                    </div>
+                                </th>
+                            </tr>`
+                        )
+                    }else{
+                        $('#couponCalField').html(
+                            `<tr>
+                                    <th>
+                                        <div class="cart-sub-total">
+                                            Subtotal<span class="inner-left-md">$ ${data.subtotal}</span>
+                                        </div>
+                                        <div class="cart-sub-total">
+                                            Coupon<span class="inner-left-md">$ ${data.coupon_name}</span>
+                                            <button type="submit" onclick="couponRemove()"><i class="fa fa-times"></i>  </button>
+                                        </div>
+                                         <div class="cart-sub-total">
+                                            Discount Amount<span class="inner-left-md">$ ${data.discount_amount}</span>
+                                        </div>
+                                        <div class="cart-grand-total">
+                                            Grand Total<span class="inner-left-md">$ ${data.total_amount}</span>
+                                        </div>
+                                    </th>
+                                        </tr>`
+                        )
+                    }
+                }
+            })
+        }
+        function couponRemove() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('site.cart.couponremove') }}",
+                dataType: 'json',
+                success: function (data) {
+                    couponCalculation();
+                    $('#couponField').show();
+                    $('#coupon_name').val('');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم حذف الكوبون',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+        }
+
+
+        couponCalculation();
 
     </script>
 

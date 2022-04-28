@@ -27,7 +27,7 @@ class JobController extends Controller
 
     public function store(JobsRequest $request)
     {
-        $data = $request->only(['name','email','gender','expiry_date']);
+        $data = $request->only(['name','terms','start_date','expiry_date']);
         $data['status'] = $request->has('status');
         $job = Job::create($data);
 
@@ -35,13 +35,6 @@ class JobController extends Controller
         return response()->json([
             'message' => $job ? 'Create successful' : 'Create failed'
         ],$job ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
-    }
-
-
-
-    public function show(Job $job)
-    {
-        //
     }
 
 

@@ -1,12 +1,12 @@
 @extends('cms.parent')
 
-@section('page-name','Create Jobs')
+@section('page-name','Create Coupon')
 @section('main-page','Content Management')
-@section('sub-page','Jobs')
-@section('page-name-small','Create Jobs')
+@section('sub-page','Coupons')
+@section('page-name-small','Create Coupon')
 
 @section('styles')
-    <link href="{{asset('cms/assets/css/_select2.scss')}}" rel="stylesheet" type="text/css" />
+
 
 @endsection
 
@@ -27,65 +27,42 @@
                     <h3 class="text-dark font-weight-bold mb-10">Basic Info</h3>
 
                     <div class="form-group row mt-4">
-                        <label for="name" class="col-3 col-form-label">Name (Ar):</label>
+                        <label for="name" class="col-3 col-form-label">Name:</label>
                         <div class="col-6">
-                            <input name="name[ar]" type="text" class="form-control" id="name" placeholder="Please enter your name" />
+                            <input name="name" type="text" class="form-control" id="name" placeholder="Please enter your name" />
 
-                            <span class="form-text text-muted">Please enter arabic name</span>
-                        </div>
-
-
-                    </div>
-                    <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Name (En):</label>
-                        <div class="col-6">
-                            <input name="name[en]" type="text" class="form-control" id="name_en" placeholder="Enter english name" />
-                            <span class="form-text text-muted">Please enter english name</span>
+                            <span class="form-text text-muted">Please enter name</span>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
 
-                    <h3 class="text-dark font-weight-bold mb-10">Terms</h3>
+                    <h3 class="text-dark font-weight-bold mb-10">Discount</h3>
                     <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Terms (ar):</label>
+                        <label for="name" class="col-3 col-form-label">Discount:</label>
                         <div class="col-6">
-                            <div class="tagify-item">
-                                <select class="js-example-basic-single" name="terms[ar][]" multiple>
+                            <input name="discount" type="text" class="form-control" id="discount" placeholder="Please enter your discount" />
 
-                                </select>
-                            </div>
-                    </div>
-                    </div>
-
-
-                    <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Terms (en):</label>
-                        <div class="col-6">
-                            <div class="tagify-item">
-                                <select class="js-example-basic-single_2" name="terms[en][]" multiple>
-
-                                </select>
-                            </div>
+                            <span class="form-text text-muted">Please enter discount</span>
                         </div>
                     </div>
-                    <div class="separator separator-dashed my-10"></div>
 
-                    <h3 class="text-dark font-weight-bold mb-10">Start Date</h3>
+                    <div class="separator separator-dashed my-10"></div>
+                    <h3 class="text-dark font-weight-bold mb-10">Quantity</h3>
                     <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Start Date:</label>
+                        <label for="name" class="col-3 col-form-label">Quantity:</label>
+                        <div class="col-6">
+                            <input name="qty" type="text" class="form-control" id="qty" placeholder="Please enter your quantity" />
+
+                            <span class="form-text text-muted">Please enter quantity</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-dark font-weight-bold mb-10">Date</h3>
+                    <div class="form-group row mt-4">
+                        <label class="col-3 col-form-label">Date:</label>
                         <div class="col-3">
-                            <input name="start_date" type="date" class="form-control" id="example-date-input" placeholder="Enter start_date" />
-                            <span class="form-text text-muted">Please enter start_date</span>
-                        </div>
-                    </div>
-                    <div class="separator separator-dashed my-10"></div>
-
-                    <h3 class="text-dark font-weight-bold mb-10">Expiry Date</h3>
-                    <div class="form-group row mt-4">
-                        <label class="col-3 col-form-label">Expiry Date:</label>
-                        <div class="col-3">
-                            <input name="expiry_date" type="date" class="form-control" id="example-date-input" placeholder="Enter expiry_date" />
-                            <span class="form-text text-muted">Please enter expiry_date</span>
+                            <input name="date" type="date" class="form-control" id="example-date-input" placeholder="Enter date" />
+                            <span class="form-text text-muted">Please enter date</span>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
@@ -124,12 +101,10 @@
 @endsection
 @section('scripts')
 
-<script src="{{asset('cms/assets/js/select2.js')}}"></script>
-
 <script>
      function store() {
          let formData = new FormData($('#create-form')[0]);
-             axios.post('/cms/admin/jobs', formData, {
+             axios.post('/cms/admin/coupons', formData, {
                  headers: {
                      'Content-Type': 'application/json',
                      'Accept': 'application/json',
@@ -137,7 +112,7 @@
              }).then(function (response) {
                  console.log(response);
                  toastr.success(response.data.message);
-                 window.location.href = '/cms/admin/jobs';
+                 window.location.href = '/cms/admin/coupons';
              }).catch(function (error) {
                  let messages = '';
                  if(typeof  error.response.data.message == 'string'){
@@ -152,21 +127,4 @@
              });
          }
 </script>
-
-<script>
-    $(".js-example-basic-single").select2({
-        tags: true,
-        tokenSeparators: [',', '  '],
-        width: '100%'
-    });
-</script>
-
-<script>
-    $(".js-example-basic-single_2").select2({
-        tags: true,
-        tokenSeparators: [',', '  '],
-        width: '100%'
-    });
-</script>
-
 @endsection

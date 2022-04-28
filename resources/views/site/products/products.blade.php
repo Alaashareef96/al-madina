@@ -499,6 +499,8 @@
                 title: '{{trans('site/product.guest')}}',
             })
             @endguest
+
+            @auth()
             @if(auth('web')->user()->email_verified_at == null)
             Swal.fire({
                 icon: 'info',
@@ -507,6 +509,8 @@
                 timer: 1500
             })
             @endif
+            @endauth
+
             var id = $(this).data("id");
             $.ajax({
 
@@ -550,22 +554,25 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            @guest()
-            Swal.fire({
-                icon: 'error',
-                title: '{{trans('site/product.guest')}}',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            @endguest
-            @if(auth('web')->user()->email_verified_at == null)
-            Swal.fire({
-                icon: 'info',
-                title: 'يجب تفعيل الايميل الخاص بك',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            @endif
+{{--            @guest()--}}
+{{--            Swal.fire({--}}
+{{--                icon: 'error',--}}
+{{--                title: '{{trans('site/product.guest')}}',--}}
+{{--                showConfirmButton: false,--}}
+{{--                timer: 1500--}}
+{{--            })--}}
+{{--            @endguest--}}
+
+{{--            @auth--}}
+{{--            @if(auth('web')->user()->email_verified_at == null)--}}
+{{--            Swal.fire({--}}
+{{--                icon: 'info',--}}
+{{--                title: 'يجب تفعيل الايميل الخاص بك',--}}
+{{--                showConfirmButton: false,--}}
+{{--                timer: 1500--}}
+{{--            })--}}
+{{--            @endif--}}
+{{--            @endauth--}}
             var id = $(this).data("id");
             $.ajax({
 
