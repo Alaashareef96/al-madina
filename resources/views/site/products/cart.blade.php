@@ -128,9 +128,9 @@
                         <!--end::Table-->
                     <div class="row">
                     <div class="col-md-4 col-sm-12 estimate-ship-tax">
-{{--                        @if(Session::has('coupon'))--}}
+                        @if(Session::has('coupon'))
 
-{{--                        @else--}}
+                        @else
                             <table class="table" id="couponField">
                             <thead>
                             <tr>
@@ -153,7 +153,7 @@
                             </tr>
                             </tbody><!-- /tbody -->
                         </table><!-- /table -->
-{{--                            @endif--}}
+                            @endif
                     </div><!-- /.estimate-ship-tax -->
                     <div>
 
@@ -166,7 +166,7 @@
                             <tr>
                                 <td>
                                     <div class="cart-checkout-btn pull-right">
-                                        <button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+                                        <a href="{{route('site.checkout')}}" type="submit"  class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</a>
 
                                     </div>
                                 </td>
@@ -200,7 +200,7 @@
 
 
 @section('script')
-{{--    <script type="text/javascript" src="{{asset('site/js/jquery.numeric-min.js')}}"></script>--}}
+    <script type="text/javascript" src="{{asset('site/js/jquery.numeric-min.js')}}"></script>
     <script>
         function confirmDestroy(id, reference){
             Swal.fire({
@@ -285,9 +285,9 @@
                 }
             });
         }
-        // $('.input-number').numeric({
-        //     negative:false
-        // })
+        $('.input-number').numeric({
+            negative:false
+        })
         $(document).on('change','.input-number',function (){
             var number =$(this).val();
             var rowId =  $(this).data('id');
@@ -414,6 +414,35 @@
                     })
                 }
             })
+        }
+        function Checkout(){
+            @guest()
+            Swal.fire({
+                icon: 'error',
+                title: '{{trans('site/product.guest')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            @endguest
+            @auth
+            $.ajax({
+                type:'GET',
+                url: "{{ route('site.checkout') }}",
+                success:function(data){
+                    // if(!status){
+                    //     Swal.fire({
+                    //         icon: 'error',
+                    //         title: 'يجب اضافة منتج للسلة أولا',
+                    //         showConfirmButton: false,
+                    //         timer: 1500
+                    //     });
+                    // }
+                }
+
+
+            });
+            @endauth
+
         }
 
 

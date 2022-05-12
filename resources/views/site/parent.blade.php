@@ -23,7 +23,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.8.1/lottie_svg.min.js" integrity="sha512-jk2H6cbspEVLyLHIJkHcwiHqh7sQuyrBJvHKokFyKebzaRZiA7RmcbAo7KvM3GqFaLJJGDFC/gBMYzbeeS7KUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 
+
+
+{{--    <link rel="stylesheet" href="{{asset('cms/assets/plugins/toastr/toastr.min.css')}}" />--}}
+{{--    <link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">--}}
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
     <style>
         #loading svg path{
             fill: #FFF;
@@ -280,6 +287,45 @@
     </div>
 </header>
 <!-- ./header -->
+{{--@dd(Session::get('success'))--}}
+@if(Session::has('successSweet'))
+    <script type="text/javascript">
+        new swal({
+            icon: 'success',
+            title: '{{Session::get('successSweet')}}',
+            showConfirmButton: false,
+            timer: 1500
+        }).then((value) => {
+            //location.reload();
+        }).catch(swal.noop);
+    </script>
+@endif
+
+@if(Session::has('error'))
+    <script type="text/javascript">
+        new swal({
+            icon: 'error',
+            title: '{{Session::get('error')}}',
+            showConfirmButton: false,
+            timer: 1500
+        }).then((value) => {
+            //location.reload();
+        }).catch(swal.noop);
+    </script>
+@endif
+
+@if(Session::has('info'))
+    <script type="text/javascript">
+        new swal({
+            icon: 'info',
+            title: '{{Session::get('info')}}',
+            showConfirmButton: false,
+            timer: 1500
+        }).then((value) => {
+            //location.reload();
+        }).catch(swal.noop);
+    </script>
+@endif
 
 @if ($message = session('success'))
     <div class="alert alert-success alert-block">
@@ -289,28 +335,28 @@
 @endif
 
 
-@if ($message = session('error'))
-    <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{ $message }}</strong>
-    </div>
-@endif
+{{--@if ($message = session('error'))--}}
+{{--    <div class="alert alert-danger alert-block">--}}
+{{--        <button type="button" class="close" data-dismiss="alert">×</button>--}}
+{{--        <strong>{{ $message }}</strong>--}}
+{{--    </div>--}}
+{{--@endif--}}
 
 
-@if ($message = session('warning'))
-    <div class="alert alert-warning alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{ $message }}</strong>
-    </div>
-@endif
+{{--@if ($message = session('warning'))--}}
+{{--    <div class="alert alert-warning alert-block">--}}
+{{--        <button type="button" class="close" data-dismiss="alert">×</button>--}}
+{{--        <strong>{{ $message }}</strong>--}}
+{{--    </div>--}}
+{{--@endif--}}
 
 
-@if ($message = session('info'))
-    <div class="alert alert-info alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{ $message }}</strong>
-    </div>
-@endif
+{{--@if ($message = session('info'))--}}
+{{--    <div class="alert alert-info alert-block">--}}
+{{--        <button type="button" class="close" data-dismiss="alert">×</button>--}}
+{{--        <strong>{{ $message }}</strong>--}}
+{{--    </div>--}}
+{{--@endif--}}
 
 @auth
 @if(auth()->user()->email_verified_at == null)
@@ -493,9 +539,11 @@
 <script src="{{asset('site/js/wow.min.js')}}"></script>
 <script src="{{asset('site/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('site/js/main.js')}}"></script>
-<script src="{{asset('cms/assets/js/pages/features/miscellaneous/toastr.js')}}"></script>
+{{--<script src="{{asset('cms/assets/js/pages/features/miscellaneous/toastr.js')}}"></script>--}}
 <script src="{{asset('js/axios.js')}}"></script>
 <script src="{{asset('cms/assets/js/pages/features/miscellaneous/sweetalert2.js')}}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 {{--<script>--}}
 {{--    // // var words = ['المدينة','المدينه']--}}
@@ -555,5 +603,11 @@
 
 </script>
 
+
+
+
+
 @yield('script')
+
+
 </html>

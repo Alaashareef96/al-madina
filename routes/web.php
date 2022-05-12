@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CitieController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\JobController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Site\AboutSiteController;
 use App\Http\Controllers\Site\AlbumsSiteController;
 use App\Http\Controllers\Site\AuthSiteController;
 use App\Http\Controllers\Site\CartSiteController;
+use App\Http\Controllers\Site\CheckoutSiteController;
 use App\Http\Controllers\Site\ContactSiteController;
 use App\Http\Controllers\Site\FacebookSiteController;
 use App\Http\Controllers\Site\FavouriteSiteController;
@@ -29,6 +32,7 @@ use App\Http\Controllers\Site\HomeSiteController;
 use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
+use App\Http\Controllers\Site\PaymentStripSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
 use App\Http\Controllers\Site\SearchSiteController;
 use App\Http\Controllers\Site\SocialController;
@@ -132,6 +136,8 @@ Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(functio
     Route::get('/status-user', [UsersSiteController::class, 'status'])->name('status-user');
     Route::get('/delete-user/{id}', [UsersSiteController::class, 'deleteUser'])->name('delete-user');
 
+    Route::resource('cities', CityController::class);
+
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
@@ -192,6 +198,14 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::post('/coupon-apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon');
     Route::get('/coupon-calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation');
     Route::get('/coupon-remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove');
+
+
+    Route::get('/checkout', [CheckoutSiteController::class, 'CheckoutCreate'])->name('site.checkout');
+
+    Route::post('/checkout/store', [CheckoutSiteController::class, 'CheckoutStore'])->name('site.checkout.store');
+
+    Route::post('/stripe/order', [PaymentStripSiteController::class, 'StripeOrder'])->name('site.stripe.order');
+
 
     Route::get('logout', [AuthSiteController::class,'logoutUser'])->name('auth.logout.user');
 
