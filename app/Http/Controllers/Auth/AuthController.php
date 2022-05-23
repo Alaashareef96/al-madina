@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
     public function ShowLogin(){
+
         return response()->view('cms.auth.login');
     }
 
@@ -82,7 +83,7 @@ class AuthController extends Controller
 
 
     private function getGuardName(){
-        return auth('admin')->check() ? 'admin' : 'pro';
+        return auth('admin')->check() ? 'admin' : 'web';
     }
 
     public function logout(Request $request){

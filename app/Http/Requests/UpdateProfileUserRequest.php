@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditPasswordRequest extends FormRequest
+class UpdateProfileUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,10 @@ class EditPasswordRequest extends FormRequest
      */
     public function rules()
     {
-        $guard = auth('admin')->check() ? 'admin' : 'web';
         return [
-            'current_password' => 'required|string|current_password:' . $guard,
-            'new_password' => 'required|string|min:3|max:25|confirmed',
-            'new_password_confirmation' => 'required|string|min:3|max:25',
+            'name' => 'required|string|min:3|max:45',
+            'email' => 'nullable|string|email|unique:users,email,'.auth('web')->id(),
+            'mobile' => 'required|string|numeric|digits:10',
         ];
     }
 }

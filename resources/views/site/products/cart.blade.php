@@ -25,14 +25,6 @@
     </style>
 
 @endsection
-{{--@section('catr')--}}
-{{--                                  <div class="catr-show">--}}
-{{--                                    <a  href="{{route('site.cart.index')}}" class="catrs-main">--}}
-{{--                                        <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>--}}
-{{--                                    </a>--}}
-{{--                                    <span class="badge-number">{{$cartQty}}</span>--}}
-{{--                                </div>--}}
-{{--@endsection--}}
 @section('contact')
 
     <div class="products bubbles">

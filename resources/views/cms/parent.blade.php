@@ -7,7 +7,7 @@
 <head>
 	<base href="">
 	<meta charset="utf-8" />
-	<title>AL-Madina | CMS</title>
+    <title>@yield('title')</title>
 	<meta name="description"
 		content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -1237,6 +1237,92 @@
                                                     <span></span>
                                                 </i>
                                                 <span class="menu-text">Index</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+									<span class="svg-icon menu-icon">
+										<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Shopping\Barcode.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+												<rect x="0" y="0" width="24" height="24" />
+												<path
+                                                    d="M13,5 L15,5 L15,20 L13,20 L13,5 Z M5,5 L5,20 L3,20 C2.44771525,20 2,19.5522847 2,19 L2,6 C2,5.44771525 2.44771525,5 3,5 L5,5 Z M16,5 L18,5 L18,20 L16,20 L16,5 Z M20,5 L21,5 C21.5522847,5 22,5.44771525 22,6 L22,19 C22,19.5522847 21.5522847,20 21,20 L20,20 L20,5 Z"
+                                                    fill="#000000" />
+												<polygon fill="#000000" opacity="0.3" points="9 5 9 20 7 20 7 5" />
+											</g>
+										</svg>
+                                        <!--end::Svg Icon--></span>
+                                    <span class="menu-text">Orders</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+											<span class="menu-link">
+												<span class="menu-text">Orders</span>
+											</span>
+                                        </li>
+
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('pending-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Pending</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('confirmed-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Confirmed</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('processing-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Processing</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('picked-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Picked</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('shipped-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Shipped</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item" aria-haspopup="true">
+                                            <a href="{{route('delivered-orders')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Delivered</span>
                                             </a>
                                         </li>
 

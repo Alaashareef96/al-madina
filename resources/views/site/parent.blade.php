@@ -88,10 +88,10 @@
         <div class="container">
             <div class="top">
                 <div class="language">
-                        @if(auth('web')->user()->id ?? '' != null)
-                            <a href="{{route('auth.logout.user')}}" type="button" class="btn btn-primary">LogoOut</a>
-                        @else
+                        @if(auth('web')->user() == null)
+
                             <a href="{{route('auth.login.view.user')}}" type="button" class="btn btn-primary">Login&SignUp</a>
+
                         @endif
 
                     <a href="{{route('dashboard.change-language-user','ar')}}" class=@if (App::getLocale() == 'ar') "active" @endif >العربية</a>
@@ -105,13 +105,21 @@
                                 <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
                             </a>
                         </div>
-                        @yield('catr')
+
                         <div class="catr-show">
                             <a  href="{{route('site.cart.index')}}" class="catrs-main">
                                 <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
                             </a>
 {{--                            {{Session::get('cartQty')}}--}}
                             <span class="badge-number">{{Gloudemans\Shoppingcart\Facades\Cart::count()}}</span>
+                        </div>
+                        <div class="order-show mx-3">
+                            <a  href="{{route('site.profile')}}" class="order-show" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                     <div class="socail-media ml-3">
@@ -602,10 +610,6 @@
     });
 
 </script>
-
-
-
-
 
 @yield('script')
 

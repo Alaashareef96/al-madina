@@ -51,10 +51,10 @@ class CheckoutSiteController extends Controller
 
         if ($request->payment_method == 'stripe') {
           return view('site.checkout.payment_stripe', compact('data','cartTotal','cartQty'));
-        } elseif ($request->payment_method == 'card') {
-         return 'card';
+        } elseif ($request->payment_method == 'cash') {
+            return view('site.checkout.payment_cash', compact('data','cartTotal','cartQty'));
         } else {
-            return 'cash';
+           return 'paypal';
         }
 
     }

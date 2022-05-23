@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthSiteController extends Controller
@@ -71,5 +72,28 @@ class AuthSiteController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         return redirect()->route('home');
+    }
+
+    public function sendResetEmailUser(Request $request)
+    {
+
+//        dd(Password::broker('admins'));
+        $validator = Validator($request->all(), [
+            'email' => 'required|email',
+        ]);
+        if (!$validator->fails()) {
+            $status = Password::broker('users')->sendResetLink(
+                $request->only('email')
+            );
+
+            return $status === Password::RESET_LINK_SENT
+                ? response()->json(['message' => __($status)], Response::HTTP_OK)
+                : response()->json(['message' => __($status)], Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
     }
 }

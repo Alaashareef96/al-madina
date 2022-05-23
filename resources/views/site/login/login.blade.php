@@ -259,17 +259,17 @@
         }
     </script>
 
-{{--	<script>--}}
-{{--		function performForgotPassword(){--}}
-{{--			axios.post('/forgot-password', {--}}
-{{--				email: document.getElementById('reset_email').value,--}}
-{{--		    }).then(function (response) {--}}
-{{--		        toastr.success(response.data.message)--}}
-{{--		    }).catch(function (error) {--}}
-{{--		        toastr.error(error.response.data.message)--}}
-{{--		    });--}}
-{{--		}--}}
-{{--	</script>--}}
+    <script>
+        function performForgotPassword(){
+            axios.post('/al-madina/profile/user/forgot-password-user', {
+                email: document.getElementById('reset_email').value,
+            }).then(function (response) {
+                toastr.success(response.data.message)
+            }).catch(function (error) {
+                toastr.error(error.response.data.message)
+            });
+        }
+    </script>
 </body>
 <!--end::Body-->
 

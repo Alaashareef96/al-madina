@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CitieController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DeleteImageController;
@@ -13,9 +12,9 @@ use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\JobsRequestController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\OfferController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SuccessPartnerController;
 use App\Http\Controllers\Admin\TheySaidController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -24,6 +23,7 @@ use App\Http\Controllers\Site\AboutSiteController;
 use App\Http\Controllers\Site\AlbumsSiteController;
 use App\Http\Controllers\Site\AuthSiteController;
 use App\Http\Controllers\Site\CartSiteController;
+use App\Http\Controllers\Site\CashSiteController;
 use App\Http\Controllers\Site\CheckoutSiteController;
 use App\Http\Controllers\Site\ContactSiteController;
 use App\Http\Controllers\Site\FacebookSiteController;
@@ -32,8 +32,10 @@ use App\Http\Controllers\Site\HomeSiteController;
 use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
+use App\Http\Controllers\Site\OrderSiteController;
 use App\Http\Controllers\Site\PaymentStripSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
+use App\Http\Controllers\Site\ProfileUserSiteController;
 use App\Http\Controllers\Site\SearchSiteController;
 use App\Http\Controllers\Site\SocialController;
 use App\Http\Controllers\Site\UsersSiteController;
@@ -61,13 +63,13 @@ Route::prefix('cms')->middleware('guest:admin')->group(function(){
     Route::post('login', [AuthController::class,'login'])->name('auth.login');
 
 });
-Route::prefix('email')->middleware('auth:admin,web')->group(function () {
+Route::prefix('email')->middleware('auth:web')->group(function () {
     Route::get('verify', [VerifyEmailController::class, 'notice'])->name('verification.notice');
     Route::post('verification-notification', [VerifyEmailController::class, 'send'])->middleware(['throttle:6,1'])->name('verification.send');
     Route::get('verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 });
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest:admin,web')->group(function () {
     // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
     Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
@@ -75,7 +77,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(function(){
+Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
     Route::get('/change-lang/{language}', [DashboardController::class, 'changeLanguage'])->name('dashboard.change-language');
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
@@ -138,6 +140,38 @@ Route::prefix('cms/admin')->middleware(['auth:admin','verified'])->group(functio
 
     Route::resource('cities', CityController::class);
 
+    Route::prefix('orders')->group(function(){
+
+        Route::get('/pending/orders', [OrderController::class, 'PendingOrders'])->name('pending-orders');
+
+        Route::get('/details/{order_id}', [OrderController::class, 'OrdersDetails'])->name('order.details');
+
+        Route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrders'])->name('confirmed-orders');
+
+        Route::get('/processing/orders', [OrderController::class, 'ProcessingOrders'])->name('processing-orders');
+
+        Route::get('/picked/orders', [OrderController::class, 'PickedOrders'])->name('picked-orders');
+
+        Route::get('/shipped/orders', [OrderController::class, 'ShippedOrders'])->name('shipped-orders');
+
+        Route::get('/delivered/orders', [OrderController::class, 'DeliveredOrders'])->name('delivered-orders');
+
+        Route::get('/cancel/orders', [OrderController::class, 'CancelOrders'])->name('cancel-orders');
+
+        Route::get('/pending/confirm/{order_id}', [OrderController::class, 'PendingToConfirm'])->name('pending-confirm');
+
+        Route::get('/confirm/processing/{order_id}', [OrderController::class, 'ConfirmToProcessing'])->name('confirm.processing');
+
+        Route::get('/processing/picked/{order_id}', [OrderController::class, 'ProcessingToPicked'])->name('processing.picked');
+
+        Route::get('/picked/shipped/{order_id}', [OrderController::class, 'PickedToShipped'])->name('picked.shipped');
+
+        Route::get('/shipped/delivered/{order_id}', [OrderController::class, 'ShippedToDelivered'])->name('shipped.delivered');
+
+
+    });
+
+
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
@@ -195,18 +229,33 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::get('/cart-change', [CartSiteController::class, 'CartChange'])->name('site.cart.change');
 
 
-    Route::post('/coupon-apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon');
-    Route::get('/coupon-calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation');
-    Route::get('/coupon-remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove');
+    Route::post('/coupon-apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon')->middleware(['auth:web','verified']);
+    Route::get('/coupon-calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation')->middleware(['auth:web','verified']);
+    Route::get('/coupon-remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove')->middleware(['auth:web','verified']);
 
 
     Route::get('/checkout', [CheckoutSiteController::class, 'CheckoutCreate'])->name('site.checkout');
+    Route::post('/checkout/store', [CheckoutSiteController::class, 'CheckoutStore'])->name('site.checkout.store')->middleware(['auth:web','verified']);
 
-    Route::post('/checkout/store', [CheckoutSiteController::class, 'CheckoutStore'])->name('site.checkout.store');
+    Route::post('/stripe/order', [PaymentStripSiteController::class, 'StripeOrder'])->name('site.stripe.order')->middleware(['auth:web','verified']);
+    Route::post('/cash/order', [CashSiteController::class, 'CashOrder'])->name('site.cash.order')->middleware(['auth:web','verified']);
 
-    Route::post('/stripe/order', [PaymentStripSiteController::class, 'StripeOrder'])->name('site.stripe.order');
+    Route::get('/show/orders', [OrderSiteController::class, 'MyOrders'])->name('site.MyOrders')->middleware(['auth:web','verified']);
+    Route::get('/order_details/{order_id}', [OrderSiteController::class, 'OrderDetails'])->name('site.OrdersDetails')->middleware(['auth:web','verified']);
+    Route::get('/invoice_download/{order_id}', [OrderSiteController::class, 'InvoiceDownload'])->name('site.invoiceDownload')->middleware(['auth:web','verified']);
+
+    Route::prefix('profile/user')->group(function(){
+
+    Route::view('/',  'site/profile/profile')->name('site.profile');
+    Route::view('edit-profile','site/profile/edit-profile' )->name('site.edit-profile');
+    Route::put('update-profile', [ProfileUserSiteController::class,'updateProfile'])->name('site.update-profile');
+
+    Route::view('edit-password','site/profile/edit-password')->name('site.edit-password');
+
+    Route::post('/forgot-password-user', [AuthSiteController::class, 'sendResetEmailUser'])->name('site.password.email.user');
 
 
+    });
     Route::get('logout', [AuthSiteController::class,'logoutUser'])->name('auth.logout.user');
 
 

@@ -57,7 +57,6 @@ class Handler extends ExceptionHandler
             }
         }
         if($e instanceof ValidationException) {
-
             // if($request->wantsJson() || $request->ajax()){
 
 //                $firstKey = array_key_first($e->errors());

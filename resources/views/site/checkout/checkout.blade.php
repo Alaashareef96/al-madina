@@ -148,8 +148,8 @@
                             <label class="custom-control-label" for="stripe">Stripe</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="card" name="payment_method" type="radio" value="card" class="custom-control-input" >
-                            <label class="custom-control-label" for="card">Card</label>
+                            <input id="cash" name="payment_method" type="radio" value="cash" class="custom-control-input" >
+                            <label class="custom-control-label" for="cash">Cash</label>
                         </div>
                         <div class="custom-control custom-radio">
                             <input id="paypal" name="payment_method" type="radio" value="paypal" class="custom-control-input" >

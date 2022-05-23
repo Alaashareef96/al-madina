@@ -17,7 +17,7 @@
         </div>
         <!--end::Header-->
         <!--begin::Form-->
-        <form class="form" id="create-form">
+
             <!--begin::Body-->
             <div class="card-body">
                 <div class="row">
