@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Cache;
+
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -20,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'gender',
         'mobile',
-        'dob'
+        'dob',
+        'last_seen',
     ];
 
 
@@ -32,6 +35,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function UserOnline(){
+        return Cache::has('user-is-online' . $this->id);
+    }
+
 
     public function products()
     {

@@ -261,7 +261,7 @@
 
     <script>
         function performForgotPassword(){
-            axios.post('/al-madina/profile/user/forgot-password-user', {
+            axios.post('/forgot-password-user', {
                 email: document.getElementById('reset_email').value,
             }).then(function (response) {
                 toastr.success(response.data.message)

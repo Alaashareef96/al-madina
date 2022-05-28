@@ -1,6 +1,6 @@
 @extends('site.parent')
 
-@section('titel','الصفحة الشخصية')
+@section('titel','الطلبات المرجعة')
 
 @section('style')
     <style>
@@ -73,28 +73,28 @@
 
                         <div class="row col-lg-6">
                             <div class="col-lg-6">
-                                <div class="col-3" id="filter-bar">
-                                    <div class="nav-search">
-                                        <div>
-                                            <span class="number-of-search-result" id="search_number">{{count($orders)}}</span>
-                                            <span> منتجات في المشتريات </span>
-                                            <span id="search-names"> </span>
-                                        </div>
-                                        <div>
-                                            <span class="word-search">{{trans('site/product.show_by')}}</span>
-                                            <select name="search_by" id="sort-select">
-                                                <option value="desc" {{ request()->sort == 'desc' ? 'selected':'' }}>الأحدث</option>
-                                                <option value="asc" {{ request()->sort == 'asc' ? 'selected':'' }}>الأقدم</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 mb-3">
-                                    <div class="words-filter" id="filter-tabs">
+{{--                                <div class="col-12" id="filter-bar">--}}
+{{--                                    <div class="nav-search">--}}
+{{--                                        <div>--}}
+{{--                                            <span class="number-of-search-result" id="search_number">{{count($orders)}}</span>--}}
+{{--                                            <span> منتجات في المشتريات </span>--}}
+{{--                                            <span id="search-names"> </span>--}}
+{{--                                        </div>--}}
+{{--                                        <div>--}}
+{{--                                            <span class="word-search">{{trans('site/product.show_by')}}</span>--}}
+{{--                                            <select name="search_by" id="sort-select">--}}
+{{--                                                <option value="desc" {{ request()->sort == 'desc' ? 'selected':'' }}>الأحدث</option>--}}
+{{--                                                <option value="asc" {{ request()->sort == 'asc' ? 'selected':'' }}>الأقدم</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-12 mb-3">--}}
+{{--                                    <div class="words-filter" id="filter-tabs">--}}
 
-                                    </div>
+{{--                                    </div>--}}
 
-                                </div>
+{{--                                </div>--}}
 
                                 <!--begin::Table-->
                                 <div class="table">
@@ -106,6 +106,7 @@
                                             <th style="min-width: 100px">المجموع</th>
                                             <th style="min-width: 120px">وسيلة الدفع</th>
                                             <th style="min-width: 120px">الفاتورة</th>
+                                            <th style="min-width: 120px">سبب الارجاع</th>
                                             <th style="min-width: 150px">حالة الطلب</th>
                                             <th class="pr-0 text-right" style="min-width: 60px">العمليات</th>
                                         </tr>
@@ -121,10 +122,17 @@
                                                 <td>{{$order->amount}}</td>
                                                 <td>{{$order->payment_method}}</td>
                                                 <td>{{$order->invoice_no}}</td>
+                                                <td>{{$order->return_reason  ?? ''}}</td>
                                                 <td class="col-md-2">
                                                     <label for="">
-                                                        <span class="badge badge-pill @if($order->status == 'pending')badge-warning @elseif($order->status == 'confirm') badge-primary @elseif($order->status == 'processing') badge-info @elseif($order->status == 'picked')  badge-dark  @elseif($order->status == 'shipped') badge-success @elseif($order->status == 'delivered') badge-success @elseif($order->status == 'cancel')badge-danger @endif">{{ucfirst($order->status)}}</span>
+                                                        @if($order->return_order == 1)
+                                                        <span class="badge badge-pill badge-warning ">Pedding</span>
+                                                        <span class="badge badge-pill badge-danger">Return Requested</span>
+                                                        @elseif($order->return_order == 2)
+                                                            <span class="badge badge-pill badge-success ">Success </span>
+                                                        @endif
                                                     </label>
+
                                                 </td>
                                                 <td class="pr-0">
                                                     <a href="{{route('site.OrdersDetails',$order->id)}}">
@@ -152,7 +160,7 @@
                                 <div class="row">
                                     <div class="mx-auto mt-5" id="pagination-div">
                                         <nav class="custom-pagination">
-                                            {{--                                {{ $products->links() }}--}}
+
                                         </nav>
                                     </div>
                                 </div>

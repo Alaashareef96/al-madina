@@ -184,7 +184,7 @@
                                                 <!--end::Info-->
                                             </div>
 
-                                        @if($order->status == 'Pending')
+                                        @if($order->status == 'pending')
                                          <div class="d-flex">
                                             <a href="#"  type="button" class="btn btn-light-primary font-weight-bolder mr-6 px-6 font-size-sm"  onclick="confirm('{{$order->id}}')">
                                                 <span class="svg-icon">

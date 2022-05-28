@@ -58,7 +58,12 @@
                                         <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                             <a href="{{route('site.MyOrders')}}" type="button" class="block-aa">قائمة الطلبات</a>
                                         </li>
-
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <a href="{{route('site.return.order.list')}}" type="button" class="block-aa">قائمة الطلبات المرجعة</a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <a href="{{route('site.cancel.orders')}}" type="button" class="block-aa">قائمة الطلبات الملغية</a>
+                                        </li>
 
                                     </ul>
                                 </div>

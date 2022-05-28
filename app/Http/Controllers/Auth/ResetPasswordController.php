@@ -62,7 +62,7 @@ class ResetPasswordController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $status = Password::reset(
+            $status = Password::broker('admins')->reset(
                 $request->only('email', 'password', 'password_confirmation', 'token'),
                 function ($user, $password) {
                     $user->forceFill([

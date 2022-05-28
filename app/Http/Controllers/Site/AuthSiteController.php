@@ -4,15 +4,25 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Auth\PasswordBroker;
 
 class AuthSiteController extends Controller
 {
+
+//    const PASSWORD_RESET = PasswordBroker::PASSWORD_RESET;
+
+//    const PASSWORD_RESET = 'site.password.reset.user';
+
+
+
     public function ShowLoginUser(){
         return response()->view('site.login.login');
     }
@@ -56,7 +66,7 @@ class AuthSiteController extends Controller
                    }
                }else{
                    return response()->json([
-                       'message' => 'Please wait while your account is approved by the administrator'
+                       'message' => 'The account is locked by the admin'
                    ],Response::HTTP_BAD_REQUEST);
                }
 
@@ -74,7 +84,7 @@ class AuthSiteController extends Controller
         return redirect()->route('home');
     }
 
-    public function sendResetEmailUser(Request $request)
+    public function sendResetEmail(Request $request)
     {
 
 //        dd(Password::broker('admins'));
@@ -96,4 +106,40 @@ class AuthSiteController extends Controller
         }
 
     }
+
+    public function resetPassword(Request $request, $token)
+    {
+        return view('site.login.reset-password-user', ['token' => $token, 'email' => $request->input('email')]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator($request->all(), [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        if (!$validator->fails()) {
+            $status = Password::broker('users')->reset(
+                $request->only('email', 'password', 'password_confirmation', 'token'),
+                function ($user, $password) {
+                    $user->forceFill([
+                        'password' => Hash::make($password)
+                    ])->setRememberToken(Str::random(60));
+                    $user->save();
+                    event(new PasswordReset($user));
+                }
+            );
+
+            return $status === Password::PASSWORD_RESET
+                ? response()->json(['message' => __($status)])
+                : response()->json(['message' => __($status)], Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 }

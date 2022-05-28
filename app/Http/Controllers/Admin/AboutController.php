@@ -23,7 +23,7 @@ class AboutController extends Controller
     public function index()
     {
         $data = About::all();
-        return response()->view('cms.about.index', ['abouts' => $data]);
+        return response()->view('cms.about.index',compact('data'));
     }
 
     /**
@@ -87,7 +87,7 @@ class AboutController extends Controller
 
     public function edit(About $about)
     {
-        return response()->view('cms.about.edit', ['about' => $about]);
+        return response()->view('cms.about.edit',compact('about'));
     }
 
 

@@ -17,7 +17,8 @@ class AddGenderToUsersTable extends Migration
             $table->string('gender')->after('password');
             $table->string('mobile');
             $table->date('dob');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
+            $table->string('last_seen')->nullable();
         });
     }
 

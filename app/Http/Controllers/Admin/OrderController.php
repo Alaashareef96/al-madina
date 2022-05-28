@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class OrderController extends Controller
 {
     public function PendingOrders(){
-        $orders = Order::where('status','Pending')->orderBy('id','DESC')->get();
+        $orders = Order::where('status','pending')->orderBy('id','DESC')->get();
         return view('cms.order.pending_orders',compact('orders'));
 
     }
@@ -98,6 +98,26 @@ class OrderController extends Controller
         return response()->json([
             'message' => $confirm ? 'تم تأكيد الطلب' : 'Create failed'
         ],$confirm ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+    }
+
+    public function ReturnRequest(){
+
+        $orders = Order::where('return_order', 1)->orderBy('id','DESC')->get();
+        return view('cms.order.return_request',compact('orders'));
+
+    }
+
+    public function ReturnRequestApprove($order_id){
+
+        Order::where('id',$order_id)->update(['return_order' => 2]);
+
+        return redirect()->back()->with('successSweet',"تمت العملية بنجاح");
+    }
+
+    public function ReturnAllRequest(){
+
+        $orders = Order::where('return_order',2)->orderBy('id','DESC')->get();
+        return view('cms.order.all_return_request',compact('orders'));
     }
 
 }

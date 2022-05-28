@@ -9,9 +9,9 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol  class="breadcrumb official ">
-                    <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans('site/product.Home')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('product')}}">{{trans('site/product.products')}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">المشتريات</li>
+                    <li class="breadcrumb-item"><a href="{{route('site.profile')}}">الصفحة الشخصية</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('site.MyOrders')}}">قائمة الطلبات</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">تفاصيل الطلب</li>
                 </ol>
             </nav>
             <div class="row">
@@ -97,7 +97,7 @@
                                     <th> Order : </th>
                                     <th>
 {{--                                        <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->status }} </span> </th>--}}
-                                        <span class="badge badge-pill @if($order->status == 'Pending')badge-warning @elseif($order->status == 'confirm') badge-primary @elseif($order->status == 'processing') badge-info @elseif($order->status == 'picked')  badge-dark  @elseif($order->status == 'shipped') badge-success @elseif($order->status == 'delivered') badge-success @elseif($order->status == 'cancel')badge-danger @endif">{{ucfirst($order->status)}}</span>
+                                        <span class="badge badge-pill @if($order->status == 'pending')badge-warning @elseif($order->status == 'confirm') badge-primary @elseif($order->status == 'processing') badge-info @elseif($order->status == 'picked')  badge-dark  @elseif($order->status == 'shipped') badge-success @elseif($order->status == 'delivered') badge-success @elseif($order->status == 'cancel')badge-danger @endif">{{ucfirst($order->status)}}</span>
                                 </tr>
                             </table>
 
@@ -155,13 +155,25 @@
             @if($order->status !== "delivered")
 
             @else
+                @php
+                    $order = App\Models\Order::where('id',$order->id)->where('return_date','=',NULL)->first();
+                @endphp
+                @if($order)
+                 <form id="create-form-return">
+                    @csrf
                 <div class="form-group">
                     <label for="label"> Order Return Reason:</label>
-                    <textarea name="return_reason" id="" class="form-control" cols="30" rows="05">Return Reason</textarea>
-
+                    <textarea name="return_reason" id="return_reason" class="form-control" cols="30" rows="05"></textarea>
                 </div>
-            @endif
+                    <span class="return_reason" style="color:red"></span>
+                <button type="button" onclick="Return('{{$order->id}}')" class="btn btn-danger">Order Return</button>
 
+                </form>
+                @else
+
+                <span class="badge badge-pill badge-danger" style="font-size: 15px">You Have send return request for this product</span>
+                @endif
+            @endif
 
             </div>
         </div>
@@ -170,8 +182,50 @@
 
 
 @section('script')
+    <script>
+        function Return(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, process it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmed(id);
+                }
+            });
+        }
+        function confirmed(id) {
+            let formData = new FormData($('#create-form-return')[0]);
+            formData.append('_method','PUT');
 
-
+            axios.post('/al-madina/return/order/'+id, formData)
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تمت العملية بنجاح ',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    window.location.href = '/al-madina/show/orders';
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'لم يتم  تأكيد الطلب',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+        }
+    </script>
 @endsection
 
 

@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SuccessPartnerController;
 use App\Http\Controllers\Admin\TheySaidController;
@@ -38,7 +40,7 @@ use App\Http\Controllers\Site\ProductSiteController;
 use App\Http\Controllers\Site\ProfileUserSiteController;
 use App\Http\Controllers\Site\SearchSiteController;
 use App\Http\Controllers\Site\SocialController;
-use App\Http\Controllers\Site\UsersSiteController;
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -68,13 +70,13 @@ Route::prefix('email')->middleware('auth:web')->group(function () {
     Route::post('verification-notification', [VerifyEmailController::class, 'send'])->middleware(['throttle:6,1'])->name('verification.send');
     Route::get('verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 });
-
-Route::middleware('guest:admin,web')->group(function () {
-    // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
-    Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
-    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
-    Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'])->name('password.update');
-});
+//
+//Route::middleware('guest:admin')->group(function () {
+//    // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
+//    Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
+//    Route::get('/password-reset/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
+//    Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'])->name('password.update');
+//});
 
 
 Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
@@ -134,9 +136,9 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('success-partners', SuccessPartnerController::class);
 
-    Route::get('/users', [UsersSiteController::class, 'index'])->name('users');
-    Route::get('/status-user', [UsersSiteController::class, 'status'])->name('status-user');
-    Route::get('/delete-user/{id}', [UsersSiteController::class, 'deleteUser'])->name('delete-user');
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::get('/status-user', [UsersController::class, 'status'])->name('status-user');
+    Route::get('/delete-user/{id}', [UsersController::class, 'deleteUser'])->name('delete-user');
 
     Route::resource('cities', CityController::class);
 
@@ -168,15 +170,42 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
         Route::get('/shipped/delivered/{order_id}', [OrderController::class, 'ShippedToDelivered'])->name('shipped.delivered');
 
+        Route::get('/return/request', [OrderController::class, 'ReturnRequest'])->name('return.request');
+
+        Route::get('/return/approve/{order_id}', [OrderController::class, 'ReturnRequestApprove'])->name('return.approve');
+
+        Route::get('/all/request', [OrderController::class, 'ReturnAllRequest'])->name('return.all.request');
 
     });
 
+    Route::prefix('reports')->group(function(){
 
+        Route::view('/view','cms/report/report_view')->name('all-reports');
+
+        Route::post('/search/by/date', [ReportController::class, 'ReportByDate'])->name('search-by-date');
+
+        Route::post('/search/by/month', [ReportController::class, 'ReportByMonth'])->name('search-by-month');
+
+        Route::post('/search/by/year', [ReportController::class, 'ReportByYear'])->name('search-by-year');
+
+    });
+
+    Route::resource('seo', SeoController::class);
 
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
 
 //****************************SITE*****************************
+
+Route::middleware('guest:web')->group(function () {
+
+    Route::post('/forgot-password-user', [AuthSiteController::class, 'sendResetEmail'])->name('site.password.email.user');
+    Route::get('/reset-password/{token}', [AuthSiteController::class, 'resetPassword'])->name('site.password.reset.user');
+    Route::post('/reset-password-user', [AuthSiteController::class, 'updatePassword'])->name('site.password.update.user');
+
+});
+
+
 Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::get('loginUser', [AuthSiteController::class, 'ShowLoginUser'])->name('auth.login.view.user');
     Route::post('register', [AuthSiteController::class, 'register'])->name('auth.register.user');
@@ -241,21 +270,22 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::post('/cash/order', [CashSiteController::class, 'CashOrder'])->name('site.cash.order')->middleware(['auth:web','verified']);
 
     Route::get('/show/orders', [OrderSiteController::class, 'MyOrders'])->name('site.MyOrders')->middleware(['auth:web','verified']);
+    Route::get('/return/order/list', [OrderSiteController::class, 'ReturnOrderList'])->name('site.return.order.list');
+        Route::get('/cancel/orders', [OrderSiteController::class, 'CancelOrders'])->name('site.cancel.orders');
     Route::get('/order_details/{order_id}', [OrderSiteController::class, 'OrderDetails'])->name('site.OrdersDetails')->middleware(['auth:web','verified']);
     Route::get('/invoice_download/{order_id}', [OrderSiteController::class, 'InvoiceDownload'])->name('site.invoiceDownload')->middleware(['auth:web','verified']);
+    Route::put('/return/order/{order_id}', [OrderSiteController::class, 'ReturnOrder'])->name('site.return.order');
 
-    Route::prefix('profile/user')->group(function(){
+    Route::prefix('profile/user')->middleware('auth:web')->group(function(){
 
     Route::view('/',  'site/profile/profile')->name('site.profile');
     Route::view('edit-profile','site/profile/edit-profile' )->name('site.edit-profile');
     Route::put('update-profile', [ProfileUserSiteController::class,'updateProfile'])->name('site.update-profile');
-
     Route::view('edit-password','site/profile/edit-password')->name('site.edit-password');
 
-    Route::post('/forgot-password-user', [AuthSiteController::class, 'sendResetEmailUser'])->name('site.password.email.user');
-
-
     });
+
+
     Route::get('logout', [AuthSiteController::class,'logoutUser'])->name('auth.logout.user');
 
 
