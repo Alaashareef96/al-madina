@@ -37,7 +37,10 @@
                     <th style="min-width: 50px">#</th>
                     <th style="min-width: 100px">image</th>
                     <th style="min-width: 150px">Name</th>
-                    <th class="pr-0 text-right" style="min-width: 160px">action</th>
+                    <th style="min-width: 150px">Price</th>
+                    <th style="min-width: 150px">Discount Price</th>
+                    <th style="min-width: 80px">QTY</th>
+                    <th class="pr-0 text-right" style="min-width: 120px">action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +54,22 @@
                             src="{{url(Storage::url($product->image->url_image ?? ''))}}"  alt="User Image">
                            </td>
                         <td>{{$product->name ?? ''}}</td>
+                        <td>{{$product->price ?? ''}}</td>
+                        <td>
+                            @if($product->discount_price == NULL)
+{{--                                <span class="badge badge-pill badge-danger">No Discount</span>--}}
+                                <span class="label label-lg label-light-warning label-inline" STYLE="font-size: 13px">No Discount</span>
+                            @else
+                                @php
+                                    $amount = $product->price - $product->discount_price;
+                                    $discount = ($amount/$product->price) * 100;
+                                @endphp
+{{--                                <span class="badge badge-pill badge-danger">{{ round($discount)  }} %</span>--}}
+                                <span class="label label-lg label-light-danger label-inline" STYLE="font-size: 13px">{{round($discount)}} %</span>
+
+                            @endif
+                        </td>
+                        <td>{{$product->product_qty ?? ''}}</td>
                         <td class="pr-0 text-right">
                             <a href="{{route('products.edit',$product->id)}}"
                                 class="btn btn-icon btn-light btn-hover-primary btn-sm 3">

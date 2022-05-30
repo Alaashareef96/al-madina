@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
     use HasTranslations;
-    protected $fillable = ['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id'];
+    protected $fillable = ['name','details','calories','fats','protein','carbohydrate','vitamin','price','discount_price','product_qty','brand_id','size_id','taste_id'];
     public $translatable = ['name','details'];
 
 

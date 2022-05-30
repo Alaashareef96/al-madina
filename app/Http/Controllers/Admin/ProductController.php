@@ -23,8 +23,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::orderBy('id', 'desc')->get();
-        return response()->view('cms.product.index', ['products' => $data]);
+        $products = Product::orderBy('id', 'desc')->get();
+        return response()->view('cms.product.index', compact('products'));
     }
 
 
@@ -39,7 +39,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
-            $product = Product::create($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id']));
+            $product = Product::create($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','discount_price','product_qty','brand_id','size_id','taste_id']));
 //            $product->categories()->attach($request->category);
 
             if ($request->hasFile('image')) {
@@ -56,15 +56,10 @@ class ProductController extends Controller
                 $product->image()->save($img);
             }
             return response()->json([
-                'message' => $product ? 'Create successflu' : 'Create falid'
+                'message' => $product ? 'Create successful' : 'Create failed'
             ],$product ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 
-
-    public function show(product $product)
-    {
-        //
-    }
 
 
     public function edit(product $product)
@@ -80,7 +75,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, product $product)
     {
 
-        $product->update($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','brand_id','size_id','taste_id']));
+        $product->update($request->only(['name','details','calories','fats','protein','carbohydrate','vitamin','price','discount_price','product_qty','brand_id','size_id','taste_id']));
 //        $product->categories()->sync($request->category);
 
 
@@ -94,7 +89,7 @@ class ProductController extends Controller
 
         }
         return response()->json([
-            'message' => $product ? 'Create successflu' : 'Create falid'
+            'message' => $product ? 'Update successful' : 'Update failed'
         ],$product ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
     }
 

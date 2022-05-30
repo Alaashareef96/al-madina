@@ -22,8 +22,8 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $data = About::all();
-        return response()->view('cms.about.index',compact('data'));
+        $abouts= About::all();
+        return response()->view('cms.about.index',compact('abouts'));
     }
 
     /**

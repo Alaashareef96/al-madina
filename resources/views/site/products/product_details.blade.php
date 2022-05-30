@@ -60,10 +60,29 @@
                                 </li>
                             </ul>
                         </div>
+                        @if($show->discount_price == NULL)
                         <div class="d-flex price">
                             <h5>{{trans('site/product.price')}} </h5>
                             <p>{{$show->price}} {{trans('site/product.shekel')}}</p>
                         </div>
+                        @else
+                            <div class="d-flex price">
+                                <h5>{{trans('site/product.price')}} </h5>
+{{--                                <p>{{$show->price}} {{trans('site/product.shekel')}}</p>--}}
+                                <del style="color: #808080">{{$show->price ?? ''}} {{trans('site/product.shekel')}}</del>
+                                <span class="type">
+                            </div>
+                        <div class="d-flex price">
+                            <h5>سعر الخصم :</h5>
+                            <p>{{$show->discount_price ?? ''}} {{trans('site/product.shekel')}}</p>
+                                <h5>نسبة الخصم :</h5>
+                                @php
+                                    $amount = $show->price - $show->discount_price;
+                                    $discount = ($amount/$show->price) * 100;
+                                @endphp
+                                <p style="color: red">{{round($discount)}}%</p>
+                        </div>
+                        @endif
                     </div>
 
 

@@ -23,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->string('carbohydrate');
             $table->string('vitamin');
             $table->string('price');
+            $table->string('discount_price')->nullable();
+            $table->string('product_qty');
             $table->foreignId('brand_id');
             $table->foreignId('size_id');
             $table->foreignId('taste_id');

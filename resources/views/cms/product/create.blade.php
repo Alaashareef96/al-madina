@@ -112,36 +112,36 @@
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Calories:</label>
                         <div class="col-6">
-                            <input name="calories" type="text" class="form-control"  placeholder="Enter english calories" />
-                            <span class="form-text text-muted">Please enter english calories</span>
+                            <input name="calories" type="text" class="form-control"  placeholder="Enter calories" />
+                            <span class="form-text text-muted">Please enter calories</span>
                         </div>
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Fats:</label>
                         <div class="col-6">
-                            <input name="fats" type="text" class="form-control"  placeholder="Enter english fats" />
-                            <span class="form-text text-muted">Please enter english fats</span>
+                            <input name="fats" type="text" class="form-control"  placeholder="Enter fats" />
+                            <span class="form-text text-muted">Please enter fats</span>
                         </div>
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Protein:</label>
                         <div class="col-6">
-                            <input name="protein" type="text" class="form-control"  placeholder="Enter english protein" />
-                            <span class="form-text text-muted">Please enter english protein</span>
+                            <input name="protein" type="text" class="form-control"  placeholder="Enter protein" />
+                            <span class="form-text text-muted">Please enter protein</span>
                         </div>
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Carbohydrate:</label>
                         <div class="col-6">
-                            <input name="carbohydrate" type="text" class="form-control"  placeholder="Enter english carbohydrate" />
-                            <span class="form-text text-muted">Please enter english carbohydrate</span>
+                            <input name="carbohydrate" type="text" class="form-control"  placeholder="Enter carbohydrate" />
+                            <span class="form-text text-muted">Please enter carbohydrate</span>
                         </div>
                     </div>
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Vitamin:</label>
                         <div class="col-6">
-                            <input name="vitamin" type="text" class="form-control"  placeholder="Enter english vitamin" />
-                            <span class="form-text text-muted">Please enter english vitamin</span>
+                            <input name="vitamin" type="text" class="form-control"  placeholder="Enter vitamin" />
+                            <span class="form-text text-muted">Please enter vitamin</span>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-10"></div>
@@ -151,12 +151,28 @@
                     <div class="form-group row mt-4">
                         <label class="col-3 col-form-label">Price:</label>
                         <div class="col-6">
-                            <input name="price" type="text" class="form-control"  placeholder="Enter english price" />
-                            <span class="form-text text-muted">Please enter english price</span>
+                            <input name="price" type="text" class="form-control"  placeholder="Enter price" />
+                            <span class="form-text text-muted">Please enter price</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label class="col-3 col-form-label">Discount Price:</label>
+                        <div class="col-6">
+                            <input name="discount_price" type="text" class="form-control"  placeholder="Enter discount price" />
+                            <span class="form-text text-muted">Please enter discount price</span>
                         </div>
                     </div>
 
                     <div class="separator separator-dashed my-10"></div>
+                    <h3 class="text-dark font-weight-bold mb-10">Product QTY</h3>
+
+                    <div class="form-group row mt-4">
+                        <label class="col-3 col-form-label">qty :</label>
+                        <div class="col-6">
+                            <input name="product_qty" type="text" class="form-control"  placeholder="Enter qty" />
+                            <span class="form-text text-muted">Please enter qty</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">

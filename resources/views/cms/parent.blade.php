@@ -1285,6 +1285,7 @@
 											</a>
 										</li>
 
+
 									</ul>
 								</div>
 							</li>
@@ -3208,6 +3209,8 @@
     <script src="{{asset('cms/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
 	<script src="https://keenthemes.com/metronic/assets/js/engage_code.js"></script>
 	<script src="{{asset('cms/assets/js/scripts.bundle.js')}}"></script>
+    <script src="{{asset('cms/assets/js/pages/crud/ktdatatable/base/html-table.js')}}"></script>
+    <script src="{{asset('cms/assets/js/pages/crud/ktdatatable/base/translation.js')}}"></script>
 {{--    <script src="{{asset('cms/assets/js/pages/crud/forms/widgets/tagify.js')}}"></script>--}}
 	@yield('scripts')
 </body>

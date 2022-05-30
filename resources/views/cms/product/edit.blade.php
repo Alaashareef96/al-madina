@@ -150,8 +150,24 @@
                                 <span class="form-text text-muted">Please enter english price</span>
                             </div>
                         </div>
+                        <div class="form-group row mt-4">
+                            <label class="col-3 col-form-label">Discount Price:</label>
+                            <div class="col-6">
+                                <input name="discount_price" type="text" class="form-control" value="{{$product->discount_price}}" placeholder="Enter discount price" />
+                                <span class="form-text text-muted">Please enter discount price</span>
+                            </div>
+                        </div>
 
                         <div class="separator separator-dashed my-10"></div>
+                        <h3 class="text-dark font-weight-bold mb-10">Product QTY</h3>
+
+                        <div class="form-group row mt-4">
+                            <label class="col-3 col-form-label">qty :</label>
+                            <div class="col-6">
+                                <input name="product_qty" type="text" class="form-control" value="{{$product->product_qty}}" placeholder="Enter qty" />
+                                <span class="form-text text-muted">Please enter qty</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="row">

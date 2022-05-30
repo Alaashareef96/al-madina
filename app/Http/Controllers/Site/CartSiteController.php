@@ -22,10 +22,11 @@ class CartSiteController extends Controller
         $id = $request->id;
         $product = Product::findOrFail($id);
 
-          $cart =  Cart::add([
+        if ($product->discount_price == NULL) {
+            $cart = Cart::add([
                 'id' => $id,
                 'name' => $product->name,
-               'price' => $product->price,
+                'price' => $product->price,
                 'weight' => 1,
                 'qty' => 1,
                 'taxRate' => 0,
@@ -33,10 +34,27 @@ class CartSiteController extends Controller
                     'image' => $product->image->url_image,
                     'brand' => $product->brand->name,
                     'size' => $product->size->name,
-                    'taste' =>$product->taste->name,
+                    'taste' => $product->taste->name,
                 ],
             ]);
             return response()->json(['success' => 'Successfully Added on Your Cart']);
+        }else{
+            $cart = Cart::add([
+                'id' => $id,
+                'name' => $product->name,
+                'price' => $product->discount_price,
+                'weight' => 1,
+                'qty' => 1,
+                'taxRate' => 0,
+                'options' => [
+                    'image' => $product->image->url_image,
+                    'brand' => $product->brand->name,
+                    'size' => $product->size->name,
+                    'taste' => $product->taste->name,
+                ],
+            ]);
+            return response()->json(['success' => 'Successfully Added on Your Cart']);
+        }
     }
 
     public function getCart(){

@@ -105,7 +105,6 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('categories', CategoryController::class);
 
-//    Route::resource('sub-categories', SubCategoryController::class);
 
     Route::resource('products', ProductController::class);
 
