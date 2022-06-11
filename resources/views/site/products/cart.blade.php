@@ -212,7 +212,7 @@
 
         function destroy(id, reference) {
             //JS - Axios
-            axios.delete('/al-madina/cart-remove/'+id)
+            axios.delete('/al-madina/cart/remove/'+id)
                 .then(function (response) {
                     // handle success
                     console.log(response);
@@ -242,7 +242,7 @@
           //   console.log($sss)
             $.ajax({
                 type:'GET',
-                url: "/al-madina/cart-increment/"+rowId,
+                url: "/al-madina/cart/increment/"+rowId,
                 dataType:'json',
                 success:function(data){
                     couponCalculation();
@@ -257,7 +257,7 @@
         function cartDecrement(rowId,that){
             $.ajax({
                 type:'GET',
-                url: "/al-madina/cart-decrement/"+rowId,
+                url: "/al-madina/cart/decrement/"+rowId,
                 dataType:'json',
                 success:function(data){
                     if(data.status){
@@ -311,6 +311,14 @@
         })
 
         function applyCoupon(){
+            @guest()
+            Swal.fire({
+                icon: 'error',
+                title: '{{trans('site/product.guest')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            @endguest
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -341,6 +349,13 @@
                             timer: 1500
                         })
                     }
+                    if(data.nocart)
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'يجب اضافة منتج للسلة',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
         }
@@ -421,14 +436,6 @@
                 type:'GET',
                 url: "{{ route('site.checkout') }}",
                 success:function(data){
-                    // if(!status){
-                    //     Swal.fire({
-                    //         icon: 'error',
-                    //         title: 'يجب اضافة منتج للسلة أولا',
-                    //         showConfirmButton: false,
-                    //         timer: 1500
-                    //     });
-                    // }
                 }
 
 

@@ -18,27 +18,55 @@ class OrderSiteController extends Controller
     public function MyOrders(Request $request){
         $order = $request->sort;
         $orders = Order::where('user_id',Auth::id())->orderBy('id', $order ?? 'desc')->get();
-        return view('site.order.myOrders',compact('orders'));
+        if($request->ajax()) {
+            $view = view('site.order.myOrders-sort',compact('orders'))->render();
+            return response()->json([
+                'view'=>$view,
+                'order' => $order,
+            ]);
+        }else{
+            return view('site.order.myOrders',compact('orders'));
+        }
+
 
     }
 
-    public function ReturnOrderList(){
+    public function ReturnOrderList(Request $request){
 
+        $order = $request->sort;
         $orders = Order::where([
         ['user_id',Auth::id()],
-        ['return_date','!=',NULL],
-        ])->orderBy('id','DESC')->get();
-        return view('site.order.returnOrder',compact('orders'));
+        ['return_date','!=',NULL],])->orderBy('id', $order ?? 'desc')->get();
+
+        if($request->ajax()) {
+            $view = view('site.order.returnOrders-sort',compact('orders'))->render();
+            return response()->json([
+                'view'=>$view,
+                'order' => $order,
+            ]);
+        }else{
+            return view('site.order.returnOrder',compact('orders'));
+        }
+
 
     }
 
-    public function CancelOrders(){
-
+    public function CancelOrders(Request $request){
+        $order = $request->sort;
         $orders = Order::where([
             ['user_id',Auth::id()],
-            ['status','cancel'],
-        ])->orderBy('id','DESC')->get();
-        return view('site.order.cancelOrder',compact('orders'));
+            ['status','canceled'],])->orderBy('id', $order ?? 'desc')->get();
+
+        if($request->ajax()) {
+            $view = view('site.order.cancelOrders-sort',compact('orders'))->render();
+            return response()->json([
+                'view'=>$view,
+                'order' => $order,
+            ]);
+        }else{
+            return view('site.order.cancelOrder',compact('orders'));
+        }
+
 
     }
 
@@ -76,6 +104,25 @@ class OrderSiteController extends Controller
         return response()->json([
             'message' => $isSaved ? 'successful' : 'failed',
         ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+    }
+
+    public function OrderTraking(Request $request){
+
+        $invoice = $request->code;
+
+        $track = Order::where('invoice_no',$invoice)->first();
+
+        if ($track) {
+
+            return view('site.order.track_order',compact('track'));
+
+        }else{
+
+
+            return back()->with('error',"هذا الرقم غير صالح");
+
+        }
 
     }
 

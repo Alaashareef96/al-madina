@@ -32,12 +32,7 @@ class NewsSiteController extends Controller
         return response()->view('site..news.news_details',compact('news','newsall','comments'));
 
     }
-    public function showComment()
-    {
 
-        $comments = Comment::with('news')->orderBy('id', 'desc')->get();
-        return response()->view('cms.news.comment',compact('comments'));
-    }
 
     public function newsComment(CommentRequest $request)
     {
@@ -68,29 +63,7 @@ class NewsSiteController extends Controller
 //        }
 
     }
-    public function deleteComment($id){
 
-        $comment= Comment::findOrFail($id);
-
-        $url_image = $comment->img->url_image;
-        $media = $comment->img->delete();
-        $comment->delete();
-
-        if ($comment) Storage::disk('public')->delete($url_image);
-        return response()->json([
-            'icon'=>$comment ? 'success':'error',
-            'title'=>$comment ? 'Deleted successfully':'Delete failed'
-        ], $comment ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
-    }
-
-    public function status(Request $request){
-
-
-        $comment= Comment::findOrFail($request->id);
-//        return  $request->input('status')? 1 : 0;
-        $comment->status = $request->input('status') == 'true'  ? 1 : 0;
-        $isUpdated = $comment->save();
-    }
 
 
 }

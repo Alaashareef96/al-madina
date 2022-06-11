@@ -224,7 +224,7 @@
                 title: '{{trans('site/product.guest')}}',
             })
             @endguest
-            axios.delete('/al-madina/favourite-delete/'+id)
+            axios.delete('/al-madina/favourite/delete/'+id)
 
                 .then(function (response) {
                     // handle success

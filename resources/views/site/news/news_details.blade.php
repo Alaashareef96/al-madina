@@ -391,7 +391,7 @@
                                     <label for="recipient-name" class="col-form-label">الاسم كاملا:</label>
                                     <input type="text" class="form-control custom-input" name="name" id="name"
                                            placeholder="أدخل الاسم كاملا">
-                                    <span class="name"></span>
+                                    <span class="name" style="color:red" ></span>
                                 </div>
                                 <input type="hidden" class="form-control custom-input" name="news_id" value="{{$news->id}}" id="news_id">
 
@@ -401,18 +401,17 @@
                                     <label for="recipient-name" class="col-form-label">الايميل:</label>
                                     <input type="email" class="form-control custom-input" name="email" id="email"
                                            placeholder="أدخل الإيميل">
-                                    <span class="email"></span>
+                                    <span class="email" style="color:red"></span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">التعليق:</label>
                                     <textarea name="comment" class="form-control custom-input" id="comment" name="comment" cols="20" rows="7" placeholder="اكتب تعليقك هنا..."></textarea>
-                                    <span class="comment"></span>
-                                    <span class="note">
                                         ملاحظة:
                                         <small>سيتم نشر تعليقك بعد موافقة المسؤول</small>
                                     </span>
+                                    <span class="comment" style="color:red" ></span>
 
                                 </div>
                             </div>
@@ -533,6 +532,7 @@
                 title: '{{trans('site/news.guest')}}',
             })
             @endguest
+            @auth
             @if(auth('web')->user()->email_verified_at == null)
             Swal.fire({
                 icon: 'info',
@@ -541,8 +541,9 @@
                 timer: 1500
             })
             @endif
+            @endauth
             let formData = new FormData($('#create-form-comment')[0]);
-            axios.post('/al-madina/news-comment', formData, {
+            axios.post('/al-madina/news/comment', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -551,15 +552,16 @@
                 console.log(response);
                 document.getElementById('create-form-comment').reset();
                 $('.bd-example-modal-lg').modal('hide');
-                $('.bd-example-modal-lg-thanks').modal('show');
+                // $('.bd-example-modal-lg-thanks').modal('show');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم اضافة التعليق بنجاح',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
             }).catch(function (error) {
                 console.log(error.response.data.message);
-                // if(error.response.data.message == false) {
-                //     // console.log(error.response.data.message);
-                //     $('.bd-example-modal-lg').modal('hide');
-                //     $('.bd-example-modal-lg-false').modal('show');
-                // }
                 $('.name').text('');
                 $('.email').text('');
                 $('.comment').text('');

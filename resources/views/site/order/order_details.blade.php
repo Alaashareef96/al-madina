@@ -1,6 +1,6 @@
 @extends('site.parent')
 
-@section('titel','المشتريات')
+@section('titel','تفاصيل الطلب')
 
 
 @section('contact')
@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-header"><h4>Shipping Details</h4></div>
                         <hr>
-                        <div class="card-body" style="background: #E9EBEC;">
+                        <div class="card-body">
                             <table class="table">
                                 <tr>
                                     <th> Shipping Name : </th>
@@ -36,7 +36,7 @@
                                 </tr>
                                 <tr>
                                     <th> City : </th>
-                                    <th> {{ $order->city->name }} </th>
+                                    <th> {{$order->city->name ?? ''}} </th>
                                 </tr>
                                 <tr>
                                     <th> Address : </th>
@@ -61,7 +61,7 @@
                                 <span class="text-danger"> Invoice : {{ $order->invoice_no }}</span></h4>
                         </div>
                         <hr>
-                        <div class="card-body" style="background: #E9EBEC;">
+                        <div class="card-body">
                             <table class="table">
                                 <tr>
                                     <th>  Name : </th>
@@ -108,7 +108,7 @@
             <br>
              <div class="row">
 
-                    <div class="col-md-12" style="background: #E9EBEC;">
+                    <div class="col-md-12">
 
                         <div class="table">
                             <table class="table table-head-custom table-vertical-center"  data-parent="price" id="kt_advance_table_widget_2">

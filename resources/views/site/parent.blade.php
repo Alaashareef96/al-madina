@@ -16,6 +16,27 @@
     <script>
         {{ $seo->google_analytics ?? ''}}
     </script>
+{{--    <script src="https://js.pusher.com/7.1/pusher.min.js"></script>--}}
+{{--    <script>--}}
+
+{{--        // Enable pusher logging - don't include this in production--}}
+{{--        Pusher.logToConsole = true;--}}
+
+{{--        var pusher = new Pusher('ecf0d34d84c507806b19', {--}}
+{{--            cluster: 'ap2',--}}
+{{--            authEndpoint: "/broadcasting/auth"--}}
+{{--        });--}}
+
+{{--        var channel = pusher.subscribe('private-App.Models.User.{{ Auth::id() }}');--}}
+{{--        channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {--}}
+{{--            alert(data.amount);--}}
+{{--        });--}}
+{{--    </script>--}}
+
+    <script>
+        window.UserId = "{{ Auth::id() }}";
+    </script>
+    <script src="{{asset('js/app.js')}}"></script>
     <!-- /// Google Analytics Code // -->
     <title>@yield('titel')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -68,6 +89,20 @@
         .catr-show{
             position: relative;
         }
+        .input-search{
+            position: relative;
+        }
+        #searchProducts {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            z-index: 999;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
     </style>
 
     @yield('style')
@@ -128,6 +163,10 @@
                             @if($cartnumber)
                             <span class="badge-number">{{$cartnumber}}</span>
                             @endif
+                        </div>
+
+                        <div class="order-show mx-3">
+                           <a href="" type="button" data-toggle="modal" data-target="#ordertraking"><i class="icon fa fa-check"></i>Order Traking</a>
                         </div>
                         <div class="order-show mx-3">
                             <a  href="{{route('site.profile')}}" class="order-show" >
@@ -254,9 +293,10 @@
                 </li>
             </ul>
             <div class="input-search d-lg-block d-none">
-                <form id="create-form" type="get" action="{{route('search')}}">
-                    <input type="search" name="search" id ='search_input' class="form-control" placeholder="{{trans('site/parent.Search')}}">
-                    <button type="submit" >
+                <form id="create-form" type="post" action="{{route('search')}}">
+                    @csrf
+                    <input type="search" name="search" id="search" onfocus="search_result_show()" onblur="search_result_hide()" class="form-control" placeholder="{{trans('site/parent.Search')}}">
+                    <button class="search-button" type="submit" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="15.85" height="15.853"
                              viewBox="0 0 15.85 15.853">
                             <path id="Path"
@@ -266,6 +306,7 @@
                     </button>
 
                 </form>
+                <div id="searchProducts"></div>
             </div>
             <button class="btn-nav" type="button">
                 <i class="fa fa-bars" aria-hidden="true"></i>
@@ -309,6 +350,8 @@
             </button>
         </div>
     </div>
+
+
 </header>
 <!-- ./header -->
 {{--@dd(Session::get('success'))--}}
@@ -390,6 +433,36 @@
 @endif
 @endauth
 
+
+<!-- Order Traking Modal -->
+<div class="modal fade" id="ordertraking" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Track Your Order </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" action="{{ route('site.order.tracking') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <label>Invoice Code</label>
+                        <input type="text" name="code" required="" class="form-control" placeholder="Your Order Invoice Number">
+                    </div>
+
+                    <button class="btn btn-danger" type="submit" style="margin-left: 17px;"> Track Now </button>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
 @yield('contact')
 
 <!-- footer -->
@@ -556,6 +629,7 @@
 </a>
 <div class="side-overlay"></div>
 </body>
+
 <script src="{{asset('site/js/jquery.min.js')}}"></script>
 <script src="{{asset('site/js/popper.min.js')}}"></script>
 <script src="{{asset('site/js/bootstrap.min.js')}}"></script>
@@ -624,6 +698,12 @@
 
         })
     });
+    function search_result_hide(){
+        $("#searchProducts").slideUp();
+    }
+    function search_result_show(){
+        $("#searchProducts").slideDown();
+    }
 
 </script>
 

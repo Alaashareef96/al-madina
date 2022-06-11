@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\NewsRequest;
+use App\Models\Comment;
 use App\Models\Media;
 use App\Models\News;
 use Carbon\Carbon;
@@ -134,5 +135,39 @@ class NewsController extends Controller
             'icon'=>$isDeleted ? 'success':'error',
             'title'=>$isDeleted ? 'Deleted successfully':'Delete failed'
         ], $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+    }
+
+    public function showComment()
+    {
+
+        $comments = Comment::with('news')->orderBy('id', 'desc')->get();
+        return response()->view('cms.news.comment',compact('comments'));
+    }
+
+    public function deleteComment($id){
+
+        $comment= Comment::findOrFail($id);
+
+        if($comment->img != null){
+             $url_image = $comment->img->url_image;
+             $media = $comment->img->delete();
+         }
+        $comment->delete();
+        if($comment->img != null){
+            if ($comment) Storage::disk('public')->delete($url_image);
+        }
+        return response()->json([
+            'icon'=>$comment ? 'success':'error',
+            'title'=>$comment ? 'Deleted successfully':'Delete failed'
+        ], $comment ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+    }
+
+    public function status(Request $request){
+
+        $comment= Comment::findOrFail($request->id);
+//        return  $request->input('status')? 1 : 0;
+        $comment->status = $request->input('status') == 'true'  ? 1 : 0;
+        $isUpdated = $comment->save();
     }
 }

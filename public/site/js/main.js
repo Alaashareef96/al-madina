@@ -160,6 +160,35 @@ $(document).ready(function () {
             }, 100);
         });
     });
+    const site_url = "http://localhost:8000/al-madina/";
+
+    $("body").on("keyup", "#search", function(){
+
+        let text = $("#search").val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        if (text.length > 0) {
+        $.ajax({
+            data: {search: text},
+            url : site_url + "search-product",
+            method : 'post',
+            beforSend : function(request){
+                return request.setReuestHeader('X-CSRF-Token',("meta[name='csrf-token']"))
+
+            },
+            success:function(result){
+                $("#searchProducts").html(result);
+            }
+
+        }); // end ajax
+        }
+        if (text.length < 1 ) $("#searchProducts").html("");
+
+
+    }); // end one
 
 
 });
@@ -235,3 +264,5 @@ $('.upload-file').on('click',function(){
 if($('.datepicker').length > 0){
     $('.datepicker').datepicker();
 }
+
+

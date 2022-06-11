@@ -16,7 +16,7 @@ class CheckoutSiteController extends Controller
     public function CheckoutCreate()
     {
 
-        if(Auth::check()){
+//        if(Auth::check()){
 
             if (Cart::subtotal() > 0) {
 
@@ -30,9 +30,7 @@ class CheckoutSiteController extends Controller
                 return redirect()->back()->with('info',"يجب اضافة منتج للسلة");
 
             }
-        }else{
-            return redirect('/al-madina/loginUser');
-        }
+
 
 
     }
@@ -51,10 +49,12 @@ class CheckoutSiteController extends Controller
 
         if ($request->payment_method == 'stripe') {
           return view('site.checkout.payment_stripe', compact('data','cartTotal','cartQty'));
+
         } elseif ($request->payment_method == 'cash') {
             return view('site.checkout.payment_cash', compact('data','cartTotal','cartQty'));
+
         } else {
-           return 'paypal';
+            return view('site.checkout.payment_paypal', compact('data','cartTotal','cartQty'));
         }
 
     }

@@ -177,7 +177,7 @@
                                                 <div class="col-6 col-md-4">
                                                     <div class="mb-8 d-flex flex-column">
                                                         <span class="text-dark font-weight-bold mb-4">Order</span>
-                                                        <span class="@if($order->status == 'Pending') text-warning @elseif($order->status == 'confirm') text-primary  @elseif($order->status == 'processing') text-info @elseif($order->status == 'picked')  text-dark @endif text-success font-weight-bolder d-block font-size-lg">{{ucfirst($order->status)}}</span>
+                                                        <span class="@if($order->status == 'pending') text-warning @elseif($order->status == 'confirm') text-primary  @elseif($order->status == 'processing') text-info @elseif($order->status == 'picked')  text-dark @endif text-success font-weight-bolder d-block font-size-lg">{{ucfirst($order->status)}}</span>
                                                     </div>
                                                 </div>
 
@@ -383,7 +383,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '/cms/admin/orders/pending/orders';
+                        window.location.href = '/cms/admin/orders/all/orders';
                     })
                     .catch(function (error) {
                         // handle error
@@ -425,7 +425,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '/cms/admin/orders/confirmed/orders';
+                        window.location.href = '/cms/admin/orders/all/orders';
                     })
                     .catch(function (error) {
                         // handle error
@@ -467,7 +467,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '/cms/admin/orders/processing/orders';
+                        window.location.href = '/cms/admin/orders/all/orders';
                     })
                     .catch(function (error) {
                         // handle error
@@ -510,7 +510,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '/cms/admin/orders/picked/orders';
+                        window.location.href = '/cms/admin/orders/all/orders';
                     })
                     .catch(function (error) {
                         // handle error
@@ -553,7 +553,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '/cms/admin/orders/shipped/orders';
+                        window.location.href = '/cms/admin/orders/all/orders';
                     })
                     .catch(function (error) {
                         // handle error

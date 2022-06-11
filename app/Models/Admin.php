@@ -15,4 +15,9 @@ use Spatie\Permission\Traits\HasRoles;
 class Admin extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasFactory, HasRoles , Notifiable;
+
+//    public function broadcastChannelRoute()
+//    {
+//        return 'App.Models.Admin.' . $this->id;
+//    }
 }

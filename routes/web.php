@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DeleteImageController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\JobsRequestController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
 use App\Http\Controllers\Site\OrderSiteController;
+use App\Http\Controllers\Site\PaymentPayPalSiteController;
 use App\Http\Controllers\Site\PaymentStripSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
 use App\Http\Controllers\Site\ProfileUserSiteController;
@@ -115,9 +117,9 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
     Route::get('/delete/{id}', [DeleteImageController::class, 'delete'])->name('delete');
 
     Route::resource('news', NewsController::class);
-    Route::get('/show-comment', [NewsSiteController::class, 'showComment'])->name('show-comment');
-    Route::get('/delete-comment/{id}', [NewsSiteController::class, 'deleteComment'])->name('delete-comment');
-    Route::get('/status-comment', [NewsSiteController::class, 'status'])->name('status-comment');
+    Route::get('/show-comment', [NewsController::class, 'showComment'])->name('show-comment');
+    Route::get('/delete-comment/{id}', [NewsController::class, 'deleteComment'])->name('delete-comment');
+    Route::get('/status-comment', [NewsController::class, 'status'])->name('status-comment');
 
     Route::resource('albums', AlbumController::class);
 
@@ -143,21 +145,21 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::prefix('orders')->group(function(){
 
-        Route::get('/pending/orders', [OrderController::class, 'PendingOrders'])->name('pending-orders');
+        Route::get('/all/orders', [OrderController::class, 'AllOrders'])->name('all-orders');
 
         Route::get('/details/{order_id}', [OrderController::class, 'OrdersDetails'])->name('order.details');
 
-        Route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrders'])->name('confirmed-orders');
-
-        Route::get('/processing/orders', [OrderController::class, 'ProcessingOrders'])->name('processing-orders');
-
-        Route::get('/picked/orders', [OrderController::class, 'PickedOrders'])->name('picked-orders');
-
-        Route::get('/shipped/orders', [OrderController::class, 'ShippedOrders'])->name('shipped-orders');
-
-        Route::get('/delivered/orders', [OrderController::class, 'DeliveredOrders'])->name('delivered-orders');
-
-        Route::get('/cancel/orders', [OrderController::class, 'CancelOrders'])->name('cancel-orders');
+//        Route::get('/confirmed/orders', [OrderController::class, 'ConfirmedOrders'])->name('confirmed-orders');
+//
+//        Route::get('/processing/orders', [OrderController::class, 'ProcessingOrders'])->name('processing-orders');
+//
+//        Route::get('/picked/orders', [OrderController::class, 'PickedOrders'])->name('picked-orders');
+//
+//        Route::get('/shipped/orders', [OrderController::class, 'ShippedOrders'])->name('shipped-orders');
+//
+//        Route::get('/delivered/orders', [OrderController::class, 'DeliveredOrders'])->name('delivered-orders');
+//
+//        Route::get('/cancel/orders', [OrderController::class, 'CancelOrders'])->name('cancel-orders');
 
         Route::get('/pending/confirm/{order_id}', [OrderController::class, 'PendingToConfirm'])->name('pending-confirm');
 
@@ -191,10 +193,18 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){
 
     Route::resource('seo', SeoController::class);
 
+    Route::view('notifications','cms.notifications.index')->name('notifications');
+
+    Route::delete('notifications/{id}', [NotificationsController::class,'destroy']);
+
+    Route::get('notifications/{id}', [NotificationsController::class,'markRead'])->name('notifications.read');
+
+
     Route::get('logout', [AuthController::class,'logout'])->name('auth.logout');
 });
 
-//****************************SITE*****************************
+//********************************************************* SITE **************************************************************************************************************
+
 
 Route::middleware('guest:web')->group(function () {
 
@@ -228,9 +238,11 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::get('/offer-details/{id}', [OfferSiteController::class, 'offerDetails'])->name('offer-details');
     Route::post('/subscribe', [OfferSiteController::class, 'offerSubscribe'])->name('subscribe');
 
-    Route::get('/news', [NewsSiteController::class, 'index'])->name('news');
-    Route::get('/news-details/{id}', [NewsSiteController::class, 'newsDetails'])->name('news-details');
-    Route::post('/news-comment', [NewsSiteController::class, 'newsComment'])->name('news-comment')->middleware(['auth:web','verified']);
+    Route::prefix('news')->group(function() {
+        Route::get('/', [NewsSiteController::class, 'index'])->name('news');
+        Route::get('details/{id}', [NewsSiteController::class, 'newsDetails'])->name('news-details');
+        Route::post('comment', [NewsSiteController::class, 'newsComment'])->name('news-comment')->middleware(['auth:web', 'verified']);
+    });
 
     Route::get('/albums', [AlbumsSiteController::class, 'index'])->name('albums');
 
@@ -245,43 +257,58 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
 
     Route::get('/search', [SearchSiteController::class, 'index'])->name('search');
 
-    Route::post('/favourite', [FavouriteSiteController::class, 'storfavourite'])->name('favourite')->middleware(['auth:web','verified']);
-    Route::get('/favourite-show', [FavouriteSiteController::class, 'index'])->name('favourite-show')->middleware(['auth:web','verified']);
-    Route::delete('/favourite-delete/{id}', [FavouriteSiteController::class, 'destroy'])->name('favourite-delete')->middleware(['auth:web','verified']);
+    Route::post('search-product', [SearchSiteController::class, 'SearchProduct'])->name('search-product');
 
-    Route::get('/cart', [CartSiteController::class, 'getCart'])->name('site.cart.index');
-    Route::post('/cart/add', [CartSiteController::class, 'AddToCart'])->name('site.cart.add');
-    Route::delete('/cart-remove/{rowId}', [CartSiteController::class, 'RemoveCartProduct'])->name('site.cart.remove');
-    Route::get('/cart-increment/{rowId}', [CartSiteController::class, 'CartIncrement'])->name('site.cart.increment');
-    Route::get('/cart-decrement/{rowId}', [CartSiteController::class, 'CartDecrement'])->name('site.cart.decrement');
-    Route::get('/cart-change', [CartSiteController::class, 'CartChange'])->name('site.cart.change');
+    Route::prefix('favourite')->middleware(['auth:web', 'verified'])->group(function() {
+        Route::post('/', [FavouriteSiteController::class, 'storfavourite'])->name('favourite');
+        Route::get('show', [FavouriteSiteController::class, 'index'])->name('favourite-show');
+        Route::delete('delete/{id}', [FavouriteSiteController::class, 'destroy'])->name('favourite-delete');
+    });
+
+    Route::prefix('cart')->group(function() {
+        Route::get('/', [CartSiteController::class, 'getCart'])->name('site.cart.index');
+        Route::post('add', [CartSiteController::class, 'AddToCart'])->name('site.cart.add');
+        Route::delete('remove/{rowId}', [CartSiteController::class, 'RemoveCartProduct'])->name('site.cart.remove');
+        Route::get('increment/{rowId}', [CartSiteController::class, 'CartIncrement'])->name('site.cart.increment');
+        Route::get('decrement/{rowId}', [CartSiteController::class, 'CartDecrement'])->name('site.cart.decrement');
+        Route::get('change', [CartSiteController::class, 'CartChange'])->name('site.cart.change');
+    });
+
+    Route::prefix('coupon')->middleware(['auth:web', 'verified'])->group(function() {
+        Route::post('apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon');
+        Route::get('calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation');
+        Route::get('remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove');
+    });
+
+    Route::prefix('checkout')->middleware(['auth:web', 'verified'])->group(function() {
+        Route::get('/', [CheckoutSiteController::class, 'CheckoutCreate'])->name('site.checkout');
+        Route::post('store', [CheckoutSiteController::class, 'CheckoutStore'])->name('site.checkout.store');
 
 
-    Route::post('/coupon-apply', [CartSiteController::class, 'CouponApply'])->name('site.cart.coupon')->middleware(['auth:web','verified']);
-    Route::get('/coupon-calculation', [CartSiteController::class, 'CouponCalculation'])->name('site.cart.couponcalculation')->middleware(['auth:web','verified']);
-    Route::get('/coupon-remove', [CartSiteController::class, 'CouponRemove'])->name('site.cart.couponremove')->middleware(['auth:web','verified']);
-
-
-    Route::get('/checkout', [CheckoutSiteController::class, 'CheckoutCreate'])->name('site.checkout');
-    Route::post('/checkout/store', [CheckoutSiteController::class, 'CheckoutStore'])->name('site.checkout.store')->middleware(['auth:web','verified']);
+    });
+        Route::post('/checkout/payment', [PaymentPayPalSiteController::class, 'checkout_now'])->name('checkout.payment');
+        Route::get('/checkout/{order_id}/cancelled', [PaymentPayPalSiteController::class, 'cancelled'])->name('checkout.cancel');
+        Route::get('/checkout/{order_id}/completed', [PaymentPayPalSiteController::class, 'completed'])->name('checkout.complete');
+        Route::get('/checkout/webhook/{order?}/{env?}', [PaymentPayPalSiteController::class, 'webhook'])->name('checkout.webhook.ipn');
 
     Route::post('/stripe/order', [PaymentStripSiteController::class, 'StripeOrder'])->name('site.stripe.order')->middleware(['auth:web','verified']);
     Route::post('/cash/order', [CashSiteController::class, 'CashOrder'])->name('site.cash.order')->middleware(['auth:web','verified']);
 
-    Route::get('/show/orders', [OrderSiteController::class, 'MyOrders'])->name('site.MyOrders')->middleware(['auth:web','verified']);
-    Route::get('/return/order/list', [OrderSiteController::class, 'ReturnOrderList'])->name('site.return.order.list');
+    Route::middleware(['auth:web','verified'])->group(function() {
+        Route::get('/show/orders', [OrderSiteController::class, 'MyOrders'])->name('site.MyOrders');
+        Route::get('/return/order/list', [OrderSiteController::class, 'ReturnOrderList'])->name('site.return.order.list');
         Route::get('/cancel/orders', [OrderSiteController::class, 'CancelOrders'])->name('site.cancel.orders');
-    Route::get('/order_details/{order_id}', [OrderSiteController::class, 'OrderDetails'])->name('site.OrdersDetails')->middleware(['auth:web','verified']);
-    Route::get('/invoice_download/{order_id}', [OrderSiteController::class, 'InvoiceDownload'])->name('site.invoiceDownload')->middleware(['auth:web','verified']);
-    Route::put('/return/order/{order_id}', [OrderSiteController::class, 'ReturnOrder'])->name('site.return.order');
+        Route::get('/order_details/{order_id}', [OrderSiteController::class, 'OrderDetails'])->name('site.OrdersDetails');
+        Route::get('/invoice_download/{order_id}', [OrderSiteController::class, 'InvoiceDownload'])->name('site.invoiceDownload');
+        Route::put('/return/order/{order_id}', [OrderSiteController::class, 'ReturnOrder'])->name('site.return.order');
+        Route::post('/order/tracking', [OrderSiteController::class, 'OrderTraking'])->name('site.order.tracking');
+    });
 
     Route::prefix('profile/user')->middleware('auth:web')->group(function(){
-
-    Route::view('/',  'site/profile/profile')->name('site.profile');
-    Route::view('edit-profile','site/profile/edit-profile' )->name('site.edit-profile');
-    Route::put('update-profile', [ProfileUserSiteController::class,'updateProfile'])->name('site.update-profile');
-    Route::view('edit-password','site/profile/edit-password')->name('site.edit-password');
-
+        Route::view('/',  'site/profile/profile')->name('site.profile');
+        Route::view('edit-profile','site/profile/edit-profile' )->name('site.edit-profile');
+        Route::put('update-profile', [ProfileUserSiteController::class,'updateProfile'])->name('site.update-profile');
+        Route::view('edit-password','site/profile/edit-password')->name('site.edit-password');
     });
 
 

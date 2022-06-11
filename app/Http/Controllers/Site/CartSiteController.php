@@ -7,8 +7,11 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Notifications\User\CartNumberNotification;
+use App\Notifications\User\CartRemoveNotification;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -37,6 +40,7 @@ class CartSiteController extends Controller
                     'taste' => $product->taste->name,
                 ],
             ]);
+            Auth::user()->notify(new CartNumberNotification());
             return response()->json(['success' => 'Successfully Added on Your Cart']);
         }else{
             $cart = Cart::add([
@@ -53,6 +57,7 @@ class CartSiteController extends Controller
                     'taste' => $product->taste->name,
                 ],
             ]);
+            Auth::user()->notify(new CartNumberNotification());
             return response()->json(['success' => 'Successfully Added on Your Cart']);
         }
     }
@@ -70,7 +75,11 @@ class CartSiteController extends Controller
         if (Session::has('coupon')) {
             Session::forget('coupon');
         }
-        return response()->json(['success' => 'Successfully Remove From Cart']);
+        $cartQty = Cart::count();
+        return response()->json([
+            'success' => 'Successfully Remove From Cart',
+            'cartQty' => $cartQty,
+        ]);
     }
 
     public function CartIncrement($rowId){
@@ -167,30 +176,33 @@ class CartSiteController extends Controller
 
     public function CouponApply(Request $request)
     {
-        $coupon_name = $request->coupon_name;
+        if (Cart::subtotal() > 0) {
+            $coupon_name = $request->coupon_name;
+            $coupon = Coupon::where([
+                ['name', $coupon_name],
+                ['date', '>=', Carbon::now()->format('Y-m-d')],
+                ['qty', '>=', 1],
+                ['status', '=', 1],
+            ])->first();
+            if ($coupon) {
 
-        $coupon = Coupon::where([
-            ['name', $coupon_name],
-            ['date', '>=', Carbon::now()->format('Y-m-d')],
-            ['qty', '>=', 1],
-            ['status', '=', 1],
-        ])->first();
-        if ($coupon) {
+                Session::put('coupon', [
+                    'coupon_name' => $coupon->name,
+                    'coupon_discount' => $coupon->discount,
+                    'discount_amount' => round(Cart::subtotal(2, '.', '') * $coupon->discount / 100),
+                    'total_amount' => round(Cart::subtotal(2, '.', '') - Cart::subtotal(2, '.', '') * $coupon->discount / 100)
+                ]);
 
-            Session::put('coupon',[
-                'coupon_name' => $coupon->name,
-                'coupon_discount' => $coupon->discount,
-                'discount_amount' => round(Cart::subtotal(2,'.','') * $coupon->discount/100),
-                'total_amount' => round(Cart::subtotal(2,'.','') - Cart::subtotal(2,'.','') * $coupon->discount/100)
-            ]);
+                return response()->json(array(
 
-            return response()->json(array(
+                    'success' => 'Coupon Applied Successfully'
+                ));
 
-                'success' => 'Coupon Applied Successfully'
-            ));
-
+            } else {
+                return response()->json(['error' => 'Invalid Coupon']);
+            }
         }else{
-            return response()->json(['error' => 'Invalid Coupon']);
+            return response()->json(['nocart' => true]);
         }
     }
 

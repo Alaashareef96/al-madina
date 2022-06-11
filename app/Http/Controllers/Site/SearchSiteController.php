@@ -19,5 +19,16 @@ class SearchSiteController extends Controller
           return response()->view('site.search.search',compact('products','offers','search','data_count','order'));
         }
 
+    public function SearchProduct(Request $request){
+
+        $item = $request->search;
+
+        $products = Product::where('name','LIKE',"%$item%")->limit(5)->get();
+        return view('site.search.search_product',compact('products'));
+
+
+
+    }
+
 
 }
