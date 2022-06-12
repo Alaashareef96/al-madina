@@ -73,12 +73,12 @@ Route::prefix('email')->middleware('auth:web')->group(function () {
     Route::get('verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 });
 //
-//Route::middleware('guest:admin')->group(function () {
-//    // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
-//    Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
-//    Route::get('/password-reset/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
-//    Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'])->name('password.update');
-//});
+Route::middleware('guest:admin')->group(function () {
+    // Route::get('/forgot-password', [ResetPasswordController::class, 'requestPasswordReset'])->name('password.request');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetEmail'])->name('password.email');
+    Route::get('/password-reset/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'])->name('password.update');
+});
 
 
 Route::prefix('cms/admin')->middleware('auth:admin')->group(function(){

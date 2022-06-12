@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Auth\PasswordBroker;
+use Closure;
 
 class AuthSiteController extends Controller
 {
@@ -21,7 +23,8 @@ class AuthSiteController extends Controller
 
 //    const PASSWORD_RESET = 'site.password.reset.user';
 
-
+//    const PASSWORD_RESET = 'site.password.reset.user';
+//    const  RESET_LINK_SENT =  'site.password.reset.user';
 
     public function ShowLoginUser(){
         return response()->view('site.login.login');
@@ -91,7 +94,9 @@ class AuthSiteController extends Controller
         $validator = Validator($request->all(), [
             'email' => 'required|email',
         ]);
+
         if (!$validator->fails()) {
+
             $status = Password::broker('users')->sendResetLink(
                 $request->only('email')
             );
@@ -100,6 +105,7 @@ class AuthSiteController extends Controller
                 ? response()->json(['message' => __($status)], Response::HTTP_OK)
                 : response()->json(['message' => __($status)], Response::HTTP_BAD_REQUEST);
         } else {
+
             return response()->json([
                 'message' => $validator->getMessageBag()->first()
             ], Response::HTTP_BAD_REQUEST);
