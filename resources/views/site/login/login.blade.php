@@ -76,8 +76,10 @@
 								onclick="login()">Sign
 								In</button>
 
-                            <a href="{{route('redirect',['service'=>'facebook'])}}" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
-                                   >Sign In with facebook</a>
+{{--                            <a href="{{route('redirect',['service'=>'facebook'])}}" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"--}}
+{{--                                   >Sign In with facebook</a>--}}
+                            <a href="{{route('otp.create')}}" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
+                            >Sign In with Mobile</a>
 						</form>
 
 						<div class="mt-10">

@@ -2064,14 +2064,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Echo["private"]("App.Models.Admin." + window.UserId).notification(function (notification) {
   $('#notificationsList').prepend(" <div class=\"d-flex flex-column font-weight-bold\">\n                                                    <a href=\"#\" class=\"text-dark text-hover-primary mb-1 font-size-lg\">A new order with amount (".concat(notification.data.amount, ") from ").concat(notification.data.customer_name, "</a>\n                                                    <span class=\"text-muted\">").concat(notification.data.created_date, "</span>\n                                                </div>"));
-  var count = Number($('#newNotifications').text());
+  var count = Number($('.badge-number').text());
   count++;
 
   if (count > 99) {
     count = '99+';
   }
 
-  $('#newNotifications').text(count);
+  $('.badge-number').prepend(count);
 });
 window.Echo["private"]("App.Models.User." + window.UserId).notification(function (notification) {
   var count = Number($('.badge-number').text());

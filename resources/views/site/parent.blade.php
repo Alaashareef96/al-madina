@@ -160,9 +160,9 @@
                             @php
                             $cartnumber=Gloudemans\Shoppingcart\Facades\Cart::count();
                             @endphp
-                            @if($cartnumber)
+{{--                            @if($cartnumber)--}}
                             <span class="badge-number">{{$cartnumber}}</span>
-                            @endif
+{{--                            @endif--}}
                         </div>
 
                         <div class="order-show mx-3">

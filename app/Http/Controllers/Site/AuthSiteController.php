@@ -19,12 +19,6 @@ use Closure;
 class AuthSiteController extends Controller
 {
 
-//    const PASSWORD_RESET = PasswordBroker::PASSWORD_RESET;
-
-//    const PASSWORD_RESET = 'site.password.reset.user';
-
-//    const PASSWORD_RESET = 'site.password.reset.user';
-//    const  RESET_LINK_SENT =  'site.password.reset.user';
 
     public function ShowLoginUser(){
         return response()->view('site.login.login');

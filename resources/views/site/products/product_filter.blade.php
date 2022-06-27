@@ -20,26 +20,26 @@
                 </div>
             </div>
         </a>
-{{--        <div class="favourite">--}}
+        <div class="favourite">
 
-{{--          @if($user = Auth::user())--}}
-{{--              @if(in_array($product->id,$user->products->pluck('id')->toArray()))--}}
-{{--                    <a class="wishlist active" data-id="{{$product->id}}">--}}
-{{--                        <i class="fa fa-heart" aria-hidden="true"></i>--}}
-{{--                    </a>--}}
-{{--                @else--}}
-{{--                    <a class="wishlist"  data-id="{{$product->id}}">--}}
-{{--                        <i class="fa fa-heart" aria-hidden="true"></i>--}}
-{{--                    </a>--}}
-{{--                @endif--}}
+          @if($user = Auth::user())
+              @if(in_array($product->id,$user->products->pluck('id')->toArray()))
+                    <a class="wishlist active" data-id="{{$product->id}}">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                @else
+                    <a class="wishlist"  data-id="{{$product->id}}">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                @endif
 
-{{--            @else--}}
-{{--                <a class="wishlist" data-id="{{$product->id}}">--}}
-{{--                    <i class="fa fa-heart" aria-hidden="true"></i>--}}
-{{--                </a>--}}
-{{--            @endif--}}
+            @else
+                <a class="wishlist" data-id="{{$product->id}}">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </a>
+            @endif
 
-{{--        </div>--}}
+        </div>
 
         <div class="catr-add">
                     <a class="catrs" data-id="{{$product->id}}">

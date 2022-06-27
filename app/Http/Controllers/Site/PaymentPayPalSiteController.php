@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Notifications\User\ConfirmOrderNotification;
 use App\Notifications\User\OrderCreatedNotification;
+use App\Notifications\User\OrderCreatedSmsNotification;
 use App\Services\OmnipayService;
 use App\Services\OrderService;
 use Carbon\Carbon;
@@ -128,6 +130,7 @@ class PaymentPayPalSiteController extends Controller
         foreach (Admin::all() as $admin){
             $admin->notify(new OrderCreatedNotification($order));
         }
+        Auth::user()->notify(new OrderCreatedSmsNotification($order));
 
         return redirect('al-madina/product')->with('successSweet','تمت العملية بنجاح');
         }

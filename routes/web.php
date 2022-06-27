@@ -36,6 +36,7 @@ use App\Http\Controllers\Site\JobsSiteController;
 use App\Http\Controllers\Site\NewsSiteController;
 use App\Http\Controllers\Site\OfferSiteController;
 use App\Http\Controllers\Site\OrderSiteController;
+use App\Http\Controllers\Site\OtpSiteController;
 use App\Http\Controllers\Site\PaymentPayPalSiteController;
 use App\Http\Controllers\Site\PaymentStripSiteController;
 use App\Http\Controllers\Site\ProductSiteController;
@@ -220,8 +221,15 @@ Route::prefix('al-madina')->middleware('guest:web')->group(function() {
     Route::post('register', [AuthSiteController::class, 'register'])->name('auth.register.user');
     Route::post('loginUser', [AuthSiteController::class, 'loginUser'])->name('auth.login.user');
 
-    Route::get('/redirect/{service}', [SocialController::class, 'redirect'])->name('redirect');
-    Route::get('/callback/{service}', [SocialController::class, 'callback']);
+    Route::view('otp/request', 'site/login/otp/otp-create')->name('otp.create');
+    Route::post('otp/request', [OtpSiteController::class, 'store'])->name('otp.store');
+    Route::view('otp/verify', 'site/login/otp/otp-verify')->name('otp.verify');
+    Route::post('otp/verify', [OtpSiteController::class, 'verify']);
+    Route::get('otp/cancel', [OtpSiteController::class, 'cancel']);
+
+
+//    Route::get('/redirect/{service}', [SocialController::class, 'redirect'])->name('redirect');
+//    Route::get('/callback/{service}', [SocialController::class, 'callback']);
 });
 
     Route::prefix('al-madina')->group(function(){

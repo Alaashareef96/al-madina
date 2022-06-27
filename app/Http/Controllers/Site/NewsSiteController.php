@@ -7,8 +7,10 @@ use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Media;
 use App\Models\News;
+use App\Notifications\User\ConfirmOrderNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,6 +55,7 @@ class NewsSiteController extends Controller
 
                 $commentNews->img()->save($img);
             }
+
             return response()->json([
                 'message' => $commentNews ? 'Create successful' : 'Create failed',
             ], $commentNews ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);

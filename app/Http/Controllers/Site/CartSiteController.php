@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Notifications\User\CartNumberNotification;
-use App\Notifications\User\CartRemoveNotification;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;

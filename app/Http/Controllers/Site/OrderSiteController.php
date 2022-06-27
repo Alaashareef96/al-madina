@@ -19,7 +19,7 @@ class OrderSiteController extends Controller
         $order = $request->sort;
         $orders = Order::where('user_id',Auth::id())->orderBy('id', $order ?? 'desc')->get();
         if($request->ajax()) {
-            $view = view('site.order.myOrders-sort',compact('orders'))->render();
+            $view = view('site.order.sort.myOrders-sort',compact('orders'))->render();
             return response()->json([
                 'view'=>$view,
                 'order' => $order,
@@ -39,7 +39,7 @@ class OrderSiteController extends Controller
         ['return_date','!=',NULL],])->orderBy('id', $order ?? 'desc')->get();
 
         if($request->ajax()) {
-            $view = view('site.order.returnOrders-sort',compact('orders'))->render();
+            $view = view('site.order.sort.returnOrders-sort',compact('orders'))->render();
             return response()->json([
                 'view'=>$view,
                 'order' => $order,
@@ -58,7 +58,7 @@ class OrderSiteController extends Controller
             ['status','canceled'],])->orderBy('id', $order ?? 'desc')->get();
 
         if($request->ajax()) {
-            $view = view('site.order.cancelOrders-sort',compact('orders'))->render();
+            $view = view('site.order.sort.cancelOrders-sort',compact('orders'))->render();
             return response()->json([
                 'view'=>$view,
                 'order' => $order,

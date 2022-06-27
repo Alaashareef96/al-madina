@@ -39,6 +39,11 @@ return [
         'password' => env('PAYPAL_PASSWORD'),
         'signature' => env('PAYPAL_SIGNATURE'),
         'sandbox' => env('PAYPAL_SANDBOX'),
-    ]
+    ],
 
+    'nexmo' => [
+        'key' => env('NEXMO_KEY'),
+        'secret' => env('NEXMO_SECRET'),
+        'sms_from' => '15556666666',
+    ],
 ];
